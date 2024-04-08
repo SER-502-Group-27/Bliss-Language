@@ -137,17 +137,5 @@ compile_commands.json
 Makefile
 Testing/
 
-# Poetry
-#   According to https://python-poetry.org/docs/glossary/#lock-file
-#   it is recommended to include poetry.lock in version control.
-#   However, in case of collaboration, if having a library (e.g. in "src/")
-#   that depends on poetry.lock for building, reverting the lock file
-#   may break the library. So, consider this carefully.
-#poetry.lock
-
-# Pylance (https://github.com/microsoft/pylance-release)
-#   Pylance is an optional plugin for Visual Studio Code that provides
-#   fast, static type checking using Pyright.  Pyright is typically
-#   run as a background service by Pylance, so users should not need
-#   to run Pyright themselves.  Ignore .pyrightconfig.json in case
-#   some users prefer to use Pyright directly.
+# Playgrounds
+src/playground.ipynb
