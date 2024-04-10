@@ -10,17 +10,9 @@ tokens = (
     "MODULO",
     "LPAREN",
     "RPAREN",  # For numerical expressions
-    "AND",
-    "OR",
     "NOT",  # Logical operators
     "IDENTIFIER",
     "ASSIGN",  # For variables
-    "IF",
-    "ELSE",  # Conditional
-    "ELIF",
-    "PRINT",  # Built-in function
-    "FOR",
-    "WHILE",  # Loops
     "ADD_ASSIGN",
     "SUB_ASSIGN",
     "MUL_ASSIGN",
@@ -31,6 +23,8 @@ tokens = (
     "GREATER_EQUAL",
     "LESS_EQUAL",
     "COLON",
+    "EQUAL",
+    "NOT_EQUAL",
 )
 
 # Reserved keywords mapping
@@ -45,6 +39,8 @@ reserved = {
     "while": "WHILE",
     "and": "AND",
     "or": "OR",
+    "in": "IN",
+    "range": "RANGE",
     # Add other keywords as needed
 }
 
@@ -66,7 +62,6 @@ t_GREATER_THAN = r">"
 t_LESS_THAN = r"<"
 t_GREATER_EQUAL = r">="
 t_LESS_EQUAL = r"<="
-
 t_COLON = r":"
 
 # A rule for identifiers (variable names)
@@ -111,39 +106,43 @@ def t_error(t):
 # Assignment and assignment operators
 
 
-def t_ASSIGN(t):
-    r"="
-    r"="
+def t_EQUAL(t):
+    r"=="
+    return t
+
+
+def t_NOT_EQUAL(t):
+    r"!="
     return t
 
 
 def t_ADD_ASSIGN(t):
-    r"\+="
     r"\+="
     return t
 
 
 def t_SUB_ASSIGN(t):
     r"-="
-    r"-="
     return t
 
 
 def t_MUL_ASSIGN(t):
-    r"\*="
     r"\*="
     return t
 
 
 def t_DIV_ASSIGN(t):
     r"/="
-    r"/="
     return t
 
 
 def t_MOD_ASSIGN(t):
     r"%="
-    r"%="
+    return t
+
+
+def t_ASSIGN(t):
+    r"="
     return t
 
 
@@ -157,7 +156,7 @@ if __name__ == "__main__":
     # else
     #     print 0
     data = """
-    if a == 2 and b == 3:
+    for a == 2 and b == 3:
     print(a)
 elif c >= 4 or d <= 5:
     print(c)
