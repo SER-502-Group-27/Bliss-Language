@@ -25,6 +25,8 @@ tokens = (
     "COLON",
     "EQUAL",
     "NOT_EQUAL",
+    "INDENT",
+    "DEDENT",
 )
 
 # Reserved keywords mapping
@@ -64,9 +66,49 @@ t_GREATER_EQUAL = r">="
 t_LESS_EQUAL = r"<="
 t_COLON = r":"
 
+
+# Define states for tracking indentation
+states = (("indent", "exclusive"),)
+
+# Track the stack of indent levels
+indent_stack = [0]
+
+# Rule for tracking newlines and whitespace
+def t_ANY_newline(t):
+    r"\n+"
+    t.lexer.lineno += len(t.value)
+    t.lexer.begin("indent")
+
+
+def t_indent_whitespace(t):
+    r"[ ]+"
+    t.lexer.lexpos -= len(t.value)  # Reset lexpos
+    space_count = len(t.value)
+    if space_count > indent_stack[-1]:
+        indent_stack.append(space_count)
+        t.type = "INDENT"
+        t.value = space_count
+        t.lexer.begin("INITIAL")  # Go back to the initial state
+        return t
+    elif space_count < indent_stack[-1]:
+        while indent_stack and space_count < indent_stack[-1]:
+            indent_stack.pop()
+            t.type = "DEDENT"
+            t.value = space_count
+            t.lexer.begin("INITIAL")  # Go back to the initial state
+            return t
+    t.lexer.begin(
+        "INITIAL"
+    )  # Go back to the initial state if indentation level is the same
+
+
+# Error handling rule for indentation state
+def t_indent_error(t):
+    print(f"Illegal character in indentation '{t.value[0]}'")
+    t.lexer.skip(1)
+
+
 # A rule for identifiers (variable names)
-
-
 def t_IDENTIFIER(t):
     r"[a-zA-Z_][a-zA-Z_0-9]*"
     t.type = reserved.get(t.value, "IDENTIFIER")  # Check for reserved words
@@ -148,11 +190,10 @@ if __name__ == "__main__":
     # Test the lexer
     data = """
     for a == 2 and b == 3:
-    print(a)
-elif c >= 4 or d <= 5:
-    print(c)
-else:
-    print(not e)
+        c+=2
+        print(a)
+    if a >=b:
+        c=10
     """
     lexer.input(data)
     for tok in lexer:
