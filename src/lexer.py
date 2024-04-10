@@ -43,6 +43,8 @@ reserved = {
     "or": "OR",
     "in": "IN",
     "range": "RANGE",
+    "break": "BREAK",
+    "continue": "CONTINUE",
     # Add other keywords as needed
 }
 
@@ -74,6 +76,8 @@ states = (("indent", "exclusive"),)
 indent_stack = [0]
 
 # Rule for tracking newlines and whitespace
+
+
 def t_ANY_newline(t):
     r"\n+"
     t.lexer.lineno += len(t.value)
@@ -192,6 +196,8 @@ if __name__ == "__main__":
     for a == 2 and b == 3:
         c+=2
         print(a)
+        break
+        continue
     if a >=b:
         c=10
     """
