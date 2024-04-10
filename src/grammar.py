@@ -16,6 +16,27 @@ def p_statement_assign(p):
     p[0] = p[3]
 
 
+def p_statement_assign_shorthand(p):
+    """
+    statement : IDENTIFIER ADD_ASSIGN expression
+              | IDENTIFIER SUB_ASSIGN expression
+              | IDENTIFIER MUL_ASSIGN expression
+              | IDENTIFIER DIV_ASSIGN expression
+              | IDENTIFIER MOD_ASSIGN expression
+    """
+    if p[2] == "+=":
+        symbol_table[p[1]] = symbol_table.get(p[1], 0) + p[3]
+    elif p[2] == "-=":
+        symbol_table[p[1]] = symbol_table.get(p[1], 0) - p[3]
+    elif p[2] == "*=":
+        symbol_table[p[1]] = symbol_table.get(p[1], 0) * p[3]
+    elif p[2] == "/=":
+        symbol_table[p[1]] = symbol_table.get(p[1], 0) / p[3]
+    elif p[2] == "%=":
+        symbol_table[p[1]] = symbol_table.get(p[1], 0) % p[3]
+    p[0] = symbol_table[p[1]]
+
+
 def p_expression_var(p):
     "expression : IDENTIFIER"
     p[0] = symbol_table.get(p[1], 0)
