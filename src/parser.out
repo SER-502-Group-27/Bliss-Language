@@ -4,280 +4,468 @@ Unused terminals:
 
     ADD_ASSIGN
     AND
-    ASSIGN
+    COLON
     DIV_ASSIGN
+    ELIF
     ELSE
+    EQUAL
     FOR
-    IDENTIFIER
+    GREATER_EQUAL
+    GREATER_THAN
     IF
+    IN
     INTEGER
-    MODULO
+    LESS_EQUAL
+    LESS_THAN
     MOD_ASSIGN
     MUL_ASSIGN
     NOT
+    NOT_EQUAL
     OR
     PRINT
+    RANGE
     STRING
     SUB_ASSIGN
     WHILE
 
 Grammar
 
-Rule 0     S' -> expression
-Rule 1     expression -> expression PLUS term
-Rule 2     expression -> expression MINUS term
-Rule 3     expression -> term
-Rule 4     term -> term TIMES factor
-Rule 5     term -> term DIVIDE factor
-Rule 6     term -> factor
-Rule 7     factor -> NUMBER
-Rule 8     factor -> LPAREN expression RPAREN
+Rule 0     S' -> statement
+Rule 1     statement -> expression
+Rule 2     statement -> IDENTIFIER ASSIGN expression
+Rule 3     expression -> IDENTIFIER
+Rule 4     expression -> expression PLUS term
+Rule 5     expression -> expression MINUS term
+Rule 6     expression -> term
+Rule 7     term -> term TIMES factor
+Rule 8     term -> term DIVIDE factor
+Rule 9     term -> term MODULO factor
+Rule 10    term -> factor
+Rule 11    factor -> NUMBER
+Rule 12    factor -> IDENTIFIER
+Rule 13    factor -> LPAREN expression RPAREN
 
 Terminals, with rules where they appear
 
-ADD_ASSIGN           :
-AND                  :
-ASSIGN               :
-DIVIDE               : 5
-DIV_ASSIGN           :
-ELSE                 :
-FOR                  :
-IDENTIFIER           :
-IF                   :
-INTEGER              :
-LPAREN               : 8
-MINUS                : 2
-MODULO               :
-MOD_ASSIGN           :
-MUL_ASSIGN           :
-NOT                  :
-NUMBER               : 7
-OR                   :
-PLUS                 : 1
-PRINT                :
-RPAREN               : 8
-STRING               :
-SUB_ASSIGN           :
-TIMES                : 4
-WHILE                :
-error                :
+ADD_ASSIGN           : 
+AND                  : 
+ASSIGN               : 2
+COLON                : 
+DIVIDE               : 8
+DIV_ASSIGN           : 
+ELIF                 : 
+ELSE                 : 
+EQUAL                : 
+FOR                  : 
+GREATER_EQUAL        : 
+GREATER_THAN         : 
+IDENTIFIER           : 2 3 12
+IF                   : 
+IN                   : 
+INTEGER              : 
+LESS_EQUAL           : 
+LESS_THAN            : 
+LPAREN               : 13
+MINUS                : 5
+MODULO               : 9
+MOD_ASSIGN           : 
+MUL_ASSIGN           : 
+NOT                  : 
+NOT_EQUAL            : 
+NUMBER               : 11
+OR                   : 
+PLUS                 : 4
+PRINT                : 
+RANGE                : 
+RPAREN               : 13
+STRING               : 
+SUB_ASSIGN           : 
+TIMES                : 7
+WHILE                : 
+error                : 
 
 Nonterminals, with rules where they appear
 
-expression           : 1 2 8 0
-factor               : 4 5 6
-term                 : 1 2 3 4 5
+expression           : 1 2 4 5 13
+factor               : 7 8 9 10
+statement            : 0
+term                 : 4 5 6 7 8 9
 
 Parsing method: LALR
 
 state 0
 
-    (0) S' -> . expression
-    (1) expression -> . expression PLUS term
-    (2) expression -> . expression MINUS term
-    (3) expression -> . term
-    (4) term -> . term TIMES factor
-    (5) term -> . term DIVIDE factor
-    (6) term -> . factor
-    (7) factor -> . NUMBER
-    (8) factor -> . LPAREN expression RPAREN
+    (0) S' -> . statement
+    (1) statement -> . expression
+    (2) statement -> . IDENTIFIER ASSIGN expression
+    (3) expression -> . IDENTIFIER
+    (4) expression -> . expression PLUS term
+    (5) expression -> . expression MINUS term
+    (6) expression -> . term
+    (7) term -> . term TIMES factor
+    (8) term -> . term DIVIDE factor
+    (9) term -> . term MODULO factor
+    (10) term -> . factor
+    (11) factor -> . NUMBER
+    (12) factor -> . IDENTIFIER
+    (13) factor -> . LPAREN expression RPAREN
 
-    NUMBER          shift and go to state 4
-    LPAREN          shift and go to state 5
+    IDENTIFIER      shift and go to state 3
+    NUMBER          shift and go to state 6
+    LPAREN          shift and go to state 7
 
-    expression                     shift and go to state 1
-    term                           shift and go to state 2
-    factor                         shift and go to state 3
+    statement                      shift and go to state 1
+    expression                     shift and go to state 2
+    term                           shift and go to state 4
+    factor                         shift and go to state 5
 
 state 1
 
-    (0) S' -> expression .
-    (1) expression -> expression . PLUS term
-    (2) expression -> expression . MINUS term
+    (0) S' -> statement .
 
-    PLUS            shift and go to state 6
-    MINUS           shift and go to state 7
 
 
 state 2
 
-    (3) expression -> term .
-    (4) term -> term . TIMES factor
-    (5) term -> term . DIVIDE factor
+    (1) statement -> expression .
+    (4) expression -> expression . PLUS term
+    (5) expression -> expression . MINUS term
 
-    PLUS            reduce using rule 3 (expression -> term .)
-    MINUS           reduce using rule 3 (expression -> term .)
-    $end            reduce using rule 3 (expression -> term .)
-    RPAREN          reduce using rule 3 (expression -> term .)
-    TIMES           shift and go to state 8
-    DIVIDE          shift and go to state 9
+    $end            reduce using rule 1 (statement -> expression .)
+    PLUS            shift and go to state 8
+    MINUS           shift and go to state 9
 
 
 state 3
 
-    (6) term -> factor .
+    (2) statement -> IDENTIFIER . ASSIGN expression
+    (3) expression -> IDENTIFIER .
+    (12) factor -> IDENTIFIER .
 
-    TIMES           reduce using rule 6 (term -> factor .)
-    DIVIDE          reduce using rule 6 (term -> factor .)
-    PLUS            reduce using rule 6 (term -> factor .)
-    MINUS           reduce using rule 6 (term -> factor .)
-    $end            reduce using rule 6 (term -> factor .)
-    RPAREN          reduce using rule 6 (term -> factor .)
+  ! reduce/reduce conflict for PLUS resolved using rule 3 (expression -> IDENTIFIER .)
+  ! reduce/reduce conflict for MINUS resolved using rule 3 (expression -> IDENTIFIER .)
+  ! reduce/reduce conflict for $end resolved using rule 3 (expression -> IDENTIFIER .)
+    ASSIGN          shift and go to state 10
+    PLUS            reduce using rule 3 (expression -> IDENTIFIER .)
+    MINUS           reduce using rule 3 (expression -> IDENTIFIER .)
+    $end            reduce using rule 3 (expression -> IDENTIFIER .)
+    TIMES           reduce using rule 12 (factor -> IDENTIFIER .)
+    DIVIDE          reduce using rule 12 (factor -> IDENTIFIER .)
+    MODULO          reduce using rule 12 (factor -> IDENTIFIER .)
+
+  ! PLUS            [ reduce using rule 12 (factor -> IDENTIFIER .) ]
+  ! MINUS           [ reduce using rule 12 (factor -> IDENTIFIER .) ]
+  ! $end            [ reduce using rule 12 (factor -> IDENTIFIER .) ]
 
 
 state 4
 
-    (7) factor -> NUMBER .
+    (6) expression -> term .
+    (7) term -> term . TIMES factor
+    (8) term -> term . DIVIDE factor
+    (9) term -> term . MODULO factor
 
-    TIMES           reduce using rule 7 (factor -> NUMBER .)
-    DIVIDE          reduce using rule 7 (factor -> NUMBER .)
-    PLUS            reduce using rule 7 (factor -> NUMBER .)
-    MINUS           reduce using rule 7 (factor -> NUMBER .)
-    $end            reduce using rule 7 (factor -> NUMBER .)
-    RPAREN          reduce using rule 7 (factor -> NUMBER .)
+    PLUS            reduce using rule 6 (expression -> term .)
+    MINUS           reduce using rule 6 (expression -> term .)
+    $end            reduce using rule 6 (expression -> term .)
+    RPAREN          reduce using rule 6 (expression -> term .)
+    TIMES           shift and go to state 11
+    DIVIDE          shift and go to state 12
+    MODULO          shift and go to state 13
 
 
 state 5
 
-    (8) factor -> LPAREN . expression RPAREN
-    (1) expression -> . expression PLUS term
-    (2) expression -> . expression MINUS term
-    (3) expression -> . term
-    (4) term -> . term TIMES factor
-    (5) term -> . term DIVIDE factor
-    (6) term -> . factor
-    (7) factor -> . NUMBER
-    (8) factor -> . LPAREN expression RPAREN
+    (10) term -> factor .
 
-    NUMBER          shift and go to state 4
-    LPAREN          shift and go to state 5
+    TIMES           reduce using rule 10 (term -> factor .)
+    DIVIDE          reduce using rule 10 (term -> factor .)
+    MODULO          reduce using rule 10 (term -> factor .)
+    PLUS            reduce using rule 10 (term -> factor .)
+    MINUS           reduce using rule 10 (term -> factor .)
+    $end            reduce using rule 10 (term -> factor .)
+    RPAREN          reduce using rule 10 (term -> factor .)
 
-    expression                     shift and go to state 10
-    term                           shift and go to state 2
-    factor                         shift and go to state 3
 
 state 6
 
-    (1) expression -> expression PLUS . term
-    (4) term -> . term TIMES factor
-    (5) term -> . term DIVIDE factor
-    (6) term -> . factor
-    (7) factor -> . NUMBER
-    (8) factor -> . LPAREN expression RPAREN
+    (11) factor -> NUMBER .
 
-    NUMBER          shift and go to state 4
-    LPAREN          shift and go to state 5
+    TIMES           reduce using rule 11 (factor -> NUMBER .)
+    DIVIDE          reduce using rule 11 (factor -> NUMBER .)
+    MODULO          reduce using rule 11 (factor -> NUMBER .)
+    PLUS            reduce using rule 11 (factor -> NUMBER .)
+    MINUS           reduce using rule 11 (factor -> NUMBER .)
+    $end            reduce using rule 11 (factor -> NUMBER .)
+    RPAREN          reduce using rule 11 (factor -> NUMBER .)
 
-    term                           shift and go to state 11
-    factor                         shift and go to state 3
 
 state 7
 
-    (2) expression -> expression MINUS . term
-    (4) term -> . term TIMES factor
-    (5) term -> . term DIVIDE factor
-    (6) term -> . factor
-    (7) factor -> . NUMBER
-    (8) factor -> . LPAREN expression RPAREN
+    (13) factor -> LPAREN . expression RPAREN
+    (3) expression -> . IDENTIFIER
+    (4) expression -> . expression PLUS term
+    (5) expression -> . expression MINUS term
+    (6) expression -> . term
+    (7) term -> . term TIMES factor
+    (8) term -> . term DIVIDE factor
+    (9) term -> . term MODULO factor
+    (10) term -> . factor
+    (11) factor -> . NUMBER
+    (12) factor -> . IDENTIFIER
+    (13) factor -> . LPAREN expression RPAREN
 
-    NUMBER          shift and go to state 4
-    LPAREN          shift and go to state 5
+    IDENTIFIER      shift and go to state 15
+    NUMBER          shift and go to state 6
+    LPAREN          shift and go to state 7
 
-    term                           shift and go to state 12
-    factor                         shift and go to state 3
+    expression                     shift and go to state 14
+    term                           shift and go to state 4
+    factor                         shift and go to state 5
 
 state 8
 
-    (4) term -> term TIMES . factor
-    (7) factor -> . NUMBER
-    (8) factor -> . LPAREN expression RPAREN
+    (4) expression -> expression PLUS . term
+    (7) term -> . term TIMES factor
+    (8) term -> . term DIVIDE factor
+    (9) term -> . term MODULO factor
+    (10) term -> . factor
+    (11) factor -> . NUMBER
+    (12) factor -> . IDENTIFIER
+    (13) factor -> . LPAREN expression RPAREN
 
-    NUMBER          shift and go to state 4
-    LPAREN          shift and go to state 5
+    NUMBER          shift and go to state 6
+    IDENTIFIER      shift and go to state 17
+    LPAREN          shift and go to state 7
 
-    factor                         shift and go to state 13
+    term                           shift and go to state 16
+    factor                         shift and go to state 5
 
 state 9
 
-    (5) term -> term DIVIDE . factor
-    (7) factor -> . NUMBER
-    (8) factor -> . LPAREN expression RPAREN
+    (5) expression -> expression MINUS . term
+    (7) term -> . term TIMES factor
+    (8) term -> . term DIVIDE factor
+    (9) term -> . term MODULO factor
+    (10) term -> . factor
+    (11) factor -> . NUMBER
+    (12) factor -> . IDENTIFIER
+    (13) factor -> . LPAREN expression RPAREN
 
-    NUMBER          shift and go to state 4
-    LPAREN          shift and go to state 5
+    NUMBER          shift and go to state 6
+    IDENTIFIER      shift and go to state 17
+    LPAREN          shift and go to state 7
 
-    factor                         shift and go to state 14
+    term                           shift and go to state 18
+    factor                         shift and go to state 5
 
 state 10
 
-    (8) factor -> LPAREN expression . RPAREN
-    (1) expression -> expression . PLUS term
-    (2) expression -> expression . MINUS term
+    (2) statement -> IDENTIFIER ASSIGN . expression
+    (3) expression -> . IDENTIFIER
+    (4) expression -> . expression PLUS term
+    (5) expression -> . expression MINUS term
+    (6) expression -> . term
+    (7) term -> . term TIMES factor
+    (8) term -> . term DIVIDE factor
+    (9) term -> . term MODULO factor
+    (10) term -> . factor
+    (11) factor -> . NUMBER
+    (12) factor -> . IDENTIFIER
+    (13) factor -> . LPAREN expression RPAREN
 
-    RPAREN          shift and go to state 15
-    PLUS            shift and go to state 6
-    MINUS           shift and go to state 7
+    IDENTIFIER      shift and go to state 15
+    NUMBER          shift and go to state 6
+    LPAREN          shift and go to state 7
 
+    expression                     shift and go to state 19
+    term                           shift and go to state 4
+    factor                         shift and go to state 5
 
 state 11
 
-    (1) expression -> expression PLUS term .
-    (4) term -> term . TIMES factor
-    (5) term -> term . DIVIDE factor
+    (7) term -> term TIMES . factor
+    (11) factor -> . NUMBER
+    (12) factor -> . IDENTIFIER
+    (13) factor -> . LPAREN expression RPAREN
 
-    PLUS            reduce using rule 1 (expression -> expression PLUS term .)
-    MINUS           reduce using rule 1 (expression -> expression PLUS term .)
-    $end            reduce using rule 1 (expression -> expression PLUS term .)
-    RPAREN          reduce using rule 1 (expression -> expression PLUS term .)
-    TIMES           shift and go to state 8
-    DIVIDE          shift and go to state 9
+    NUMBER          shift and go to state 6
+    IDENTIFIER      shift and go to state 17
+    LPAREN          shift and go to state 7
 
+    factor                         shift and go to state 20
 
 state 12
 
-    (2) expression -> expression MINUS term .
-    (4) term -> term . TIMES factor
-    (5) term -> term . DIVIDE factor
+    (8) term -> term DIVIDE . factor
+    (11) factor -> . NUMBER
+    (12) factor -> . IDENTIFIER
+    (13) factor -> . LPAREN expression RPAREN
 
-    PLUS            reduce using rule 2 (expression -> expression MINUS term .)
-    MINUS           reduce using rule 2 (expression -> expression MINUS term .)
-    $end            reduce using rule 2 (expression -> expression MINUS term .)
-    RPAREN          reduce using rule 2 (expression -> expression MINUS term .)
-    TIMES           shift and go to state 8
-    DIVIDE          shift and go to state 9
+    NUMBER          shift and go to state 6
+    IDENTIFIER      shift and go to state 17
+    LPAREN          shift and go to state 7
 
+    factor                         shift and go to state 21
 
 state 13
 
-    (4) term -> term TIMES factor .
+    (9) term -> term MODULO . factor
+    (11) factor -> . NUMBER
+    (12) factor -> . IDENTIFIER
+    (13) factor -> . LPAREN expression RPAREN
 
-    TIMES           reduce using rule 4 (term -> term TIMES factor .)
-    DIVIDE          reduce using rule 4 (term -> term TIMES factor .)
-    PLUS            reduce using rule 4 (term -> term TIMES factor .)
-    MINUS           reduce using rule 4 (term -> term TIMES factor .)
-    $end            reduce using rule 4 (term -> term TIMES factor .)
-    RPAREN          reduce using rule 4 (term -> term TIMES factor .)
+    NUMBER          shift and go to state 6
+    IDENTIFIER      shift and go to state 17
+    LPAREN          shift and go to state 7
 
+    factor                         shift and go to state 22
 
 state 14
 
-    (5) term -> term DIVIDE factor .
+    (13) factor -> LPAREN expression . RPAREN
+    (4) expression -> expression . PLUS term
+    (5) expression -> expression . MINUS term
 
-    TIMES           reduce using rule 5 (term -> term DIVIDE factor .)
-    DIVIDE          reduce using rule 5 (term -> term DIVIDE factor .)
-    PLUS            reduce using rule 5 (term -> term DIVIDE factor .)
-    MINUS           reduce using rule 5 (term -> term DIVIDE factor .)
-    $end            reduce using rule 5 (term -> term DIVIDE factor .)
-    RPAREN          reduce using rule 5 (term -> term DIVIDE factor .)
+    RPAREN          shift and go to state 23
+    PLUS            shift and go to state 8
+    MINUS           shift and go to state 9
 
 
 state 15
 
-    (8) factor -> LPAREN expression RPAREN .
+    (3) expression -> IDENTIFIER .
+    (12) factor -> IDENTIFIER .
 
-    TIMES           reduce using rule 8 (factor -> LPAREN expression RPAREN .)
-    DIVIDE          reduce using rule 8 (factor -> LPAREN expression RPAREN .)
-    PLUS            reduce using rule 8 (factor -> LPAREN expression RPAREN .)
-    MINUS           reduce using rule 8 (factor -> LPAREN expression RPAREN .)
-    $end            reduce using rule 8 (factor -> LPAREN expression RPAREN .)
-    RPAREN          reduce using rule 8 (factor -> LPAREN expression RPAREN .)
+  ! reduce/reduce conflict for RPAREN resolved using rule 3 (expression -> IDENTIFIER .)
+  ! reduce/reduce conflict for PLUS resolved using rule 3 (expression -> IDENTIFIER .)
+  ! reduce/reduce conflict for MINUS resolved using rule 3 (expression -> IDENTIFIER .)
+  ! reduce/reduce conflict for $end resolved using rule 3 (expression -> IDENTIFIER .)
+    RPAREN          reduce using rule 3 (expression -> IDENTIFIER .)
+    PLUS            reduce using rule 3 (expression -> IDENTIFIER .)
+    MINUS           reduce using rule 3 (expression -> IDENTIFIER .)
+    $end            reduce using rule 3 (expression -> IDENTIFIER .)
+    TIMES           reduce using rule 12 (factor -> IDENTIFIER .)
+    DIVIDE          reduce using rule 12 (factor -> IDENTIFIER .)
+    MODULO          reduce using rule 12 (factor -> IDENTIFIER .)
+
+  ! RPAREN          [ reduce using rule 12 (factor -> IDENTIFIER .) ]
+  ! PLUS            [ reduce using rule 12 (factor -> IDENTIFIER .) ]
+  ! MINUS           [ reduce using rule 12 (factor -> IDENTIFIER .) ]
+  ! $end            [ reduce using rule 12 (factor -> IDENTIFIER .) ]
+
+
+state 16
+
+    (4) expression -> expression PLUS term .
+    (7) term -> term . TIMES factor
+    (8) term -> term . DIVIDE factor
+    (9) term -> term . MODULO factor
+
+    PLUS            reduce using rule 4 (expression -> expression PLUS term .)
+    MINUS           reduce using rule 4 (expression -> expression PLUS term .)
+    $end            reduce using rule 4 (expression -> expression PLUS term .)
+    RPAREN          reduce using rule 4 (expression -> expression PLUS term .)
+    TIMES           shift and go to state 11
+    DIVIDE          shift and go to state 12
+    MODULO          shift and go to state 13
+
+
+state 17
+
+    (12) factor -> IDENTIFIER .
+
+    TIMES           reduce using rule 12 (factor -> IDENTIFIER .)
+    DIVIDE          reduce using rule 12 (factor -> IDENTIFIER .)
+    MODULO          reduce using rule 12 (factor -> IDENTIFIER .)
+    PLUS            reduce using rule 12 (factor -> IDENTIFIER .)
+    MINUS           reduce using rule 12 (factor -> IDENTIFIER .)
+    $end            reduce using rule 12 (factor -> IDENTIFIER .)
+    RPAREN          reduce using rule 12 (factor -> IDENTIFIER .)
+
+
+state 18
+
+    (5) expression -> expression MINUS term .
+    (7) term -> term . TIMES factor
+    (8) term -> term . DIVIDE factor
+    (9) term -> term . MODULO factor
+
+    PLUS            reduce using rule 5 (expression -> expression MINUS term .)
+    MINUS           reduce using rule 5 (expression -> expression MINUS term .)
+    $end            reduce using rule 5 (expression -> expression MINUS term .)
+    RPAREN          reduce using rule 5 (expression -> expression MINUS term .)
+    TIMES           shift and go to state 11
+    DIVIDE          shift and go to state 12
+    MODULO          shift and go to state 13
+
+
+state 19
+
+    (2) statement -> IDENTIFIER ASSIGN expression .
+    (4) expression -> expression . PLUS term
+    (5) expression -> expression . MINUS term
+
+    $end            reduce using rule 2 (statement -> IDENTIFIER ASSIGN expression .)
+    PLUS            shift and go to state 8
+    MINUS           shift and go to state 9
+
+
+state 20
+
+    (7) term -> term TIMES factor .
+
+    TIMES           reduce using rule 7 (term -> term TIMES factor .)
+    DIVIDE          reduce using rule 7 (term -> term TIMES factor .)
+    MODULO          reduce using rule 7 (term -> term TIMES factor .)
+    PLUS            reduce using rule 7 (term -> term TIMES factor .)
+    MINUS           reduce using rule 7 (term -> term TIMES factor .)
+    $end            reduce using rule 7 (term -> term TIMES factor .)
+    RPAREN          reduce using rule 7 (term -> term TIMES factor .)
+
+
+state 21
+
+    (8) term -> term DIVIDE factor .
+
+    TIMES           reduce using rule 8 (term -> term DIVIDE factor .)
+    DIVIDE          reduce using rule 8 (term -> term DIVIDE factor .)
+    MODULO          reduce using rule 8 (term -> term DIVIDE factor .)
+    PLUS            reduce using rule 8 (term -> term DIVIDE factor .)
+    MINUS           reduce using rule 8 (term -> term DIVIDE factor .)
+    $end            reduce using rule 8 (term -> term DIVIDE factor .)
+    RPAREN          reduce using rule 8 (term -> term DIVIDE factor .)
+
+
+state 22
+
+    (9) term -> term MODULO factor .
+
+    TIMES           reduce using rule 9 (term -> term MODULO factor .)
+    DIVIDE          reduce using rule 9 (term -> term MODULO factor .)
+    MODULO          reduce using rule 9 (term -> term MODULO factor .)
+    PLUS            reduce using rule 9 (term -> term MODULO factor .)
+    MINUS           reduce using rule 9 (term -> term MODULO factor .)
+    $end            reduce using rule 9 (term -> term MODULO factor .)
+    RPAREN          reduce using rule 9 (term -> term MODULO factor .)
+
+
+state 23
+
+    (13) factor -> LPAREN expression RPAREN .
+
+    TIMES           reduce using rule 13 (factor -> LPAREN expression RPAREN .)
+    DIVIDE          reduce using rule 13 (factor -> LPAREN expression RPAREN .)
+    MODULO          reduce using rule 13 (factor -> LPAREN expression RPAREN .)
+    PLUS            reduce using rule 13 (factor -> LPAREN expression RPAREN .)
+    MINUS           reduce using rule 13 (factor -> LPAREN expression RPAREN .)
+    $end            reduce using rule 13 (factor -> LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 13 (factor -> LPAREN expression RPAREN .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: reduce/reduce conflict in state 3 resolved using rule (expression -> IDENTIFIER)
+WARNING: rejected rule (factor -> IDENTIFIER) in state 3
+WARNING: reduce/reduce conflict in state 15 resolved using rule (expression -> IDENTIFIER)
+WARNING: rejected rule (factor -> IDENTIFIER) in state 15

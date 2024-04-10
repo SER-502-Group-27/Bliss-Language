@@ -1,9 +1,26 @@
 from lexer import tokens
 import ply.yacc as yacc
 
-# Define the grammar
+# Symbol table to store variable values
+symbol_table = {}
 
-# Mathematical Operations
+
+def p_statement_expr(p):
+    "statement : expression"
+    p[0] = p[1]
+
+
+def p_statement_assign(p):
+    "statement : IDENTIFIER ASSIGN expression"
+    symbol_table[p[1]] = p[3]
+    p[0] = p[3]
+
+
+def p_expression_var(p):
+    "expression : IDENTIFIER"
+    p[0] = symbol_table.get(p[1], 0)
+
+
 def p_expression(p):
     """
     expression : expression PLUS term
@@ -23,6 +40,7 @@ def p_term(p):
     """
     term : term TIMES factor
          | term DIVIDE factor
+         | term MODULO factor
          | factor
     """
     if len(p) == 4:
@@ -30,17 +48,20 @@ def p_term(p):
             p[0] = p[1] * p[3]
         elif p[2] == "/":
             p[0] = p[1] / p[3]
-    else:  # base case (factor)
+        elif p[2] == "%":
+            p[0] = p[1] % p[3]
+    else:
         p[0] = p[1]
 
 
 def p_factor(p):
     """
     factor : NUMBER
+           | IDENTIFIER
            | LPAREN expression RPAREN
     """
     if len(p) == 2:
-        p[0] = p[1]
+        p[0] = symbol_table.get(p[1], p[1]) if p[1] in symbol_table else p[1]
     else:
         p[0] = p[2]
 
@@ -57,7 +78,7 @@ parser = yacc.yacc()
 
 # Testing the parser with an interactive loop
 if __name__ == "__main__":
-    print("Enter an arithmetic expression, or 'exit' to quit:")
+    print("Enter an expression, or 'exit' to quit:")
     while True:
         try:
             s = input("calc > ").strip()
