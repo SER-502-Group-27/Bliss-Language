@@ -29,6 +29,7 @@ tokens = (
     "LESS_THAN",
     "GREATER_EQUAL",
     "LESS_EQUAL",
+    "COLON",
 )
 
 # Reserved keywords mapping
@@ -64,8 +65,11 @@ t_LESS_THAN = r"<"
 t_GREATER_EQUAL = r">="
 t_LESS_EQUAL = r"<="
 
+t_COLON = r":"
 
 # A rule for identifiers (variable names)
+
+
 def t_IDENTIFIER(t):
     r"[a-zA-Z_][a-zA-Z_0-9]*"
     t.type = reserved.get(t.value, "IDENTIFIER")  # Check for reserved words
@@ -88,6 +92,8 @@ t_ignore = " \t"
 
 
 # Define a rule so we can track line numbers
+
+
 def t_newline(t):
     r"\n+"
     r"\n+"
@@ -149,8 +155,12 @@ if __name__ == "__main__":
     # else
     #     print 0
     data = """
-    a = 2
-    a += 3
+    if a == 2 and b == 3:
+    print(a)
+elif c >= 4 or d <= 5:
+    print(c)
+else:
+    print(not e)
     """
     lexer.input(data)
     for tok in lexer:
