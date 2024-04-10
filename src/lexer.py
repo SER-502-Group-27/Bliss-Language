@@ -3,6 +3,7 @@ import ply.lex as lex
 # List of token names. This is always required
 tokens = (
     "NUMBER",
+    "BOOLEAN",
     "PLUS",
     "MINUS",
     "TIMES",
@@ -45,7 +46,8 @@ reserved = {
     "range": "RANGE",
     "break": "BREAK",
     "continue": "CONTINUE",
-    # Add other keywords as needed
+    "True": "BOOLEAN",
+    "False": "BOOLEAN",
 }
 
 # Update tokens list to include reserved words
@@ -112,15 +114,22 @@ def t_indent_error(t):
     t.lexer.skip(1)
 
 
-# A rule for identifiers (variable names)
+# A rule for identifiers (variable names) and boolean values
 def t_IDENTIFIER(t):
     r"[a-zA-Z_][a-zA-Z_0-9]*"
-    t.type = reserved.get(t.value, "IDENTIFIER")  # Check for reserved words
+    t.value = t.value  # Preserve the original case
+    if t.value.lower() in ("true", "false"):  # Check for boolean values
+        t.type = "BOOLEAN"
+        t.value = True if t.value.lower() == "true" else False
+    else:
+        t.type = reserved.get(
+            t.value.lower(), "IDENTIFIER"
+        )  # Use lowercase for checking
     return t
 
 
 # A rule for numbers
-def t_NUMBER(t):
+def t_INTEGER(t):
     r"\d+"
     t.value = int(t.value)
     return t
@@ -131,8 +140,6 @@ t_ignore = " \t"
 
 
 # Define a rule so we can track line numbers
-
-
 def t_newline(t):
     r"\n+"
     t.lexer.lineno += len(t.value)
@@ -145,8 +152,6 @@ def t_error(t):
 
 
 # Assignment and assignment operators
-
-
 def t_EQUAL(t):
     r"=="
     return t
@@ -199,7 +204,7 @@ if __name__ == "__main__":
         break
         continue
     if a >=b:
-        c=10
+        c=false
     """
     lexer.input(data)
     for tok in lexer:
