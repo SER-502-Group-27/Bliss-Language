@@ -17,6 +17,7 @@ tokens = (
     "ASSIGN",  # For variables
     "IF",
     "ELSE",  # Conditional
+    "ELIF",
     "PRINT",  # Built-in function
     "FOR",
     "WHILE",  # Loops
@@ -36,6 +37,7 @@ tokens = (
 reserved = {
     "if": "IF",
     "else": "ELSE",
+    "elif": "ELIF",
     "print": "PRINT",
     "int": "INTEGER",
     "str": "STRING",
