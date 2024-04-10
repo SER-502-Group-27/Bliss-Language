@@ -70,15 +70,11 @@ t_COLON = r":"
 def t_IDENTIFIER(t):
     r"[a-zA-Z_][a-zA-Z_0-9]*"
     t.type = reserved.get(t.value, "IDENTIFIER")  # Check for reserved words
-    r"[a-zA-Z_][a-zA-Z_0-9]*"
-    t.type = reserved.get(t.value, "IDENTIFIER")  # Check for reserved words
     return t
 
 
 # A rule for numbers
 def t_NUMBER(t):
-    r"\d+"
-    t.value = int(t.value)
     r"\d+"
     t.value = int(t.value)
     return t
@@ -92,7 +88,6 @@ t_ignore = " \t"
 
 
 def t_newline(t):
-    r"\n+"
     r"\n+"
     t.lexer.lineno += len(t.value)
 
@@ -151,10 +146,6 @@ lexer = lex.lex()
 
 if __name__ == "__main__":
     # Test the lexer
-    # if x = 10 % 2
-    #     print x
-    # else
-    #     print 0
     data = """
     for a == 2 and b == 3:
     print(a)
