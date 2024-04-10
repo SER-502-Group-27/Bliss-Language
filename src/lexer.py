@@ -46,8 +46,6 @@ reserved = {
     "range": "RANGE",
     "break": "BREAK",
     "continue": "CONTINUE",
-    "True": "BOOLEAN",
-    "False": "BOOLEAN",
 }
 
 # Update tokens list to include reserved words
@@ -198,13 +196,13 @@ lexer = lex.lex()
 if __name__ == "__main__":
     # Test the lexer
     data = """
-    for a == 2 and b == 3:
-        c+=2
-        print(a)
-        break
-        continue
-    if a >=b:
-        c=false
+    if condition:
+        statement1
+        statement2
+        if another_condition:
+            statement3
+        statement4
+    statement5
     """
     lexer.input(data)
     for tok in lexer:
