@@ -1,0 +1,40 @@
+Spring 2024 - Team 27
+
+- Ansh Agrawal
+- Rishabh Doshi
+- Satya Partha Varun Ramaraju
+- Vatsal Malaviya
+
+------------------------------------------------------
+------------------------------------------------------
+Ansh Agrawal:
+- Contributed to setting language rules
+- Researched ANTLR & YACC
+- Worked majorly on the Grammar
+- Assisted with documentation
+- Will work on parse tree
+
+------------------------------------------------------
+Rishabh Doshi:
+- Contributed to setting language rules
+- Researched LARC & PLY
+- Worked majorly on the Lexer.
+- Lexical Analysis
+- Will work on parse tree
+
+------------------------------------------------------
+Satya Partha Varun Ramaraju:
+- Contributed to setting language rules
+- Research YACC & LEX
+- Worked on lexer and grammar
+- Assisted with documentation
+- Will assist with grammar completion
+- Will try to implement list data structure
+
+------------------------------------------------------
+Vatsal Malaviya:
+- Contributed to setting language rules
+- Researched LEX & DCG
+- Worked majorly on the parser and grammar
+- Worked on the runtime environment
+- Will work on sample program creation
