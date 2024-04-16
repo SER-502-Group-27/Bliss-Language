@@ -127,7 +127,7 @@ def t_IDENTIFIER(t):
 
 
 # A rule for numbers
-def t_INTEGER(t):
+def t_NUMBER(t):
     r"\d+"
     t.value = int(t.value)
     return t
