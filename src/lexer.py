@@ -29,6 +29,7 @@ tokens = (
     "NOT_EQUAL",
     "INDENT",
     "DEDENT",
+    "STRING_LITERAL",
 )
 
 # Reserved keywords mapping
@@ -148,6 +149,15 @@ def t_INTEGER(t):
     return t
 
 
+# Function to Handle String Literals
+
+
+def t_STRING_LITERAL(t):
+    r"\"([^\\\n]|(\\.))*?\" "
+    t.value = t.value[1:-1]  # Remove the surrounding double quotes
+    return t
+
+
 # A string containing ignored characters (spaces and tabs)
 t_ignore = " \t"
 
@@ -221,6 +231,7 @@ if __name__ == "__main__":
     e = 1e-10
     e1 = 1e-3
     d = 1e10
+    "string"
     """
     lexer.input(data)
     for tok in lexer:
