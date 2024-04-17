@@ -30,6 +30,7 @@ tokens = (
     "INDENT",
     "DEDENT",
     "STRING_LITERAL",
+    "COMMA",
 )
 
 # Reserved keywords mapping
@@ -69,6 +70,7 @@ t_LESS_THAN = r"<"
 t_GREATER_EQUAL = r">="
 t_LESS_EQUAL = r"<="
 t_COLON = r":"
+t_COMMA = r","
 
 
 # Define states for tracking indentation
@@ -223,6 +225,9 @@ if __name__ == "__main__":
     e1 = 1e-3
     d = 1e10
     "string"
+    range(start, stop, step)
+    range(1, 10)
+    range(5)
     """
     lexer.input(data)
     for tok in lexer:
