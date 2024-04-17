@@ -31,6 +31,7 @@ tokens = (
     "DEDENT",
     "STRING_LITERAL",
     "COMMA",
+    "DEF",
 )
 
 # Reserved keywords mapping
@@ -49,6 +50,7 @@ reserved = {
     "range": "RANGE",
     "break": "BREAK",
     "continue": "CONTINUE",
+    "def": "DEF",
 }
 
 # Update tokens list to include reserved words
@@ -228,6 +230,8 @@ if __name__ == "__main__":
     range(start, stop, step)
     range(1, 10)
     range(5)
+    def my_function(name):
+      print(name)
     """
     lexer.input(data)
     for tok in lexer:
