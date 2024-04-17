@@ -10,16 +10,16 @@ tokens = (
     "DIVIDE",
     "MODULO",
     "LPAREN",
-    "RPAREN",  # For numerical expressions
-    "NOT",  # Logical operators
+    "RPAREN",
+    "NOT",
     "IDENTIFIER",
-    "ASSIGN",  # For variables
+    "ASSIGN",
     "ADD_ASSIGN",
     "SUB_ASSIGN",
     "MUL_ASSIGN",
     "DIV_ASSIGN",
-    "MOD_ASSIGN",  # Assignment operators
-    "GREATER_THAN",  # Comparison operators
+    "MOD_ASSIGN",
+    "GREATER_THAN",
     "LESS_THAN",
     "GREATER_EQUAL",
     "LESS_EQUAL",
@@ -86,24 +86,22 @@ def t_ANY_newline(t):
 
 def t_indent_whitespace(t):
     r"[ ]+"
-    t.lexer.lexpos -= len(t.value)  # Reset lexpos
+    t.lexer.lexpos -= len(t.value)
     space_count = len(t.value)
     if space_count > indent_stack[-1]:
         indent_stack.append(space_count)
         t.type = "INDENT"
         t.value = space_count
-        t.lexer.begin("INITIAL")  # Go back to the initial state
+        t.lexer.begin("INITIAL")
         return t
     elif space_count < indent_stack[-1]:
         while indent_stack and space_count < indent_stack[-1]:
             indent_stack.pop()
             t.type = "DEDENT"
             t.value = space_count
-            t.lexer.begin("INITIAL")  # Go back to the initial state
+            t.lexer.begin("INITIAL")
             return t
-    t.lexer.begin(
-        "INITIAL"
-    )  # Go back to the initial state if indentation level is the same
+    t.lexer.begin("INITIAL")
 
 
 # Error handling rule for indentation state
@@ -115,8 +113,8 @@ def t_indent_error(t):
 # A rule for identifiers (variable names) and boolean values
 def t_IDENTIFIER(t):
     r"[a-zA-Z_][a-zA-Z_0-9]*"
-    t.value = t.value  # Preserve the original case
-    if t.value.lower() in ("true", "false"):  # Check for boolean values
+    t.value = t.value
+    if t.value.lower() in ("true", "false"):
         t.type = "BOOLEAN"
         t.value = True if t.value.lower() == "true" else False
     else:
@@ -126,10 +124,13 @@ def t_IDENTIFIER(t):
     return t
 
 
-# A rule for numbers
+# New Number rule containing both Int and Float
 def t_NUMBER(t):
-    r"\d+"
-    t.value = int(t.value)
+    r"\d*\.\d+([eE][-+]?\d+)?|\d+\.\d*([eE][-+]?\d+)?|\d+([eE][-+]?\d+)?"
+    try:
+        t.value = int(t.value)
+    except ValueError:
+        t.value = float(t.value)
     return t
 
 
@@ -197,7 +198,7 @@ if __name__ == "__main__":
     # Test the lexer
     data = """
     if condition:
-        statement1
+        statement1 = 1.2
         statement2
         if another_condition:
             statement3
