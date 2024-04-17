@@ -3,6 +3,7 @@ import ply.lex as lex
 # List of token names. This is always required
 tokens = (
     "NUMBER",
+    "FLOAT",
     "BOOLEAN",
     "PLUS",
     "MINUS",
@@ -124,13 +125,26 @@ def t_IDENTIFIER(t):
     return t
 
 
-# New Number rule containing both Int and Float
-def t_NUMBER(t):
-    r"\d*\.\d+([eE][-+]?\d+)?|\d+\.\d*([eE][-+]?\d+)?|\d+([eE][-+]?\d+)?"
-    try:
-        t.value = int(t.value)
-    except ValueError:
-        t.value = float(t.value)
+# New Number rule containing both Int and Float - Optional
+# def t_NUMBER(t):
+#     r"\d*\.\d+([eE][-+]?\d+)?|\d+\.\d*([eE][-+]?\d+)?|\d+([eE][-+]?\d+)?"
+#     try:
+#         t.value = int(t.value)
+#     except ValueError:
+#         t.value = float(t.value)
+#     return t
+
+# Rule for Floats only
+def t_FLOAT(t):
+    r"(\d+\.\d*|\.\d+)([eE][+-]?\d+)?|\d+[eE][+-]?\d+"
+    t.value = float(t.value)
+    return t
+
+
+# Rule for Integers only
+def t_INTEGER(t):
+    r"\d+"
+    t.value = int(t.value)
     return t
 
 
@@ -197,13 +211,16 @@ lexer = lex.lex()
 if __name__ == "__main__":
     # Test the lexer
     data = """
-    if condition:
-        statement1 = 1.2
-        statement2
-        if another_condition:
-            statement3
-        statement4
-    statement5
+    a = 2
+    b = .3
+    c = 0.6
+    f = 1.0e+10
+    g = 1.0e-10
+    g1 = 1.0e-3
+    h = 1e+10
+    e = 1e-10
+    e1 = 1e-3
+    d = 1e10
     """
     lexer.input(data)
     for tok in lexer:
