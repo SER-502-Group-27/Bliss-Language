@@ -126,15 +126,6 @@ def t_IDENTIFIER(t):
     return t
 
 
-# New Number rule containing both Int and Float - Optional
-# def t_NUMBER(t):
-#     r"\d*\.\d+([eE][-+]?\d+)?|\d+\.\d*([eE][-+]?\d+)?|\d+([eE][-+]?\d+)?"
-#     try:
-#         t.value = int(t.value)
-#     except ValueError:
-#         t.value = float(t.value)
-#     return t
-
 # Rule for Floats only
 def t_FLOAT(t):
     r"(\d+\.\d*|\.\d+)([eE][+-]?\d+)?|\d+[eE][+-]?\d+"
