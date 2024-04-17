@@ -1,5 +1,6 @@
 import unittest
-from lexer import get_lexer
+
+from src.lexer import get_lexer
 
 
 class TestLexer(unittest.TestCase):
