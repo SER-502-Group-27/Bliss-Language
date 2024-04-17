@@ -227,3 +227,7 @@ if __name__ == "__main__":
     lexer.input(data)
     for tok in lexer:
         print(tok)
+
+
+def get_lexer():
+    return lexer
