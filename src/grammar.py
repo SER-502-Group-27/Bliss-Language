@@ -1,8 +1,19 @@
 from lexer import tokens
 import ply.yacc as yacc
 
-# Symbol table to store variable values
+
 symbol_table = {}
+
+
+def p_program(p):
+    """
+    program : program statement
+            | statement
+    """
+    if len(p) == 2:
+        p[0] = p[1]
+    else:
+        p[0] = p[1] + p[2] if p[1] and p[2] else p[1] or p[2]
 
 
 def p_statement_expr(p):
@@ -13,78 +24,57 @@ def p_statement_expr(p):
 def p_statement_assign(p):
     "statement : IDENTIFIER ASSIGN expression"
     symbol_table[p[1]] = p[3]
-    p[0] = p[3]
+    print(f"{p[1]} = {p[3]}")
 
 
-def p_statement_assign_shorthand(p):
+def p_expression_binop(p):
     """
-    statement : IDENTIFIER ADD_ASSIGN expression
-              | IDENTIFIER SUB_ASSIGN expression
-              | IDENTIFIER MUL_ASSIGN expression
-              | IDENTIFIER DIV_ASSIGN expression
-              | IDENTIFIER MOD_ASSIGN expression
+    expression : expression PLUS expression
+               | expression MINUS expression
+               | expression TIMES expression
+               | expression DIVIDE expression
+               | expression MODULO expression
+               | expression GREATER_THAN expression
+               | expression LESS_THAN expression
+               | expression GREATER_EQUAL expression
+               | expression LESS_EQUAL expression
+               | expression EQUAL expression
+               | expression NOT_EQUAL expression
     """
-    if p[2] == "+=":
-        symbol_table[p[1]] = symbol_table.get(p[1], 0) + p[3]
-    elif p[2] == "-=":
-        symbol_table[p[1]] = symbol_table.get(p[1], 0) - p[3]
-    elif p[2] == "*=":
-        symbol_table[p[1]] = symbol_table.get(p[1], 0) * p[3]
-    elif p[2] == "/=":
-        symbol_table[p[1]] = symbol_table.get(p[1], 0) / p[3]
-    elif p[2] == "%=":
-        symbol_table[p[1]] = symbol_table.get(p[1], 0) % p[3]
-    p[0] = symbol_table[p[1]]
+    operators = {
+        "+": lambda x, y: x + y,
+        "-": lambda x, y: x - y,
+        "*": lambda x, y: x * y,
+        "/": lambda x, y: x / y,
+        "%": lambda x, y: x % y,
+        ">": lambda x, y: x > y,
+        "<": lambda x, y: x < y,
+        ">=": lambda x, y: x >= y,
+        "<=": lambda x, y: x <= y,
+        "==": lambda x, y: x == y,
+        "!=": lambda x, y: x != y,
+    }
+    p[0] = operators[p[2]](p[1], p[3])
 
 
-def p_expression_var(p):
+def p_expression_group(p):
+    "expression : LPAREN expression RPAREN"
+    p[0] = p[2]
+
+
+def p_expression_number(p):
+    "expression : INTEGER"
+    p[0] = p[1]
+
+
+def p_expression_float(p):
+    "expression : FLOAT"
+    p[0] = p[1]
+
+
+def p_expression_identifier(p):
     "expression : IDENTIFIER"
     p[0] = symbol_table.get(p[1], 0)
-
-
-def p_expression(p):
-    """
-    expression : expression PLUS term
-               | expression MINUS term
-               | term
-    """
-    if len(p) == 4:  # expression PLUS term or expression MINUS term
-        if p[2] == "+":
-            p[0] = p[1] + p[3]
-        elif p[2] == "-":
-            p[0] = p[1] - p[3]
-    else:  # base case (term)
-        p[0] = p[1]
-
-
-def p_term(p):
-    """
-    term : term TIMES factor
-         | term DIVIDE factor
-         | term MODULO factor
-         | factor
-    """
-    if len(p) == 4:
-        if p[2] == "*":
-            p[0] = p[1] * p[3]
-        elif p[2] == "/":
-            p[0] = p[1] / p[3]
-        elif p[2] == "%":
-            p[0] = p[1] % p[3]
-    else:
-        p[0] = p[1]
-
-
-def p_factor(p):
-    """
-    factor : NUMBER
-           | IDENTIFIER
-           | LPAREN expression RPAREN
-    """
-    if len(p) == 2:
-        p[0] = symbol_table.get(p[1], p[1]) if p[1] in symbol_table else p[1]
-    else:
-        p[0] = p[2]
 
 
 def p_error(p):
@@ -94,20 +84,23 @@ def p_error(p):
         print("Syntax error at EOF")
 
 
-# Build the parser
+def p_statement_print(p):
+    "statement : PRINT LPAREN expression RPAREN"
+    print(f"{p[3]}")
+
+
 parser = yacc.yacc()
 
-# Testing the parser with an interactive loop
+
+bliss_code = """
+x = 2.5
+y = 20
+z = x + y
+print(z)
+x = x * 5
+print(x)
+"""
+
 if __name__ == "__main__":
-    print("Enter an expression, or 'exit' to quit:")
-    while True:
-        try:
-            s = input("calc > ").strip()
-            if s.lower() == "exit":
-                break
-        except EOFError:
-            break
-        if not s:
-            continue
-        result = parser.parse(s)
-        print(result)
+    print("Processing Bliss code:")
+    parser.parse(bliss_code)

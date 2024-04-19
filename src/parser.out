@@ -2,665 +2,1591 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
+    ADD_ASSIGN
     AND
     BOOLEAN
     BREAK
     COLON
+    COMMA
     CONTINUE
     DEDENT
+    DEF
+    DIV_ASSIGN
     ELIF
     ELSE
-    EQUAL
     FOR
-    GREATER_EQUAL
-    GREATER_THAN
     IF
     IN
     INDENT
-    INTEGER
-    LESS_EQUAL
-    LESS_THAN
+    MOD_ASSIGN
+    MUL_ASSIGN
     NOT
-    NOT_EQUAL
+    NUMBER
     OR
-    PRINT
     RANGE
     STRING
+    STRING_LITERAL
+    SUB_ASSIGN
     WHILE
 
 Grammar
 
-Rule 0     S' -> statement
-Rule 1     statement -> expression
-Rule 2     statement -> IDENTIFIER ASSIGN expression
-Rule 3     statement -> IDENTIFIER ADD_ASSIGN expression
-Rule 4     statement -> IDENTIFIER SUB_ASSIGN expression
-Rule 5     statement -> IDENTIFIER MUL_ASSIGN expression
-Rule 6     statement -> IDENTIFIER DIV_ASSIGN expression
-Rule 7     statement -> IDENTIFIER MOD_ASSIGN expression
-Rule 8     expression -> IDENTIFIER
-Rule 9     expression -> expression PLUS term
-Rule 10    expression -> expression MINUS term
-Rule 11    expression -> term
-Rule 12    term -> term TIMES factor
-Rule 13    term -> term DIVIDE factor
-Rule 14    term -> term MODULO factor
-Rule 15    term -> factor
-Rule 16    factor -> NUMBER
-Rule 17    factor -> IDENTIFIER
-Rule 18    factor -> LPAREN expression RPAREN
+Rule 0     S' -> program
+Rule 1     program -> program statement
+Rule 2     program -> statement
+Rule 3     statement -> expression
+Rule 4     statement -> IDENTIFIER ASSIGN expression
+Rule 5     expression -> expression PLUS expression
+Rule 6     expression -> expression MINUS expression
+Rule 7     expression -> expression TIMES expression
+Rule 8     expression -> expression DIVIDE expression
+Rule 9     expression -> expression MODULO expression
+Rule 10    expression -> expression GREATER_THAN expression
+Rule 11    expression -> expression LESS_THAN expression
+Rule 12    expression -> expression GREATER_EQUAL expression
+Rule 13    expression -> expression LESS_EQUAL expression
+Rule 14    expression -> expression EQUAL expression
+Rule 15    expression -> expression NOT_EQUAL expression
+Rule 16    expression -> LPAREN expression RPAREN
+Rule 17    expression -> INTEGER
+Rule 18    expression -> FLOAT
+Rule 19    expression -> IDENTIFIER
+Rule 20    statement -> PRINT LPAREN expression RPAREN
 
 Terminals, with rules where they appear
 
-ADD_ASSIGN           : 3
+ADD_ASSIGN           :
 AND                  :
-ASSIGN               : 2
+ASSIGN               : 4
 BOOLEAN              :
 BREAK                :
 COLON                :
+COMMA                :
 CONTINUE             :
 DEDENT               :
-DIVIDE               : 13
-DIV_ASSIGN           : 6
+DEF                  :
+DIVIDE               : 8
+DIV_ASSIGN           :
 ELIF                 :
 ELSE                 :
-EQUAL                :
+EQUAL                : 14
+FLOAT                : 18
 FOR                  :
-GREATER_EQUAL        :
-GREATER_THAN         :
-IDENTIFIER           : 2 3 4 5 6 7 8 17
+GREATER_EQUAL        : 12
+GREATER_THAN         : 10
+IDENTIFIER           : 4 19
 IF                   :
 IN                   :
 INDENT               :
-INTEGER              :
-LESS_EQUAL           :
-LESS_THAN            :
-LPAREN               : 18
-MINUS                : 10
-MODULO               : 14
-MOD_ASSIGN           : 7
-MUL_ASSIGN           : 5
+INTEGER              : 17
+LESS_EQUAL           : 13
+LESS_THAN            : 11
+LPAREN               : 16 20
+MINUS                : 6
+MODULO               : 9
+MOD_ASSIGN           :
+MUL_ASSIGN           :
 NOT                  :
-NOT_EQUAL            :
-NUMBER               : 16
+NOT_EQUAL            : 15
+NUMBER               :
 OR                   :
-PLUS                 : 9
-PRINT                :
+PLUS                 : 5
+PRINT                : 20
 RANGE                :
-RPAREN               : 18
+RPAREN               : 16 20
 STRING               :
-SUB_ASSIGN           : 4
-TIMES                : 12
+STRING_LITERAL       :
+SUB_ASSIGN           :
+TIMES                : 7
 WHILE                :
 error                :
 
 Nonterminals, with rules where they appear
 
-expression           : 1 2 3 4 5 6 7 9 10 18
-factor               : 12 13 14 15
-statement            : 0
-term                 : 9 10 11 12 13 14
+expression           : 3 4 5 5 6 6 7 7 8 8 9 9 10 10 11 11 12 12 13 13 14 14 15 15 16 20
+program              : 1 0
+statement            : 1 2
 
 Parsing method: LALR
 
 state 0
 
-    (0) S' -> . statement
-    (1) statement -> . expression
-    (2) statement -> . IDENTIFIER ASSIGN expression
-    (3) statement -> . IDENTIFIER ADD_ASSIGN expression
-    (4) statement -> . IDENTIFIER SUB_ASSIGN expression
-    (5) statement -> . IDENTIFIER MUL_ASSIGN expression
-    (6) statement -> . IDENTIFIER DIV_ASSIGN expression
-    (7) statement -> . IDENTIFIER MOD_ASSIGN expression
-    (8) expression -> . IDENTIFIER
-    (9) expression -> . expression PLUS term
-    (10) expression -> . expression MINUS term
-    (11) expression -> . term
-    (12) term -> . term TIMES factor
-    (13) term -> . term DIVIDE factor
-    (14) term -> . term MODULO factor
-    (15) term -> . factor
-    (16) factor -> . NUMBER
-    (17) factor -> . IDENTIFIER
-    (18) factor -> . LPAREN expression RPAREN
+    (0) S' -> . program
+    (1) program -> . program statement
+    (2) program -> . statement
+    (3) statement -> . expression
+    (4) statement -> . IDENTIFIER ASSIGN expression
+    (20) statement -> . PRINT LPAREN expression RPAREN
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression TIMES expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression GREATER_THAN expression
+    (11) expression -> . expression LESS_THAN expression
+    (12) expression -> . expression GREATER_EQUAL expression
+    (13) expression -> . expression LESS_EQUAL expression
+    (14) expression -> . expression EQUAL expression
+    (15) expression -> . expression NOT_EQUAL expression
+    (16) expression -> . LPAREN expression RPAREN
+    (17) expression -> . INTEGER
+    (18) expression -> . FLOAT
+    (19) expression -> . IDENTIFIER
 
-    IDENTIFIER      shift and go to state 3
-    NUMBER          shift and go to state 6
-    LPAREN          shift and go to state 7
+    IDENTIFIER      shift and go to state 4
+    PRINT           shift and go to state 5
+    LPAREN          shift and go to state 6
+    INTEGER         shift and go to state 7
+    FLOAT           shift and go to state 8
 
-    statement                      shift and go to state 1
-    expression                     shift and go to state 2
-    term                           shift and go to state 4
-    factor                         shift and go to state 5
+    program                        shift and go to state 1
+    statement                      shift and go to state 2
+    expression                     shift and go to state 3
 
 state 1
 
-    (0) S' -> statement .
+    (0) S' -> program .
+    (1) program -> program . statement
+    (3) statement -> . expression
+    (4) statement -> . IDENTIFIER ASSIGN expression
+    (20) statement -> . PRINT LPAREN expression RPAREN
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression TIMES expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression GREATER_THAN expression
+    (11) expression -> . expression LESS_THAN expression
+    (12) expression -> . expression GREATER_EQUAL expression
+    (13) expression -> . expression LESS_EQUAL expression
+    (14) expression -> . expression EQUAL expression
+    (15) expression -> . expression NOT_EQUAL expression
+    (16) expression -> . LPAREN expression RPAREN
+    (17) expression -> . INTEGER
+    (18) expression -> . FLOAT
+    (19) expression -> . IDENTIFIER
 
+    IDENTIFIER      shift and go to state 4
+    PRINT           shift and go to state 5
+    LPAREN          shift and go to state 6
+    INTEGER         shift and go to state 7
+    FLOAT           shift and go to state 8
 
+    statement                      shift and go to state 9
+    expression                     shift and go to state 3
 
 state 2
 
-    (1) statement -> expression .
-    (9) expression -> expression . PLUS term
-    (10) expression -> expression . MINUS term
+    (2) program -> statement .
 
-    $end            reduce using rule 1 (statement -> expression .)
-    PLUS            shift and go to state 8
-    MINUS           shift and go to state 9
+    IDENTIFIER      reduce using rule 2 (program -> statement .)
+    PRINT           reduce using rule 2 (program -> statement .)
+    LPAREN          reduce using rule 2 (program -> statement .)
+    INTEGER         reduce using rule 2 (program -> statement .)
+    FLOAT           reduce using rule 2 (program -> statement .)
+    $end            reduce using rule 2 (program -> statement .)
 
 
 state 3
 
-    (2) statement -> IDENTIFIER . ASSIGN expression
-    (3) statement -> IDENTIFIER . ADD_ASSIGN expression
-    (4) statement -> IDENTIFIER . SUB_ASSIGN expression
-    (5) statement -> IDENTIFIER . MUL_ASSIGN expression
-    (6) statement -> IDENTIFIER . DIV_ASSIGN expression
-    (7) statement -> IDENTIFIER . MOD_ASSIGN expression
-    (8) expression -> IDENTIFIER .
-    (17) factor -> IDENTIFIER .
+    (3) statement -> expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . TIMES expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . GREATER_THAN expression
+    (11) expression -> expression . LESS_THAN expression
+    (12) expression -> expression . GREATER_EQUAL expression
+    (13) expression -> expression . LESS_EQUAL expression
+    (14) expression -> expression . EQUAL expression
+    (15) expression -> expression . NOT_EQUAL expression
 
-  ! reduce/reduce conflict for PLUS resolved using rule 8 (expression -> IDENTIFIER .)
-  ! reduce/reduce conflict for MINUS resolved using rule 8 (expression -> IDENTIFIER .)
-  ! reduce/reduce conflict for $end resolved using rule 8 (expression -> IDENTIFIER .)
-    ASSIGN          shift and go to state 10
-    ADD_ASSIGN      shift and go to state 11
-    SUB_ASSIGN      shift and go to state 12
-    MUL_ASSIGN      shift and go to state 13
-    DIV_ASSIGN      shift and go to state 14
-    MOD_ASSIGN      shift and go to state 15
-    PLUS            reduce using rule 8 (expression -> IDENTIFIER .)
-    MINUS           reduce using rule 8 (expression -> IDENTIFIER .)
-    $end            reduce using rule 8 (expression -> IDENTIFIER .)
-    TIMES           reduce using rule 17 (factor -> IDENTIFIER .)
-    DIVIDE          reduce using rule 17 (factor -> IDENTIFIER .)
-    MODULO          reduce using rule 17 (factor -> IDENTIFIER .)
-
-  ! PLUS            [ reduce using rule 17 (factor -> IDENTIFIER .) ]
-  ! MINUS           [ reduce using rule 17 (factor -> IDENTIFIER .) ]
-  ! $end            [ reduce using rule 17 (factor -> IDENTIFIER .) ]
+    IDENTIFIER      reduce using rule 3 (statement -> expression .)
+    PRINT           reduce using rule 3 (statement -> expression .)
+    LPAREN          reduce using rule 3 (statement -> expression .)
+    INTEGER         reduce using rule 3 (statement -> expression .)
+    FLOAT           reduce using rule 3 (statement -> expression .)
+    $end            reduce using rule 3 (statement -> expression .)
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 11
+    TIMES           shift and go to state 12
+    DIVIDE          shift and go to state 13
+    MODULO          shift and go to state 14
+    GREATER_THAN    shift and go to state 15
+    LESS_THAN       shift and go to state 16
+    GREATER_EQUAL   shift and go to state 17
+    LESS_EQUAL      shift and go to state 18
+    EQUAL           shift and go to state 19
+    NOT_EQUAL       shift and go to state 20
 
 
 state 4
 
-    (11) expression -> term .
-    (12) term -> term . TIMES factor
-    (13) term -> term . DIVIDE factor
-    (14) term -> term . MODULO factor
+    (4) statement -> IDENTIFIER . ASSIGN expression
+    (19) expression -> IDENTIFIER .
 
-    PLUS            reduce using rule 11 (expression -> term .)
-    MINUS           reduce using rule 11 (expression -> term .)
-    $end            reduce using rule 11 (expression -> term .)
-    RPAREN          reduce using rule 11 (expression -> term .)
-    TIMES           shift and go to state 16
-    DIVIDE          shift and go to state 17
-    MODULO          shift and go to state 18
+    ASSIGN          shift and go to state 21
+    PLUS            reduce using rule 19 (expression -> IDENTIFIER .)
+    MINUS           reduce using rule 19 (expression -> IDENTIFIER .)
+    TIMES           reduce using rule 19 (expression -> IDENTIFIER .)
+    DIVIDE          reduce using rule 19 (expression -> IDENTIFIER .)
+    MODULO          reduce using rule 19 (expression -> IDENTIFIER .)
+    GREATER_THAN    reduce using rule 19 (expression -> IDENTIFIER .)
+    LESS_THAN       reduce using rule 19 (expression -> IDENTIFIER .)
+    GREATER_EQUAL   reduce using rule 19 (expression -> IDENTIFIER .)
+    LESS_EQUAL      reduce using rule 19 (expression -> IDENTIFIER .)
+    EQUAL           reduce using rule 19 (expression -> IDENTIFIER .)
+    NOT_EQUAL       reduce using rule 19 (expression -> IDENTIFIER .)
+    IDENTIFIER      reduce using rule 19 (expression -> IDENTIFIER .)
+    PRINT           reduce using rule 19 (expression -> IDENTIFIER .)
+    LPAREN          reduce using rule 19 (expression -> IDENTIFIER .)
+    INTEGER         reduce using rule 19 (expression -> IDENTIFIER .)
+    FLOAT           reduce using rule 19 (expression -> IDENTIFIER .)
+    $end            reduce using rule 19 (expression -> IDENTIFIER .)
 
 
 state 5
 
-    (15) term -> factor .
+    (20) statement -> PRINT . LPAREN expression RPAREN
 
-    TIMES           reduce using rule 15 (term -> factor .)
-    DIVIDE          reduce using rule 15 (term -> factor .)
-    MODULO          reduce using rule 15 (term -> factor .)
-    PLUS            reduce using rule 15 (term -> factor .)
-    MINUS           reduce using rule 15 (term -> factor .)
-    $end            reduce using rule 15 (term -> factor .)
-    RPAREN          reduce using rule 15 (term -> factor .)
+    LPAREN          shift and go to state 22
 
 
 state 6
 
-    (16) factor -> NUMBER .
+    (16) expression -> LPAREN . expression RPAREN
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression TIMES expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression GREATER_THAN expression
+    (11) expression -> . expression LESS_THAN expression
+    (12) expression -> . expression GREATER_EQUAL expression
+    (13) expression -> . expression LESS_EQUAL expression
+    (14) expression -> . expression EQUAL expression
+    (15) expression -> . expression NOT_EQUAL expression
+    (16) expression -> . LPAREN expression RPAREN
+    (17) expression -> . INTEGER
+    (18) expression -> . FLOAT
+    (19) expression -> . IDENTIFIER
 
-    TIMES           reduce using rule 16 (factor -> NUMBER .)
-    DIVIDE          reduce using rule 16 (factor -> NUMBER .)
-    MODULO          reduce using rule 16 (factor -> NUMBER .)
-    PLUS            reduce using rule 16 (factor -> NUMBER .)
-    MINUS           reduce using rule 16 (factor -> NUMBER .)
-    $end            reduce using rule 16 (factor -> NUMBER .)
-    RPAREN          reduce using rule 16 (factor -> NUMBER .)
+    LPAREN          shift and go to state 6
+    INTEGER         shift and go to state 7
+    FLOAT           shift and go to state 8
+    IDENTIFIER      shift and go to state 24
 
+    expression                     shift and go to state 23
 
 state 7
 
-    (18) factor -> LPAREN . expression RPAREN
-    (8) expression -> . IDENTIFIER
-    (9) expression -> . expression PLUS term
-    (10) expression -> . expression MINUS term
-    (11) expression -> . term
-    (12) term -> . term TIMES factor
-    (13) term -> . term DIVIDE factor
-    (14) term -> . term MODULO factor
-    (15) term -> . factor
-    (16) factor -> . NUMBER
-    (17) factor -> . IDENTIFIER
-    (18) factor -> . LPAREN expression RPAREN
+    (17) expression -> INTEGER .
 
-    IDENTIFIER      shift and go to state 20
-    NUMBER          shift and go to state 6
-    LPAREN          shift and go to state 7
+    PLUS            reduce using rule 17 (expression -> INTEGER .)
+    MINUS           reduce using rule 17 (expression -> INTEGER .)
+    TIMES           reduce using rule 17 (expression -> INTEGER .)
+    DIVIDE          reduce using rule 17 (expression -> INTEGER .)
+    MODULO          reduce using rule 17 (expression -> INTEGER .)
+    GREATER_THAN    reduce using rule 17 (expression -> INTEGER .)
+    LESS_THAN       reduce using rule 17 (expression -> INTEGER .)
+    GREATER_EQUAL   reduce using rule 17 (expression -> INTEGER .)
+    LESS_EQUAL      reduce using rule 17 (expression -> INTEGER .)
+    EQUAL           reduce using rule 17 (expression -> INTEGER .)
+    NOT_EQUAL       reduce using rule 17 (expression -> INTEGER .)
+    IDENTIFIER      reduce using rule 17 (expression -> INTEGER .)
+    PRINT           reduce using rule 17 (expression -> INTEGER .)
+    LPAREN          reduce using rule 17 (expression -> INTEGER .)
+    INTEGER         reduce using rule 17 (expression -> INTEGER .)
+    FLOAT           reduce using rule 17 (expression -> INTEGER .)
+    $end            reduce using rule 17 (expression -> INTEGER .)
+    RPAREN          reduce using rule 17 (expression -> INTEGER .)
 
-    expression                     shift and go to state 19
-    term                           shift and go to state 4
-    factor                         shift and go to state 5
 
 state 8
 
-    (9) expression -> expression PLUS . term
-    (12) term -> . term TIMES factor
-    (13) term -> . term DIVIDE factor
-    (14) term -> . term MODULO factor
-    (15) term -> . factor
-    (16) factor -> . NUMBER
-    (17) factor -> . IDENTIFIER
-    (18) factor -> . LPAREN expression RPAREN
+    (18) expression -> FLOAT .
 
-    NUMBER          shift and go to state 6
-    IDENTIFIER      shift and go to state 22
-    LPAREN          shift and go to state 7
+    PLUS            reduce using rule 18 (expression -> FLOAT .)
+    MINUS           reduce using rule 18 (expression -> FLOAT .)
+    TIMES           reduce using rule 18 (expression -> FLOAT .)
+    DIVIDE          reduce using rule 18 (expression -> FLOAT .)
+    MODULO          reduce using rule 18 (expression -> FLOAT .)
+    GREATER_THAN    reduce using rule 18 (expression -> FLOAT .)
+    LESS_THAN       reduce using rule 18 (expression -> FLOAT .)
+    GREATER_EQUAL   reduce using rule 18 (expression -> FLOAT .)
+    LESS_EQUAL      reduce using rule 18 (expression -> FLOAT .)
+    EQUAL           reduce using rule 18 (expression -> FLOAT .)
+    NOT_EQUAL       reduce using rule 18 (expression -> FLOAT .)
+    IDENTIFIER      reduce using rule 18 (expression -> FLOAT .)
+    PRINT           reduce using rule 18 (expression -> FLOAT .)
+    LPAREN          reduce using rule 18 (expression -> FLOAT .)
+    INTEGER         reduce using rule 18 (expression -> FLOAT .)
+    FLOAT           reduce using rule 18 (expression -> FLOAT .)
+    $end            reduce using rule 18 (expression -> FLOAT .)
+    RPAREN          reduce using rule 18 (expression -> FLOAT .)
 
-    term                           shift and go to state 21
-    factor                         shift and go to state 5
 
 state 9
 
-    (10) expression -> expression MINUS . term
-    (12) term -> . term TIMES factor
-    (13) term -> . term DIVIDE factor
-    (14) term -> . term MODULO factor
-    (15) term -> . factor
-    (16) factor -> . NUMBER
-    (17) factor -> . IDENTIFIER
-    (18) factor -> . LPAREN expression RPAREN
+    (1) program -> program statement .
 
-    NUMBER          shift and go to state 6
-    IDENTIFIER      shift and go to state 22
-    LPAREN          shift and go to state 7
+    IDENTIFIER      reduce using rule 1 (program -> program statement .)
+    PRINT           reduce using rule 1 (program -> program statement .)
+    LPAREN          reduce using rule 1 (program -> program statement .)
+    INTEGER         reduce using rule 1 (program -> program statement .)
+    FLOAT           reduce using rule 1 (program -> program statement .)
+    $end            reduce using rule 1 (program -> program statement .)
 
-    term                           shift and go to state 23
-    factor                         shift and go to state 5
 
 state 10
 
-    (2) statement -> IDENTIFIER ASSIGN . expression
-    (8) expression -> . IDENTIFIER
-    (9) expression -> . expression PLUS term
-    (10) expression -> . expression MINUS term
-    (11) expression -> . term
-    (12) term -> . term TIMES factor
-    (13) term -> . term DIVIDE factor
-    (14) term -> . term MODULO factor
-    (15) term -> . factor
-    (16) factor -> . NUMBER
-    (17) factor -> . IDENTIFIER
-    (18) factor -> . LPAREN expression RPAREN
+    (5) expression -> expression PLUS . expression
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression TIMES expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression GREATER_THAN expression
+    (11) expression -> . expression LESS_THAN expression
+    (12) expression -> . expression GREATER_EQUAL expression
+    (13) expression -> . expression LESS_EQUAL expression
+    (14) expression -> . expression EQUAL expression
+    (15) expression -> . expression NOT_EQUAL expression
+    (16) expression -> . LPAREN expression RPAREN
+    (17) expression -> . INTEGER
+    (18) expression -> . FLOAT
+    (19) expression -> . IDENTIFIER
 
-    IDENTIFIER      shift and go to state 20
-    NUMBER          shift and go to state 6
-    LPAREN          shift and go to state 7
+    LPAREN          shift and go to state 6
+    INTEGER         shift and go to state 7
+    FLOAT           shift and go to state 8
+    IDENTIFIER      shift and go to state 24
 
-    expression                     shift and go to state 24
-    term                           shift and go to state 4
-    factor                         shift and go to state 5
+    expression                     shift and go to state 25
 
 state 11
 
-    (3) statement -> IDENTIFIER ADD_ASSIGN . expression
-    (8) expression -> . IDENTIFIER
-    (9) expression -> . expression PLUS term
-    (10) expression -> . expression MINUS term
-    (11) expression -> . term
-    (12) term -> . term TIMES factor
-    (13) term -> . term DIVIDE factor
-    (14) term -> . term MODULO factor
-    (15) term -> . factor
-    (16) factor -> . NUMBER
-    (17) factor -> . IDENTIFIER
-    (18) factor -> . LPAREN expression RPAREN
+    (6) expression -> expression MINUS . expression
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression TIMES expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression GREATER_THAN expression
+    (11) expression -> . expression LESS_THAN expression
+    (12) expression -> . expression GREATER_EQUAL expression
+    (13) expression -> . expression LESS_EQUAL expression
+    (14) expression -> . expression EQUAL expression
+    (15) expression -> . expression NOT_EQUAL expression
+    (16) expression -> . LPAREN expression RPAREN
+    (17) expression -> . INTEGER
+    (18) expression -> . FLOAT
+    (19) expression -> . IDENTIFIER
 
-    IDENTIFIER      shift and go to state 20
-    NUMBER          shift and go to state 6
-    LPAREN          shift and go to state 7
+    LPAREN          shift and go to state 6
+    INTEGER         shift and go to state 7
+    FLOAT           shift and go to state 8
+    IDENTIFIER      shift and go to state 24
 
-    expression                     shift and go to state 25
-    term                           shift and go to state 4
-    factor                         shift and go to state 5
+    expression                     shift and go to state 26
 
 state 12
 
-    (4) statement -> IDENTIFIER SUB_ASSIGN . expression
-    (8) expression -> . IDENTIFIER
-    (9) expression -> . expression PLUS term
-    (10) expression -> . expression MINUS term
-    (11) expression -> . term
-    (12) term -> . term TIMES factor
-    (13) term -> . term DIVIDE factor
-    (14) term -> . term MODULO factor
-    (15) term -> . factor
-    (16) factor -> . NUMBER
-    (17) factor -> . IDENTIFIER
-    (18) factor -> . LPAREN expression RPAREN
+    (7) expression -> expression TIMES . expression
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression TIMES expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression GREATER_THAN expression
+    (11) expression -> . expression LESS_THAN expression
+    (12) expression -> . expression GREATER_EQUAL expression
+    (13) expression -> . expression LESS_EQUAL expression
+    (14) expression -> . expression EQUAL expression
+    (15) expression -> . expression NOT_EQUAL expression
+    (16) expression -> . LPAREN expression RPAREN
+    (17) expression -> . INTEGER
+    (18) expression -> . FLOAT
+    (19) expression -> . IDENTIFIER
 
-    IDENTIFIER      shift and go to state 20
-    NUMBER          shift and go to state 6
-    LPAREN          shift and go to state 7
+    LPAREN          shift and go to state 6
+    INTEGER         shift and go to state 7
+    FLOAT           shift and go to state 8
+    IDENTIFIER      shift and go to state 24
 
-    expression                     shift and go to state 26
-    term                           shift and go to state 4
-    factor                         shift and go to state 5
+    expression                     shift and go to state 27
 
 state 13
 
-    (5) statement -> IDENTIFIER MUL_ASSIGN . expression
-    (8) expression -> . IDENTIFIER
-    (9) expression -> . expression PLUS term
-    (10) expression -> . expression MINUS term
-    (11) expression -> . term
-    (12) term -> . term TIMES factor
-    (13) term -> . term DIVIDE factor
-    (14) term -> . term MODULO factor
-    (15) term -> . factor
-    (16) factor -> . NUMBER
-    (17) factor -> . IDENTIFIER
-    (18) factor -> . LPAREN expression RPAREN
+    (8) expression -> expression DIVIDE . expression
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression TIMES expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression GREATER_THAN expression
+    (11) expression -> . expression LESS_THAN expression
+    (12) expression -> . expression GREATER_EQUAL expression
+    (13) expression -> . expression LESS_EQUAL expression
+    (14) expression -> . expression EQUAL expression
+    (15) expression -> . expression NOT_EQUAL expression
+    (16) expression -> . LPAREN expression RPAREN
+    (17) expression -> . INTEGER
+    (18) expression -> . FLOAT
+    (19) expression -> . IDENTIFIER
 
-    IDENTIFIER      shift and go to state 20
-    NUMBER          shift and go to state 6
-    LPAREN          shift and go to state 7
+    LPAREN          shift and go to state 6
+    INTEGER         shift and go to state 7
+    FLOAT           shift and go to state 8
+    IDENTIFIER      shift and go to state 24
 
-    expression                     shift and go to state 27
-    term                           shift and go to state 4
-    factor                         shift and go to state 5
+    expression                     shift and go to state 28
 
 state 14
 
-    (6) statement -> IDENTIFIER DIV_ASSIGN . expression
-    (8) expression -> . IDENTIFIER
-    (9) expression -> . expression PLUS term
-    (10) expression -> . expression MINUS term
-    (11) expression -> . term
-    (12) term -> . term TIMES factor
-    (13) term -> . term DIVIDE factor
-    (14) term -> . term MODULO factor
-    (15) term -> . factor
-    (16) factor -> . NUMBER
-    (17) factor -> . IDENTIFIER
-    (18) factor -> . LPAREN expression RPAREN
+    (9) expression -> expression MODULO . expression
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression TIMES expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression GREATER_THAN expression
+    (11) expression -> . expression LESS_THAN expression
+    (12) expression -> . expression GREATER_EQUAL expression
+    (13) expression -> . expression LESS_EQUAL expression
+    (14) expression -> . expression EQUAL expression
+    (15) expression -> . expression NOT_EQUAL expression
+    (16) expression -> . LPAREN expression RPAREN
+    (17) expression -> . INTEGER
+    (18) expression -> . FLOAT
+    (19) expression -> . IDENTIFIER
 
-    IDENTIFIER      shift and go to state 20
-    NUMBER          shift and go to state 6
-    LPAREN          shift and go to state 7
+    LPAREN          shift and go to state 6
+    INTEGER         shift and go to state 7
+    FLOAT           shift and go to state 8
+    IDENTIFIER      shift and go to state 24
 
-    expression                     shift and go to state 28
-    term                           shift and go to state 4
-    factor                         shift and go to state 5
+    expression                     shift and go to state 29
 
 state 15
 
-    (7) statement -> IDENTIFIER MOD_ASSIGN . expression
-    (8) expression -> . IDENTIFIER
-    (9) expression -> . expression PLUS term
-    (10) expression -> . expression MINUS term
-    (11) expression -> . term
-    (12) term -> . term TIMES factor
-    (13) term -> . term DIVIDE factor
-    (14) term -> . term MODULO factor
-    (15) term -> . factor
-    (16) factor -> . NUMBER
-    (17) factor -> . IDENTIFIER
-    (18) factor -> . LPAREN expression RPAREN
+    (10) expression -> expression GREATER_THAN . expression
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression TIMES expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression GREATER_THAN expression
+    (11) expression -> . expression LESS_THAN expression
+    (12) expression -> . expression GREATER_EQUAL expression
+    (13) expression -> . expression LESS_EQUAL expression
+    (14) expression -> . expression EQUAL expression
+    (15) expression -> . expression NOT_EQUAL expression
+    (16) expression -> . LPAREN expression RPAREN
+    (17) expression -> . INTEGER
+    (18) expression -> . FLOAT
+    (19) expression -> . IDENTIFIER
 
-    IDENTIFIER      shift and go to state 20
-    NUMBER          shift and go to state 6
-    LPAREN          shift and go to state 7
+    LPAREN          shift and go to state 6
+    INTEGER         shift and go to state 7
+    FLOAT           shift and go to state 8
+    IDENTIFIER      shift and go to state 24
 
-    expression                     shift and go to state 29
-    term                           shift and go to state 4
-    factor                         shift and go to state 5
+    expression                     shift and go to state 30
 
 state 16
 
-    (12) term -> term TIMES . factor
-    (16) factor -> . NUMBER
-    (17) factor -> . IDENTIFIER
-    (18) factor -> . LPAREN expression RPAREN
+    (11) expression -> expression LESS_THAN . expression
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression TIMES expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression GREATER_THAN expression
+    (11) expression -> . expression LESS_THAN expression
+    (12) expression -> . expression GREATER_EQUAL expression
+    (13) expression -> . expression LESS_EQUAL expression
+    (14) expression -> . expression EQUAL expression
+    (15) expression -> . expression NOT_EQUAL expression
+    (16) expression -> . LPAREN expression RPAREN
+    (17) expression -> . INTEGER
+    (18) expression -> . FLOAT
+    (19) expression -> . IDENTIFIER
 
-    NUMBER          shift and go to state 6
-    IDENTIFIER      shift and go to state 22
-    LPAREN          shift and go to state 7
+    LPAREN          shift and go to state 6
+    INTEGER         shift and go to state 7
+    FLOAT           shift and go to state 8
+    IDENTIFIER      shift and go to state 24
 
-    factor                         shift and go to state 30
+    expression                     shift and go to state 31
 
 state 17
 
-    (13) term -> term DIVIDE . factor
-    (16) factor -> . NUMBER
-    (17) factor -> . IDENTIFIER
-    (18) factor -> . LPAREN expression RPAREN
+    (12) expression -> expression GREATER_EQUAL . expression
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression TIMES expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression GREATER_THAN expression
+    (11) expression -> . expression LESS_THAN expression
+    (12) expression -> . expression GREATER_EQUAL expression
+    (13) expression -> . expression LESS_EQUAL expression
+    (14) expression -> . expression EQUAL expression
+    (15) expression -> . expression NOT_EQUAL expression
+    (16) expression -> . LPAREN expression RPAREN
+    (17) expression -> . INTEGER
+    (18) expression -> . FLOAT
+    (19) expression -> . IDENTIFIER
 
-    NUMBER          shift and go to state 6
-    IDENTIFIER      shift and go to state 22
-    LPAREN          shift and go to state 7
+    LPAREN          shift and go to state 6
+    INTEGER         shift and go to state 7
+    FLOAT           shift and go to state 8
+    IDENTIFIER      shift and go to state 24
 
-    factor                         shift and go to state 31
+    expression                     shift and go to state 32
 
 state 18
 
-    (14) term -> term MODULO . factor
-    (16) factor -> . NUMBER
-    (17) factor -> . IDENTIFIER
-    (18) factor -> . LPAREN expression RPAREN
+    (13) expression -> expression LESS_EQUAL . expression
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression TIMES expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression GREATER_THAN expression
+    (11) expression -> . expression LESS_THAN expression
+    (12) expression -> . expression GREATER_EQUAL expression
+    (13) expression -> . expression LESS_EQUAL expression
+    (14) expression -> . expression EQUAL expression
+    (15) expression -> . expression NOT_EQUAL expression
+    (16) expression -> . LPAREN expression RPAREN
+    (17) expression -> . INTEGER
+    (18) expression -> . FLOAT
+    (19) expression -> . IDENTIFIER
 
-    NUMBER          shift and go to state 6
-    IDENTIFIER      shift and go to state 22
-    LPAREN          shift and go to state 7
+    LPAREN          shift and go to state 6
+    INTEGER         shift and go to state 7
+    FLOAT           shift and go to state 8
+    IDENTIFIER      shift and go to state 24
 
-    factor                         shift and go to state 32
+    expression                     shift and go to state 33
 
 state 19
 
-    (18) factor -> LPAREN expression . RPAREN
-    (9) expression -> expression . PLUS term
-    (10) expression -> expression . MINUS term
+    (14) expression -> expression EQUAL . expression
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression TIMES expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression GREATER_THAN expression
+    (11) expression -> . expression LESS_THAN expression
+    (12) expression -> . expression GREATER_EQUAL expression
+    (13) expression -> . expression LESS_EQUAL expression
+    (14) expression -> . expression EQUAL expression
+    (15) expression -> . expression NOT_EQUAL expression
+    (16) expression -> . LPAREN expression RPAREN
+    (17) expression -> . INTEGER
+    (18) expression -> . FLOAT
+    (19) expression -> . IDENTIFIER
 
-    RPAREN          shift and go to state 33
-    PLUS            shift and go to state 8
-    MINUS           shift and go to state 9
+    LPAREN          shift and go to state 6
+    INTEGER         shift and go to state 7
+    FLOAT           shift and go to state 8
+    IDENTIFIER      shift and go to state 24
 
+    expression                     shift and go to state 34
 
 state 20
 
-    (8) expression -> IDENTIFIER .
-    (17) factor -> IDENTIFIER .
+    (15) expression -> expression NOT_EQUAL . expression
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression TIMES expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression GREATER_THAN expression
+    (11) expression -> . expression LESS_THAN expression
+    (12) expression -> . expression GREATER_EQUAL expression
+    (13) expression -> . expression LESS_EQUAL expression
+    (14) expression -> . expression EQUAL expression
+    (15) expression -> . expression NOT_EQUAL expression
+    (16) expression -> . LPAREN expression RPAREN
+    (17) expression -> . INTEGER
+    (18) expression -> . FLOAT
+    (19) expression -> . IDENTIFIER
 
-  ! reduce/reduce conflict for RPAREN resolved using rule 8 (expression -> IDENTIFIER .)
-  ! reduce/reduce conflict for PLUS resolved using rule 8 (expression -> IDENTIFIER .)
-  ! reduce/reduce conflict for MINUS resolved using rule 8 (expression -> IDENTIFIER .)
-  ! reduce/reduce conflict for $end resolved using rule 8 (expression -> IDENTIFIER .)
-    RPAREN          reduce using rule 8 (expression -> IDENTIFIER .)
-    PLUS            reduce using rule 8 (expression -> IDENTIFIER .)
-    MINUS           reduce using rule 8 (expression -> IDENTIFIER .)
-    $end            reduce using rule 8 (expression -> IDENTIFIER .)
-    TIMES           reduce using rule 17 (factor -> IDENTIFIER .)
-    DIVIDE          reduce using rule 17 (factor -> IDENTIFIER .)
-    MODULO          reduce using rule 17 (factor -> IDENTIFIER .)
+    LPAREN          shift and go to state 6
+    INTEGER         shift and go to state 7
+    FLOAT           shift and go to state 8
+    IDENTIFIER      shift and go to state 24
 
-  ! RPAREN          [ reduce using rule 17 (factor -> IDENTIFIER .) ]
-  ! PLUS            [ reduce using rule 17 (factor -> IDENTIFIER .) ]
-  ! MINUS           [ reduce using rule 17 (factor -> IDENTIFIER .) ]
-  ! $end            [ reduce using rule 17 (factor -> IDENTIFIER .) ]
-
+    expression                     shift and go to state 35
 
 state 21
 
-    (9) expression -> expression PLUS term .
-    (12) term -> term . TIMES factor
-    (13) term -> term . DIVIDE factor
-    (14) term -> term . MODULO factor
+    (4) statement -> IDENTIFIER ASSIGN . expression
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression TIMES expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression GREATER_THAN expression
+    (11) expression -> . expression LESS_THAN expression
+    (12) expression -> . expression GREATER_EQUAL expression
+    (13) expression -> . expression LESS_EQUAL expression
+    (14) expression -> . expression EQUAL expression
+    (15) expression -> . expression NOT_EQUAL expression
+    (16) expression -> . LPAREN expression RPAREN
+    (17) expression -> . INTEGER
+    (18) expression -> . FLOAT
+    (19) expression -> . IDENTIFIER
 
-    PLUS            reduce using rule 9 (expression -> expression PLUS term .)
-    MINUS           reduce using rule 9 (expression -> expression PLUS term .)
-    $end            reduce using rule 9 (expression -> expression PLUS term .)
-    RPAREN          reduce using rule 9 (expression -> expression PLUS term .)
-    TIMES           shift and go to state 16
-    DIVIDE          shift and go to state 17
-    MODULO          shift and go to state 18
+    LPAREN          shift and go to state 6
+    INTEGER         shift and go to state 7
+    FLOAT           shift and go to state 8
+    IDENTIFIER      shift and go to state 24
 
+    expression                     shift and go to state 36
 
 state 22
 
-    (17) factor -> IDENTIFIER .
+    (20) statement -> PRINT LPAREN . expression RPAREN
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression TIMES expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression GREATER_THAN expression
+    (11) expression -> . expression LESS_THAN expression
+    (12) expression -> . expression GREATER_EQUAL expression
+    (13) expression -> . expression LESS_EQUAL expression
+    (14) expression -> . expression EQUAL expression
+    (15) expression -> . expression NOT_EQUAL expression
+    (16) expression -> . LPAREN expression RPAREN
+    (17) expression -> . INTEGER
+    (18) expression -> . FLOAT
+    (19) expression -> . IDENTIFIER
 
-    TIMES           reduce using rule 17 (factor -> IDENTIFIER .)
-    DIVIDE          reduce using rule 17 (factor -> IDENTIFIER .)
-    MODULO          reduce using rule 17 (factor -> IDENTIFIER .)
-    PLUS            reduce using rule 17 (factor -> IDENTIFIER .)
-    MINUS           reduce using rule 17 (factor -> IDENTIFIER .)
-    $end            reduce using rule 17 (factor -> IDENTIFIER .)
-    RPAREN          reduce using rule 17 (factor -> IDENTIFIER .)
+    LPAREN          shift and go to state 6
+    INTEGER         shift and go to state 7
+    FLOAT           shift and go to state 8
+    IDENTIFIER      shift and go to state 24
 
+    expression                     shift and go to state 37
 
 state 23
 
-    (10) expression -> expression MINUS term .
-    (12) term -> term . TIMES factor
-    (13) term -> term . DIVIDE factor
-    (14) term -> term . MODULO factor
+    (16) expression -> LPAREN expression . RPAREN
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . TIMES expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . GREATER_THAN expression
+    (11) expression -> expression . LESS_THAN expression
+    (12) expression -> expression . GREATER_EQUAL expression
+    (13) expression -> expression . LESS_EQUAL expression
+    (14) expression -> expression . EQUAL expression
+    (15) expression -> expression . NOT_EQUAL expression
 
-    PLUS            reduce using rule 10 (expression -> expression MINUS term .)
-    MINUS           reduce using rule 10 (expression -> expression MINUS term .)
-    $end            reduce using rule 10 (expression -> expression MINUS term .)
-    RPAREN          reduce using rule 10 (expression -> expression MINUS term .)
-    TIMES           shift and go to state 16
-    DIVIDE          shift and go to state 17
-    MODULO          shift and go to state 18
+    RPAREN          shift and go to state 38
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 11
+    TIMES           shift and go to state 12
+    DIVIDE          shift and go to state 13
+    MODULO          shift and go to state 14
+    GREATER_THAN    shift and go to state 15
+    LESS_THAN       shift and go to state 16
+    GREATER_EQUAL   shift and go to state 17
+    LESS_EQUAL      shift and go to state 18
+    EQUAL           shift and go to state 19
+    NOT_EQUAL       shift and go to state 20
 
 
 state 24
 
-    (2) statement -> IDENTIFIER ASSIGN expression .
-    (9) expression -> expression . PLUS term
-    (10) expression -> expression . MINUS term
+    (19) expression -> IDENTIFIER .
 
-    $end            reduce using rule 2 (statement -> IDENTIFIER ASSIGN expression .)
-    PLUS            shift and go to state 8
-    MINUS           shift and go to state 9
+    RPAREN          reduce using rule 19 (expression -> IDENTIFIER .)
+    PLUS            reduce using rule 19 (expression -> IDENTIFIER .)
+    MINUS           reduce using rule 19 (expression -> IDENTIFIER .)
+    TIMES           reduce using rule 19 (expression -> IDENTIFIER .)
+    DIVIDE          reduce using rule 19 (expression -> IDENTIFIER .)
+    MODULO          reduce using rule 19 (expression -> IDENTIFIER .)
+    GREATER_THAN    reduce using rule 19 (expression -> IDENTIFIER .)
+    LESS_THAN       reduce using rule 19 (expression -> IDENTIFIER .)
+    GREATER_EQUAL   reduce using rule 19 (expression -> IDENTIFIER .)
+    LESS_EQUAL      reduce using rule 19 (expression -> IDENTIFIER .)
+    EQUAL           reduce using rule 19 (expression -> IDENTIFIER .)
+    NOT_EQUAL       reduce using rule 19 (expression -> IDENTIFIER .)
+    IDENTIFIER      reduce using rule 19 (expression -> IDENTIFIER .)
+    PRINT           reduce using rule 19 (expression -> IDENTIFIER .)
+    LPAREN          reduce using rule 19 (expression -> IDENTIFIER .)
+    INTEGER         reduce using rule 19 (expression -> IDENTIFIER .)
+    FLOAT           reduce using rule 19 (expression -> IDENTIFIER .)
+    $end            reduce using rule 19 (expression -> IDENTIFIER .)
 
 
 state 25
 
-    (3) statement -> IDENTIFIER ADD_ASSIGN expression .
-    (9) expression -> expression . PLUS term
-    (10) expression -> expression . MINUS term
+    (5) expression -> expression PLUS expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . TIMES expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . GREATER_THAN expression
+    (11) expression -> expression . LESS_THAN expression
+    (12) expression -> expression . GREATER_EQUAL expression
+    (13) expression -> expression . LESS_EQUAL expression
+    (14) expression -> expression . EQUAL expression
+    (15) expression -> expression . NOT_EQUAL expression
 
-    $end            reduce using rule 3 (statement -> IDENTIFIER ADD_ASSIGN expression .)
-    PLUS            shift and go to state 8
-    MINUS           shift and go to state 9
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for MODULO resolved as shift
+  ! shift/reduce conflict for GREATER_THAN resolved as shift
+  ! shift/reduce conflict for LESS_THAN resolved as shift
+  ! shift/reduce conflict for GREATER_EQUAL resolved as shift
+  ! shift/reduce conflict for LESS_EQUAL resolved as shift
+  ! shift/reduce conflict for EQUAL resolved as shift
+  ! shift/reduce conflict for NOT_EQUAL resolved as shift
+    IDENTIFIER      reduce using rule 5 (expression -> expression PLUS expression .)
+    PRINT           reduce using rule 5 (expression -> expression PLUS expression .)
+    LPAREN          reduce using rule 5 (expression -> expression PLUS expression .)
+    INTEGER         reduce using rule 5 (expression -> expression PLUS expression .)
+    FLOAT           reduce using rule 5 (expression -> expression PLUS expression .)
+    $end            reduce using rule 5 (expression -> expression PLUS expression .)
+    RPAREN          reduce using rule 5 (expression -> expression PLUS expression .)
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 11
+    TIMES           shift and go to state 12
+    DIVIDE          shift and go to state 13
+    MODULO          shift and go to state 14
+    GREATER_THAN    shift and go to state 15
+    LESS_THAN       shift and go to state 16
+    GREATER_EQUAL   shift and go to state 17
+    LESS_EQUAL      shift and go to state 18
+    EQUAL           shift and go to state 19
+    NOT_EQUAL       shift and go to state 20
+
+  ! PLUS            [ reduce using rule 5 (expression -> expression PLUS expression .) ]
+  ! MINUS           [ reduce using rule 5 (expression -> expression PLUS expression .) ]
+  ! TIMES           [ reduce using rule 5 (expression -> expression PLUS expression .) ]
+  ! DIVIDE          [ reduce using rule 5 (expression -> expression PLUS expression .) ]
+  ! MODULO          [ reduce using rule 5 (expression -> expression PLUS expression .) ]
+  ! GREATER_THAN    [ reduce using rule 5 (expression -> expression PLUS expression .) ]
+  ! LESS_THAN       [ reduce using rule 5 (expression -> expression PLUS expression .) ]
+  ! GREATER_EQUAL   [ reduce using rule 5 (expression -> expression PLUS expression .) ]
+  ! LESS_EQUAL      [ reduce using rule 5 (expression -> expression PLUS expression .) ]
+  ! EQUAL           [ reduce using rule 5 (expression -> expression PLUS expression .) ]
+  ! NOT_EQUAL       [ reduce using rule 5 (expression -> expression PLUS expression .) ]
 
 
 state 26
 
-    (4) statement -> IDENTIFIER SUB_ASSIGN expression .
-    (9) expression -> expression . PLUS term
-    (10) expression -> expression . MINUS term
+    (6) expression -> expression MINUS expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . TIMES expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . GREATER_THAN expression
+    (11) expression -> expression . LESS_THAN expression
+    (12) expression -> expression . GREATER_EQUAL expression
+    (13) expression -> expression . LESS_EQUAL expression
+    (14) expression -> expression . EQUAL expression
+    (15) expression -> expression . NOT_EQUAL expression
 
-    $end            reduce using rule 4 (statement -> IDENTIFIER SUB_ASSIGN expression .)
-    PLUS            shift and go to state 8
-    MINUS           shift and go to state 9
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for MODULO resolved as shift
+  ! shift/reduce conflict for GREATER_THAN resolved as shift
+  ! shift/reduce conflict for LESS_THAN resolved as shift
+  ! shift/reduce conflict for GREATER_EQUAL resolved as shift
+  ! shift/reduce conflict for LESS_EQUAL resolved as shift
+  ! shift/reduce conflict for EQUAL resolved as shift
+  ! shift/reduce conflict for NOT_EQUAL resolved as shift
+    IDENTIFIER      reduce using rule 6 (expression -> expression MINUS expression .)
+    PRINT           reduce using rule 6 (expression -> expression MINUS expression .)
+    LPAREN          reduce using rule 6 (expression -> expression MINUS expression .)
+    INTEGER         reduce using rule 6 (expression -> expression MINUS expression .)
+    FLOAT           reduce using rule 6 (expression -> expression MINUS expression .)
+    $end            reduce using rule 6 (expression -> expression MINUS expression .)
+    RPAREN          reduce using rule 6 (expression -> expression MINUS expression .)
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 11
+    TIMES           shift and go to state 12
+    DIVIDE          shift and go to state 13
+    MODULO          shift and go to state 14
+    GREATER_THAN    shift and go to state 15
+    LESS_THAN       shift and go to state 16
+    GREATER_EQUAL   shift and go to state 17
+    LESS_EQUAL      shift and go to state 18
+    EQUAL           shift and go to state 19
+    NOT_EQUAL       shift and go to state 20
+
+  ! PLUS            [ reduce using rule 6 (expression -> expression MINUS expression .) ]
+  ! MINUS           [ reduce using rule 6 (expression -> expression MINUS expression .) ]
+  ! TIMES           [ reduce using rule 6 (expression -> expression MINUS expression .) ]
+  ! DIVIDE          [ reduce using rule 6 (expression -> expression MINUS expression .) ]
+  ! MODULO          [ reduce using rule 6 (expression -> expression MINUS expression .) ]
+  ! GREATER_THAN    [ reduce using rule 6 (expression -> expression MINUS expression .) ]
+  ! LESS_THAN       [ reduce using rule 6 (expression -> expression MINUS expression .) ]
+  ! GREATER_EQUAL   [ reduce using rule 6 (expression -> expression MINUS expression .) ]
+  ! LESS_EQUAL      [ reduce using rule 6 (expression -> expression MINUS expression .) ]
+  ! EQUAL           [ reduce using rule 6 (expression -> expression MINUS expression .) ]
+  ! NOT_EQUAL       [ reduce using rule 6 (expression -> expression MINUS expression .) ]
 
 
 state 27
 
-    (5) statement -> IDENTIFIER MUL_ASSIGN expression .
-    (9) expression -> expression . PLUS term
-    (10) expression -> expression . MINUS term
+    (7) expression -> expression TIMES expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . TIMES expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . GREATER_THAN expression
+    (11) expression -> expression . LESS_THAN expression
+    (12) expression -> expression . GREATER_EQUAL expression
+    (13) expression -> expression . LESS_EQUAL expression
+    (14) expression -> expression . EQUAL expression
+    (15) expression -> expression . NOT_EQUAL expression
 
-    $end            reduce using rule 5 (statement -> IDENTIFIER MUL_ASSIGN expression .)
-    PLUS            shift and go to state 8
-    MINUS           shift and go to state 9
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for MODULO resolved as shift
+  ! shift/reduce conflict for GREATER_THAN resolved as shift
+  ! shift/reduce conflict for LESS_THAN resolved as shift
+  ! shift/reduce conflict for GREATER_EQUAL resolved as shift
+  ! shift/reduce conflict for LESS_EQUAL resolved as shift
+  ! shift/reduce conflict for EQUAL resolved as shift
+  ! shift/reduce conflict for NOT_EQUAL resolved as shift
+    IDENTIFIER      reduce using rule 7 (expression -> expression TIMES expression .)
+    PRINT           reduce using rule 7 (expression -> expression TIMES expression .)
+    LPAREN          reduce using rule 7 (expression -> expression TIMES expression .)
+    INTEGER         reduce using rule 7 (expression -> expression TIMES expression .)
+    FLOAT           reduce using rule 7 (expression -> expression TIMES expression .)
+    $end            reduce using rule 7 (expression -> expression TIMES expression .)
+    RPAREN          reduce using rule 7 (expression -> expression TIMES expression .)
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 11
+    TIMES           shift and go to state 12
+    DIVIDE          shift and go to state 13
+    MODULO          shift and go to state 14
+    GREATER_THAN    shift and go to state 15
+    LESS_THAN       shift and go to state 16
+    GREATER_EQUAL   shift and go to state 17
+    LESS_EQUAL      shift and go to state 18
+    EQUAL           shift and go to state 19
+    NOT_EQUAL       shift and go to state 20
+
+  ! PLUS            [ reduce using rule 7 (expression -> expression TIMES expression .) ]
+  ! MINUS           [ reduce using rule 7 (expression -> expression TIMES expression .) ]
+  ! TIMES           [ reduce using rule 7 (expression -> expression TIMES expression .) ]
+  ! DIVIDE          [ reduce using rule 7 (expression -> expression TIMES expression .) ]
+  ! MODULO          [ reduce using rule 7 (expression -> expression TIMES expression .) ]
+  ! GREATER_THAN    [ reduce using rule 7 (expression -> expression TIMES expression .) ]
+  ! LESS_THAN       [ reduce using rule 7 (expression -> expression TIMES expression .) ]
+  ! GREATER_EQUAL   [ reduce using rule 7 (expression -> expression TIMES expression .) ]
+  ! LESS_EQUAL      [ reduce using rule 7 (expression -> expression TIMES expression .) ]
+  ! EQUAL           [ reduce using rule 7 (expression -> expression TIMES expression .) ]
+  ! NOT_EQUAL       [ reduce using rule 7 (expression -> expression TIMES expression .) ]
 
 
 state 28
 
-    (6) statement -> IDENTIFIER DIV_ASSIGN expression .
-    (9) expression -> expression . PLUS term
-    (10) expression -> expression . MINUS term
+    (8) expression -> expression DIVIDE expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . TIMES expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . GREATER_THAN expression
+    (11) expression -> expression . LESS_THAN expression
+    (12) expression -> expression . GREATER_EQUAL expression
+    (13) expression -> expression . LESS_EQUAL expression
+    (14) expression -> expression . EQUAL expression
+    (15) expression -> expression . NOT_EQUAL expression
 
-    $end            reduce using rule 6 (statement -> IDENTIFIER DIV_ASSIGN expression .)
-    PLUS            shift and go to state 8
-    MINUS           shift and go to state 9
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for MODULO resolved as shift
+  ! shift/reduce conflict for GREATER_THAN resolved as shift
+  ! shift/reduce conflict for LESS_THAN resolved as shift
+  ! shift/reduce conflict for GREATER_EQUAL resolved as shift
+  ! shift/reduce conflict for LESS_EQUAL resolved as shift
+  ! shift/reduce conflict for EQUAL resolved as shift
+  ! shift/reduce conflict for NOT_EQUAL resolved as shift
+    IDENTIFIER      reduce using rule 8 (expression -> expression DIVIDE expression .)
+    PRINT           reduce using rule 8 (expression -> expression DIVIDE expression .)
+    LPAREN          reduce using rule 8 (expression -> expression DIVIDE expression .)
+    INTEGER         reduce using rule 8 (expression -> expression DIVIDE expression .)
+    FLOAT           reduce using rule 8 (expression -> expression DIVIDE expression .)
+    $end            reduce using rule 8 (expression -> expression DIVIDE expression .)
+    RPAREN          reduce using rule 8 (expression -> expression DIVIDE expression .)
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 11
+    TIMES           shift and go to state 12
+    DIVIDE          shift and go to state 13
+    MODULO          shift and go to state 14
+    GREATER_THAN    shift and go to state 15
+    LESS_THAN       shift and go to state 16
+    GREATER_EQUAL   shift and go to state 17
+    LESS_EQUAL      shift and go to state 18
+    EQUAL           shift and go to state 19
+    NOT_EQUAL       shift and go to state 20
+
+  ! PLUS            [ reduce using rule 8 (expression -> expression DIVIDE expression .) ]
+  ! MINUS           [ reduce using rule 8 (expression -> expression DIVIDE expression .) ]
+  ! TIMES           [ reduce using rule 8 (expression -> expression DIVIDE expression .) ]
+  ! DIVIDE          [ reduce using rule 8 (expression -> expression DIVIDE expression .) ]
+  ! MODULO          [ reduce using rule 8 (expression -> expression DIVIDE expression .) ]
+  ! GREATER_THAN    [ reduce using rule 8 (expression -> expression DIVIDE expression .) ]
+  ! LESS_THAN       [ reduce using rule 8 (expression -> expression DIVIDE expression .) ]
+  ! GREATER_EQUAL   [ reduce using rule 8 (expression -> expression DIVIDE expression .) ]
+  ! LESS_EQUAL      [ reduce using rule 8 (expression -> expression DIVIDE expression .) ]
+  ! EQUAL           [ reduce using rule 8 (expression -> expression DIVIDE expression .) ]
+  ! NOT_EQUAL       [ reduce using rule 8 (expression -> expression DIVIDE expression .) ]
 
 
 state 29
 
-    (7) statement -> IDENTIFIER MOD_ASSIGN expression .
-    (9) expression -> expression . PLUS term
-    (10) expression -> expression . MINUS term
+    (9) expression -> expression MODULO expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . TIMES expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . GREATER_THAN expression
+    (11) expression -> expression . LESS_THAN expression
+    (12) expression -> expression . GREATER_EQUAL expression
+    (13) expression -> expression . LESS_EQUAL expression
+    (14) expression -> expression . EQUAL expression
+    (15) expression -> expression . NOT_EQUAL expression
 
-    $end            reduce using rule 7 (statement -> IDENTIFIER MOD_ASSIGN expression .)
-    PLUS            shift and go to state 8
-    MINUS           shift and go to state 9
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for MODULO resolved as shift
+  ! shift/reduce conflict for GREATER_THAN resolved as shift
+  ! shift/reduce conflict for LESS_THAN resolved as shift
+  ! shift/reduce conflict for GREATER_EQUAL resolved as shift
+  ! shift/reduce conflict for LESS_EQUAL resolved as shift
+  ! shift/reduce conflict for EQUAL resolved as shift
+  ! shift/reduce conflict for NOT_EQUAL resolved as shift
+    IDENTIFIER      reduce using rule 9 (expression -> expression MODULO expression .)
+    PRINT           reduce using rule 9 (expression -> expression MODULO expression .)
+    LPAREN          reduce using rule 9 (expression -> expression MODULO expression .)
+    INTEGER         reduce using rule 9 (expression -> expression MODULO expression .)
+    FLOAT           reduce using rule 9 (expression -> expression MODULO expression .)
+    $end            reduce using rule 9 (expression -> expression MODULO expression .)
+    RPAREN          reduce using rule 9 (expression -> expression MODULO expression .)
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 11
+    TIMES           shift and go to state 12
+    DIVIDE          shift and go to state 13
+    MODULO          shift and go to state 14
+    GREATER_THAN    shift and go to state 15
+    LESS_THAN       shift and go to state 16
+    GREATER_EQUAL   shift and go to state 17
+    LESS_EQUAL      shift and go to state 18
+    EQUAL           shift and go to state 19
+    NOT_EQUAL       shift and go to state 20
+
+  ! PLUS            [ reduce using rule 9 (expression -> expression MODULO expression .) ]
+  ! MINUS           [ reduce using rule 9 (expression -> expression MODULO expression .) ]
+  ! TIMES           [ reduce using rule 9 (expression -> expression MODULO expression .) ]
+  ! DIVIDE          [ reduce using rule 9 (expression -> expression MODULO expression .) ]
+  ! MODULO          [ reduce using rule 9 (expression -> expression MODULO expression .) ]
+  ! GREATER_THAN    [ reduce using rule 9 (expression -> expression MODULO expression .) ]
+  ! LESS_THAN       [ reduce using rule 9 (expression -> expression MODULO expression .) ]
+  ! GREATER_EQUAL   [ reduce using rule 9 (expression -> expression MODULO expression .) ]
+  ! LESS_EQUAL      [ reduce using rule 9 (expression -> expression MODULO expression .) ]
+  ! EQUAL           [ reduce using rule 9 (expression -> expression MODULO expression .) ]
+  ! NOT_EQUAL       [ reduce using rule 9 (expression -> expression MODULO expression .) ]
 
 
 state 30
 
-    (12) term -> term TIMES factor .
+    (10) expression -> expression GREATER_THAN expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . TIMES expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . GREATER_THAN expression
+    (11) expression -> expression . LESS_THAN expression
+    (12) expression -> expression . GREATER_EQUAL expression
+    (13) expression -> expression . LESS_EQUAL expression
+    (14) expression -> expression . EQUAL expression
+    (15) expression -> expression . NOT_EQUAL expression
 
-    TIMES           reduce using rule 12 (term -> term TIMES factor .)
-    DIVIDE          reduce using rule 12 (term -> term TIMES factor .)
-    MODULO          reduce using rule 12 (term -> term TIMES factor .)
-    PLUS            reduce using rule 12 (term -> term TIMES factor .)
-    MINUS           reduce using rule 12 (term -> term TIMES factor .)
-    $end            reduce using rule 12 (term -> term TIMES factor .)
-    RPAREN          reduce using rule 12 (term -> term TIMES factor .)
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for MODULO resolved as shift
+  ! shift/reduce conflict for GREATER_THAN resolved as shift
+  ! shift/reduce conflict for LESS_THAN resolved as shift
+  ! shift/reduce conflict for GREATER_EQUAL resolved as shift
+  ! shift/reduce conflict for LESS_EQUAL resolved as shift
+  ! shift/reduce conflict for EQUAL resolved as shift
+  ! shift/reduce conflict for NOT_EQUAL resolved as shift
+    IDENTIFIER      reduce using rule 10 (expression -> expression GREATER_THAN expression .)
+    PRINT           reduce using rule 10 (expression -> expression GREATER_THAN expression .)
+    LPAREN          reduce using rule 10 (expression -> expression GREATER_THAN expression .)
+    INTEGER         reduce using rule 10 (expression -> expression GREATER_THAN expression .)
+    FLOAT           reduce using rule 10 (expression -> expression GREATER_THAN expression .)
+    $end            reduce using rule 10 (expression -> expression GREATER_THAN expression .)
+    RPAREN          reduce using rule 10 (expression -> expression GREATER_THAN expression .)
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 11
+    TIMES           shift and go to state 12
+    DIVIDE          shift and go to state 13
+    MODULO          shift and go to state 14
+    GREATER_THAN    shift and go to state 15
+    LESS_THAN       shift and go to state 16
+    GREATER_EQUAL   shift and go to state 17
+    LESS_EQUAL      shift and go to state 18
+    EQUAL           shift and go to state 19
+    NOT_EQUAL       shift and go to state 20
+
+  ! PLUS            [ reduce using rule 10 (expression -> expression GREATER_THAN expression .) ]
+  ! MINUS           [ reduce using rule 10 (expression -> expression GREATER_THAN expression .) ]
+  ! TIMES           [ reduce using rule 10 (expression -> expression GREATER_THAN expression .) ]
+  ! DIVIDE          [ reduce using rule 10 (expression -> expression GREATER_THAN expression .) ]
+  ! MODULO          [ reduce using rule 10 (expression -> expression GREATER_THAN expression .) ]
+  ! GREATER_THAN    [ reduce using rule 10 (expression -> expression GREATER_THAN expression .) ]
+  ! LESS_THAN       [ reduce using rule 10 (expression -> expression GREATER_THAN expression .) ]
+  ! GREATER_EQUAL   [ reduce using rule 10 (expression -> expression GREATER_THAN expression .) ]
+  ! LESS_EQUAL      [ reduce using rule 10 (expression -> expression GREATER_THAN expression .) ]
+  ! EQUAL           [ reduce using rule 10 (expression -> expression GREATER_THAN expression .) ]
+  ! NOT_EQUAL       [ reduce using rule 10 (expression -> expression GREATER_THAN expression .) ]
 
 
 state 31
 
-    (13) term -> term DIVIDE factor .
+    (11) expression -> expression LESS_THAN expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . TIMES expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . GREATER_THAN expression
+    (11) expression -> expression . LESS_THAN expression
+    (12) expression -> expression . GREATER_EQUAL expression
+    (13) expression -> expression . LESS_EQUAL expression
+    (14) expression -> expression . EQUAL expression
+    (15) expression -> expression . NOT_EQUAL expression
 
-    TIMES           reduce using rule 13 (term -> term DIVIDE factor .)
-    DIVIDE          reduce using rule 13 (term -> term DIVIDE factor .)
-    MODULO          reduce using rule 13 (term -> term DIVIDE factor .)
-    PLUS            reduce using rule 13 (term -> term DIVIDE factor .)
-    MINUS           reduce using rule 13 (term -> term DIVIDE factor .)
-    $end            reduce using rule 13 (term -> term DIVIDE factor .)
-    RPAREN          reduce using rule 13 (term -> term DIVIDE factor .)
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for MODULO resolved as shift
+  ! shift/reduce conflict for GREATER_THAN resolved as shift
+  ! shift/reduce conflict for LESS_THAN resolved as shift
+  ! shift/reduce conflict for GREATER_EQUAL resolved as shift
+  ! shift/reduce conflict for LESS_EQUAL resolved as shift
+  ! shift/reduce conflict for EQUAL resolved as shift
+  ! shift/reduce conflict for NOT_EQUAL resolved as shift
+    IDENTIFIER      reduce using rule 11 (expression -> expression LESS_THAN expression .)
+    PRINT           reduce using rule 11 (expression -> expression LESS_THAN expression .)
+    LPAREN          reduce using rule 11 (expression -> expression LESS_THAN expression .)
+    INTEGER         reduce using rule 11 (expression -> expression LESS_THAN expression .)
+    FLOAT           reduce using rule 11 (expression -> expression LESS_THAN expression .)
+    $end            reduce using rule 11 (expression -> expression LESS_THAN expression .)
+    RPAREN          reduce using rule 11 (expression -> expression LESS_THAN expression .)
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 11
+    TIMES           shift and go to state 12
+    DIVIDE          shift and go to state 13
+    MODULO          shift and go to state 14
+    GREATER_THAN    shift and go to state 15
+    LESS_THAN       shift and go to state 16
+    GREATER_EQUAL   shift and go to state 17
+    LESS_EQUAL      shift and go to state 18
+    EQUAL           shift and go to state 19
+    NOT_EQUAL       shift and go to state 20
+
+  ! PLUS            [ reduce using rule 11 (expression -> expression LESS_THAN expression .) ]
+  ! MINUS           [ reduce using rule 11 (expression -> expression LESS_THAN expression .) ]
+  ! TIMES           [ reduce using rule 11 (expression -> expression LESS_THAN expression .) ]
+  ! DIVIDE          [ reduce using rule 11 (expression -> expression LESS_THAN expression .) ]
+  ! MODULO          [ reduce using rule 11 (expression -> expression LESS_THAN expression .) ]
+  ! GREATER_THAN    [ reduce using rule 11 (expression -> expression LESS_THAN expression .) ]
+  ! LESS_THAN       [ reduce using rule 11 (expression -> expression LESS_THAN expression .) ]
+  ! GREATER_EQUAL   [ reduce using rule 11 (expression -> expression LESS_THAN expression .) ]
+  ! LESS_EQUAL      [ reduce using rule 11 (expression -> expression LESS_THAN expression .) ]
+  ! EQUAL           [ reduce using rule 11 (expression -> expression LESS_THAN expression .) ]
+  ! NOT_EQUAL       [ reduce using rule 11 (expression -> expression LESS_THAN expression .) ]
 
 
 state 32
 
-    (14) term -> term MODULO factor .
+    (12) expression -> expression GREATER_EQUAL expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . TIMES expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . GREATER_THAN expression
+    (11) expression -> expression . LESS_THAN expression
+    (12) expression -> expression . GREATER_EQUAL expression
+    (13) expression -> expression . LESS_EQUAL expression
+    (14) expression -> expression . EQUAL expression
+    (15) expression -> expression . NOT_EQUAL expression
 
-    TIMES           reduce using rule 14 (term -> term MODULO factor .)
-    DIVIDE          reduce using rule 14 (term -> term MODULO factor .)
-    MODULO          reduce using rule 14 (term -> term MODULO factor .)
-    PLUS            reduce using rule 14 (term -> term MODULO factor .)
-    MINUS           reduce using rule 14 (term -> term MODULO factor .)
-    $end            reduce using rule 14 (term -> term MODULO factor .)
-    RPAREN          reduce using rule 14 (term -> term MODULO factor .)
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for MODULO resolved as shift
+  ! shift/reduce conflict for GREATER_THAN resolved as shift
+  ! shift/reduce conflict for LESS_THAN resolved as shift
+  ! shift/reduce conflict for GREATER_EQUAL resolved as shift
+  ! shift/reduce conflict for LESS_EQUAL resolved as shift
+  ! shift/reduce conflict for EQUAL resolved as shift
+  ! shift/reduce conflict for NOT_EQUAL resolved as shift
+    IDENTIFIER      reduce using rule 12 (expression -> expression GREATER_EQUAL expression .)
+    PRINT           reduce using rule 12 (expression -> expression GREATER_EQUAL expression .)
+    LPAREN          reduce using rule 12 (expression -> expression GREATER_EQUAL expression .)
+    INTEGER         reduce using rule 12 (expression -> expression GREATER_EQUAL expression .)
+    FLOAT           reduce using rule 12 (expression -> expression GREATER_EQUAL expression .)
+    $end            reduce using rule 12 (expression -> expression GREATER_EQUAL expression .)
+    RPAREN          reduce using rule 12 (expression -> expression GREATER_EQUAL expression .)
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 11
+    TIMES           shift and go to state 12
+    DIVIDE          shift and go to state 13
+    MODULO          shift and go to state 14
+    GREATER_THAN    shift and go to state 15
+    LESS_THAN       shift and go to state 16
+    GREATER_EQUAL   shift and go to state 17
+    LESS_EQUAL      shift and go to state 18
+    EQUAL           shift and go to state 19
+    NOT_EQUAL       shift and go to state 20
+
+  ! PLUS            [ reduce using rule 12 (expression -> expression GREATER_EQUAL expression .) ]
+  ! MINUS           [ reduce using rule 12 (expression -> expression GREATER_EQUAL expression .) ]
+  ! TIMES           [ reduce using rule 12 (expression -> expression GREATER_EQUAL expression .) ]
+  ! DIVIDE          [ reduce using rule 12 (expression -> expression GREATER_EQUAL expression .) ]
+  ! MODULO          [ reduce using rule 12 (expression -> expression GREATER_EQUAL expression .) ]
+  ! GREATER_THAN    [ reduce using rule 12 (expression -> expression GREATER_EQUAL expression .) ]
+  ! LESS_THAN       [ reduce using rule 12 (expression -> expression GREATER_EQUAL expression .) ]
+  ! GREATER_EQUAL   [ reduce using rule 12 (expression -> expression GREATER_EQUAL expression .) ]
+  ! LESS_EQUAL      [ reduce using rule 12 (expression -> expression GREATER_EQUAL expression .) ]
+  ! EQUAL           [ reduce using rule 12 (expression -> expression GREATER_EQUAL expression .) ]
+  ! NOT_EQUAL       [ reduce using rule 12 (expression -> expression GREATER_EQUAL expression .) ]
 
 
 state 33
 
-    (18) factor -> LPAREN expression RPAREN .
+    (13) expression -> expression LESS_EQUAL expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . TIMES expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . GREATER_THAN expression
+    (11) expression -> expression . LESS_THAN expression
+    (12) expression -> expression . GREATER_EQUAL expression
+    (13) expression -> expression . LESS_EQUAL expression
+    (14) expression -> expression . EQUAL expression
+    (15) expression -> expression . NOT_EQUAL expression
 
-    TIMES           reduce using rule 18 (factor -> LPAREN expression RPAREN .)
-    DIVIDE          reduce using rule 18 (factor -> LPAREN expression RPAREN .)
-    MODULO          reduce using rule 18 (factor -> LPAREN expression RPAREN .)
-    PLUS            reduce using rule 18 (factor -> LPAREN expression RPAREN .)
-    MINUS           reduce using rule 18 (factor -> LPAREN expression RPAREN .)
-    $end            reduce using rule 18 (factor -> LPAREN expression RPAREN .)
-    RPAREN          reduce using rule 18 (factor -> LPAREN expression RPAREN .)
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for MODULO resolved as shift
+  ! shift/reduce conflict for GREATER_THAN resolved as shift
+  ! shift/reduce conflict for LESS_THAN resolved as shift
+  ! shift/reduce conflict for GREATER_EQUAL resolved as shift
+  ! shift/reduce conflict for LESS_EQUAL resolved as shift
+  ! shift/reduce conflict for EQUAL resolved as shift
+  ! shift/reduce conflict for NOT_EQUAL resolved as shift
+    IDENTIFIER      reduce using rule 13 (expression -> expression LESS_EQUAL expression .)
+    PRINT           reduce using rule 13 (expression -> expression LESS_EQUAL expression .)
+    LPAREN          reduce using rule 13 (expression -> expression LESS_EQUAL expression .)
+    INTEGER         reduce using rule 13 (expression -> expression LESS_EQUAL expression .)
+    FLOAT           reduce using rule 13 (expression -> expression LESS_EQUAL expression .)
+    $end            reduce using rule 13 (expression -> expression LESS_EQUAL expression .)
+    RPAREN          reduce using rule 13 (expression -> expression LESS_EQUAL expression .)
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 11
+    TIMES           shift and go to state 12
+    DIVIDE          shift and go to state 13
+    MODULO          shift and go to state 14
+    GREATER_THAN    shift and go to state 15
+    LESS_THAN       shift and go to state 16
+    GREATER_EQUAL   shift and go to state 17
+    LESS_EQUAL      shift and go to state 18
+    EQUAL           shift and go to state 19
+    NOT_EQUAL       shift and go to state 20
+
+  ! PLUS            [ reduce using rule 13 (expression -> expression LESS_EQUAL expression .) ]
+  ! MINUS           [ reduce using rule 13 (expression -> expression LESS_EQUAL expression .) ]
+  ! TIMES           [ reduce using rule 13 (expression -> expression LESS_EQUAL expression .) ]
+  ! DIVIDE          [ reduce using rule 13 (expression -> expression LESS_EQUAL expression .) ]
+  ! MODULO          [ reduce using rule 13 (expression -> expression LESS_EQUAL expression .) ]
+  ! GREATER_THAN    [ reduce using rule 13 (expression -> expression LESS_EQUAL expression .) ]
+  ! LESS_THAN       [ reduce using rule 13 (expression -> expression LESS_EQUAL expression .) ]
+  ! GREATER_EQUAL   [ reduce using rule 13 (expression -> expression LESS_EQUAL expression .) ]
+  ! LESS_EQUAL      [ reduce using rule 13 (expression -> expression LESS_EQUAL expression .) ]
+  ! EQUAL           [ reduce using rule 13 (expression -> expression LESS_EQUAL expression .) ]
+  ! NOT_EQUAL       [ reduce using rule 13 (expression -> expression LESS_EQUAL expression .) ]
+
+
+state 34
+
+    (14) expression -> expression EQUAL expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . TIMES expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . GREATER_THAN expression
+    (11) expression -> expression . LESS_THAN expression
+    (12) expression -> expression . GREATER_EQUAL expression
+    (13) expression -> expression . LESS_EQUAL expression
+    (14) expression -> expression . EQUAL expression
+    (15) expression -> expression . NOT_EQUAL expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for MODULO resolved as shift
+  ! shift/reduce conflict for GREATER_THAN resolved as shift
+  ! shift/reduce conflict for LESS_THAN resolved as shift
+  ! shift/reduce conflict for GREATER_EQUAL resolved as shift
+  ! shift/reduce conflict for LESS_EQUAL resolved as shift
+  ! shift/reduce conflict for EQUAL resolved as shift
+  ! shift/reduce conflict for NOT_EQUAL resolved as shift
+    IDENTIFIER      reduce using rule 14 (expression -> expression EQUAL expression .)
+    PRINT           reduce using rule 14 (expression -> expression EQUAL expression .)
+    LPAREN          reduce using rule 14 (expression -> expression EQUAL expression .)
+    INTEGER         reduce using rule 14 (expression -> expression EQUAL expression .)
+    FLOAT           reduce using rule 14 (expression -> expression EQUAL expression .)
+    $end            reduce using rule 14 (expression -> expression EQUAL expression .)
+    RPAREN          reduce using rule 14 (expression -> expression EQUAL expression .)
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 11
+    TIMES           shift and go to state 12
+    DIVIDE          shift and go to state 13
+    MODULO          shift and go to state 14
+    GREATER_THAN    shift and go to state 15
+    LESS_THAN       shift and go to state 16
+    GREATER_EQUAL   shift and go to state 17
+    LESS_EQUAL      shift and go to state 18
+    EQUAL           shift and go to state 19
+    NOT_EQUAL       shift and go to state 20
+
+  ! PLUS            [ reduce using rule 14 (expression -> expression EQUAL expression .) ]
+  ! MINUS           [ reduce using rule 14 (expression -> expression EQUAL expression .) ]
+  ! TIMES           [ reduce using rule 14 (expression -> expression EQUAL expression .) ]
+  ! DIVIDE          [ reduce using rule 14 (expression -> expression EQUAL expression .) ]
+  ! MODULO          [ reduce using rule 14 (expression -> expression EQUAL expression .) ]
+  ! GREATER_THAN    [ reduce using rule 14 (expression -> expression EQUAL expression .) ]
+  ! LESS_THAN       [ reduce using rule 14 (expression -> expression EQUAL expression .) ]
+  ! GREATER_EQUAL   [ reduce using rule 14 (expression -> expression EQUAL expression .) ]
+  ! LESS_EQUAL      [ reduce using rule 14 (expression -> expression EQUAL expression .) ]
+  ! EQUAL           [ reduce using rule 14 (expression -> expression EQUAL expression .) ]
+  ! NOT_EQUAL       [ reduce using rule 14 (expression -> expression EQUAL expression .) ]
+
+
+state 35
+
+    (15) expression -> expression NOT_EQUAL expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . TIMES expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . GREATER_THAN expression
+    (11) expression -> expression . LESS_THAN expression
+    (12) expression -> expression . GREATER_EQUAL expression
+    (13) expression -> expression . LESS_EQUAL expression
+    (14) expression -> expression . EQUAL expression
+    (15) expression -> expression . NOT_EQUAL expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for MODULO resolved as shift
+  ! shift/reduce conflict for GREATER_THAN resolved as shift
+  ! shift/reduce conflict for LESS_THAN resolved as shift
+  ! shift/reduce conflict for GREATER_EQUAL resolved as shift
+  ! shift/reduce conflict for LESS_EQUAL resolved as shift
+  ! shift/reduce conflict for EQUAL resolved as shift
+  ! shift/reduce conflict for NOT_EQUAL resolved as shift
+    IDENTIFIER      reduce using rule 15 (expression -> expression NOT_EQUAL expression .)
+    PRINT           reduce using rule 15 (expression -> expression NOT_EQUAL expression .)
+    LPAREN          reduce using rule 15 (expression -> expression NOT_EQUAL expression .)
+    INTEGER         reduce using rule 15 (expression -> expression NOT_EQUAL expression .)
+    FLOAT           reduce using rule 15 (expression -> expression NOT_EQUAL expression .)
+    $end            reduce using rule 15 (expression -> expression NOT_EQUAL expression .)
+    RPAREN          reduce using rule 15 (expression -> expression NOT_EQUAL expression .)
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 11
+    TIMES           shift and go to state 12
+    DIVIDE          shift and go to state 13
+    MODULO          shift and go to state 14
+    GREATER_THAN    shift and go to state 15
+    LESS_THAN       shift and go to state 16
+    GREATER_EQUAL   shift and go to state 17
+    LESS_EQUAL      shift and go to state 18
+    EQUAL           shift and go to state 19
+    NOT_EQUAL       shift and go to state 20
+
+  ! PLUS            [ reduce using rule 15 (expression -> expression NOT_EQUAL expression .) ]
+  ! MINUS           [ reduce using rule 15 (expression -> expression NOT_EQUAL expression .) ]
+  ! TIMES           [ reduce using rule 15 (expression -> expression NOT_EQUAL expression .) ]
+  ! DIVIDE          [ reduce using rule 15 (expression -> expression NOT_EQUAL expression .) ]
+  ! MODULO          [ reduce using rule 15 (expression -> expression NOT_EQUAL expression .) ]
+  ! GREATER_THAN    [ reduce using rule 15 (expression -> expression NOT_EQUAL expression .) ]
+  ! LESS_THAN       [ reduce using rule 15 (expression -> expression NOT_EQUAL expression .) ]
+  ! GREATER_EQUAL   [ reduce using rule 15 (expression -> expression NOT_EQUAL expression .) ]
+  ! LESS_EQUAL      [ reduce using rule 15 (expression -> expression NOT_EQUAL expression .) ]
+  ! EQUAL           [ reduce using rule 15 (expression -> expression NOT_EQUAL expression .) ]
+  ! NOT_EQUAL       [ reduce using rule 15 (expression -> expression NOT_EQUAL expression .) ]
+
+
+state 36
+
+    (4) statement -> IDENTIFIER ASSIGN expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . TIMES expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . GREATER_THAN expression
+    (11) expression -> expression . LESS_THAN expression
+    (12) expression -> expression . GREATER_EQUAL expression
+    (13) expression -> expression . LESS_EQUAL expression
+    (14) expression -> expression . EQUAL expression
+    (15) expression -> expression . NOT_EQUAL expression
+
+    IDENTIFIER      reduce using rule 4 (statement -> IDENTIFIER ASSIGN expression .)
+    PRINT           reduce using rule 4 (statement -> IDENTIFIER ASSIGN expression .)
+    LPAREN          reduce using rule 4 (statement -> IDENTIFIER ASSIGN expression .)
+    INTEGER         reduce using rule 4 (statement -> IDENTIFIER ASSIGN expression .)
+    FLOAT           reduce using rule 4 (statement -> IDENTIFIER ASSIGN expression .)
+    $end            reduce using rule 4 (statement -> IDENTIFIER ASSIGN expression .)
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 11
+    TIMES           shift and go to state 12
+    DIVIDE          shift and go to state 13
+    MODULO          shift and go to state 14
+    GREATER_THAN    shift and go to state 15
+    LESS_THAN       shift and go to state 16
+    GREATER_EQUAL   shift and go to state 17
+    LESS_EQUAL      shift and go to state 18
+    EQUAL           shift and go to state 19
+    NOT_EQUAL       shift and go to state 20
+
+
+state 37
+
+    (20) statement -> PRINT LPAREN expression . RPAREN
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . TIMES expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . GREATER_THAN expression
+    (11) expression -> expression . LESS_THAN expression
+    (12) expression -> expression . GREATER_EQUAL expression
+    (13) expression -> expression . LESS_EQUAL expression
+    (14) expression -> expression . EQUAL expression
+    (15) expression -> expression . NOT_EQUAL expression
+
+    RPAREN          shift and go to state 39
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 11
+    TIMES           shift and go to state 12
+    DIVIDE          shift and go to state 13
+    MODULO          shift and go to state 14
+    GREATER_THAN    shift and go to state 15
+    LESS_THAN       shift and go to state 16
+    GREATER_EQUAL   shift and go to state 17
+    LESS_EQUAL      shift and go to state 18
+    EQUAL           shift and go to state 19
+    NOT_EQUAL       shift and go to state 20
+
+
+state 38
+
+    (16) expression -> LPAREN expression RPAREN .
+
+    PLUS            reduce using rule 16 (expression -> LPAREN expression RPAREN .)
+    MINUS           reduce using rule 16 (expression -> LPAREN expression RPAREN .)
+    TIMES           reduce using rule 16 (expression -> LPAREN expression RPAREN .)
+    DIVIDE          reduce using rule 16 (expression -> LPAREN expression RPAREN .)
+    MODULO          reduce using rule 16 (expression -> LPAREN expression RPAREN .)
+    GREATER_THAN    reduce using rule 16 (expression -> LPAREN expression RPAREN .)
+    LESS_THAN       reduce using rule 16 (expression -> LPAREN expression RPAREN .)
+    GREATER_EQUAL   reduce using rule 16 (expression -> LPAREN expression RPAREN .)
+    LESS_EQUAL      reduce using rule 16 (expression -> LPAREN expression RPAREN .)
+    EQUAL           reduce using rule 16 (expression -> LPAREN expression RPAREN .)
+    NOT_EQUAL       reduce using rule 16 (expression -> LPAREN expression RPAREN .)
+    IDENTIFIER      reduce using rule 16 (expression -> LPAREN expression RPAREN .)
+    PRINT           reduce using rule 16 (expression -> LPAREN expression RPAREN .)
+    LPAREN          reduce using rule 16 (expression -> LPAREN expression RPAREN .)
+    INTEGER         reduce using rule 16 (expression -> LPAREN expression RPAREN .)
+    FLOAT           reduce using rule 16 (expression -> LPAREN expression RPAREN .)
+    $end            reduce using rule 16 (expression -> LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 16 (expression -> LPAREN expression RPAREN .)
+
+
+state 39
+
+    (20) statement -> PRINT LPAREN expression RPAREN .
+
+    IDENTIFIER      reduce using rule 20 (statement -> PRINT LPAREN expression RPAREN .)
+    PRINT           reduce using rule 20 (statement -> PRINT LPAREN expression RPAREN .)
+    LPAREN          reduce using rule 20 (statement -> PRINT LPAREN expression RPAREN .)
+    INTEGER         reduce using rule 20 (statement -> PRINT LPAREN expression RPAREN .)
+    FLOAT           reduce using rule 20 (statement -> PRINT LPAREN expression RPAREN .)
+    $end            reduce using rule 20 (statement -> PRINT LPAREN expression RPAREN .)
 
 WARNING:
 WARNING: Conflicts:
 WARNING:
-WARNING: reduce/reduce conflict in state 3 resolved using rule (expression -> IDENTIFIER)
-WARNING: rejected rule (factor -> IDENTIFIER) in state 3
-WARNING: reduce/reduce conflict in state 20 resolved using rule (expression -> IDENTIFIER)
-WARNING: rejected rule (factor -> IDENTIFIER) in state 20
+WARNING: shift/reduce conflict for PLUS in state 25 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 25 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 25 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 25 resolved as shift
+WARNING: shift/reduce conflict for MODULO in state 25 resolved as shift
+WARNING: shift/reduce conflict for GREATER_THAN in state 25 resolved as shift
+WARNING: shift/reduce conflict for LESS_THAN in state 25 resolved as shift
+WARNING: shift/reduce conflict for GREATER_EQUAL in state 25 resolved as shift
+WARNING: shift/reduce conflict for LESS_EQUAL in state 25 resolved as shift
+WARNING: shift/reduce conflict for EQUAL in state 25 resolved as shift
+WARNING: shift/reduce conflict for NOT_EQUAL in state 25 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 26 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 26 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 26 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 26 resolved as shift
+WARNING: shift/reduce conflict for MODULO in state 26 resolved as shift
+WARNING: shift/reduce conflict for GREATER_THAN in state 26 resolved as shift
+WARNING: shift/reduce conflict for LESS_THAN in state 26 resolved as shift
+WARNING: shift/reduce conflict for GREATER_EQUAL in state 26 resolved as shift
+WARNING: shift/reduce conflict for LESS_EQUAL in state 26 resolved as shift
+WARNING: shift/reduce conflict for EQUAL in state 26 resolved as shift
+WARNING: shift/reduce conflict for NOT_EQUAL in state 26 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 27 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 27 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 27 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 27 resolved as shift
+WARNING: shift/reduce conflict for MODULO in state 27 resolved as shift
+WARNING: shift/reduce conflict for GREATER_THAN in state 27 resolved as shift
+WARNING: shift/reduce conflict for LESS_THAN in state 27 resolved as shift
+WARNING: shift/reduce conflict for GREATER_EQUAL in state 27 resolved as shift
+WARNING: shift/reduce conflict for LESS_EQUAL in state 27 resolved as shift
+WARNING: shift/reduce conflict for EQUAL in state 27 resolved as shift
+WARNING: shift/reduce conflict for NOT_EQUAL in state 27 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 28 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 28 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 28 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 28 resolved as shift
+WARNING: shift/reduce conflict for MODULO in state 28 resolved as shift
+WARNING: shift/reduce conflict for GREATER_THAN in state 28 resolved as shift
+WARNING: shift/reduce conflict for LESS_THAN in state 28 resolved as shift
+WARNING: shift/reduce conflict for GREATER_EQUAL in state 28 resolved as shift
+WARNING: shift/reduce conflict for LESS_EQUAL in state 28 resolved as shift
+WARNING: shift/reduce conflict for EQUAL in state 28 resolved as shift
+WARNING: shift/reduce conflict for NOT_EQUAL in state 28 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 29 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 29 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 29 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 29 resolved as shift
+WARNING: shift/reduce conflict for MODULO in state 29 resolved as shift
+WARNING: shift/reduce conflict for GREATER_THAN in state 29 resolved as shift
+WARNING: shift/reduce conflict for LESS_THAN in state 29 resolved as shift
+WARNING: shift/reduce conflict for GREATER_EQUAL in state 29 resolved as shift
+WARNING: shift/reduce conflict for LESS_EQUAL in state 29 resolved as shift
+WARNING: shift/reduce conflict for EQUAL in state 29 resolved as shift
+WARNING: shift/reduce conflict for NOT_EQUAL in state 29 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 30 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 30 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 30 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 30 resolved as shift
+WARNING: shift/reduce conflict for MODULO in state 30 resolved as shift
+WARNING: shift/reduce conflict for GREATER_THAN in state 30 resolved as shift
+WARNING: shift/reduce conflict for LESS_THAN in state 30 resolved as shift
+WARNING: shift/reduce conflict for GREATER_EQUAL in state 30 resolved as shift
+WARNING: shift/reduce conflict for LESS_EQUAL in state 30 resolved as shift
+WARNING: shift/reduce conflict for EQUAL in state 30 resolved as shift
+WARNING: shift/reduce conflict for NOT_EQUAL in state 30 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 31 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 31 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 31 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 31 resolved as shift
+WARNING: shift/reduce conflict for MODULO in state 31 resolved as shift
+WARNING: shift/reduce conflict for GREATER_THAN in state 31 resolved as shift
+WARNING: shift/reduce conflict for LESS_THAN in state 31 resolved as shift
+WARNING: shift/reduce conflict for GREATER_EQUAL in state 31 resolved as shift
+WARNING: shift/reduce conflict for LESS_EQUAL in state 31 resolved as shift
+WARNING: shift/reduce conflict for EQUAL in state 31 resolved as shift
+WARNING: shift/reduce conflict for NOT_EQUAL in state 31 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 32 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 32 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 32 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 32 resolved as shift
+WARNING: shift/reduce conflict for MODULO in state 32 resolved as shift
+WARNING: shift/reduce conflict for GREATER_THAN in state 32 resolved as shift
+WARNING: shift/reduce conflict for LESS_THAN in state 32 resolved as shift
+WARNING: shift/reduce conflict for GREATER_EQUAL in state 32 resolved as shift
+WARNING: shift/reduce conflict for LESS_EQUAL in state 32 resolved as shift
+WARNING: shift/reduce conflict for EQUAL in state 32 resolved as shift
+WARNING: shift/reduce conflict for NOT_EQUAL in state 32 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 33 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 33 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 33 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 33 resolved as shift
+WARNING: shift/reduce conflict for MODULO in state 33 resolved as shift
+WARNING: shift/reduce conflict for GREATER_THAN in state 33 resolved as shift
+WARNING: shift/reduce conflict for LESS_THAN in state 33 resolved as shift
+WARNING: shift/reduce conflict for GREATER_EQUAL in state 33 resolved as shift
+WARNING: shift/reduce conflict for LESS_EQUAL in state 33 resolved as shift
+WARNING: shift/reduce conflict for EQUAL in state 33 resolved as shift
+WARNING: shift/reduce conflict for NOT_EQUAL in state 33 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 34 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 34 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 34 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 34 resolved as shift
+WARNING: shift/reduce conflict for MODULO in state 34 resolved as shift
+WARNING: shift/reduce conflict for GREATER_THAN in state 34 resolved as shift
+WARNING: shift/reduce conflict for LESS_THAN in state 34 resolved as shift
+WARNING: shift/reduce conflict for GREATER_EQUAL in state 34 resolved as shift
+WARNING: shift/reduce conflict for LESS_EQUAL in state 34 resolved as shift
+WARNING: shift/reduce conflict for EQUAL in state 34 resolved as shift
+WARNING: shift/reduce conflict for NOT_EQUAL in state 34 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 35 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 35 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 35 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 35 resolved as shift
+WARNING: shift/reduce conflict for MODULO in state 35 resolved as shift
+WARNING: shift/reduce conflict for GREATER_THAN in state 35 resolved as shift
+WARNING: shift/reduce conflict for LESS_THAN in state 35 resolved as shift
+WARNING: shift/reduce conflict for GREATER_EQUAL in state 35 resolved as shift
+WARNING: shift/reduce conflict for LESS_EQUAL in state 35 resolved as shift
+WARNING: shift/reduce conflict for EQUAL in state 35 resolved as shift
+WARNING: shift/reduce conflict for NOT_EQUAL in state 35 resolved as shift

@@ -31,7 +31,6 @@ tokens = (
     "DEDENT",
     "STRING_LITERAL",
     "COMMA",
-    "DEF",
 )
 
 # Reserved keywords mapping
@@ -53,10 +52,10 @@ reserved = {
     "def": "DEF",
 }
 
-# Update tokens list to include reserved words
+
 tokens += tuple(reserved.values())
 
-# Regular expression rules for simple tokens
+
 t_PLUS = r"\+"
 t_MINUS = r"-"
 t_TIMES = r"\*"
@@ -75,48 +74,50 @@ t_COLON = r":"
 t_COMMA = r","
 
 
-# Define states for tracking indentation
 states = (("indent", "exclusive"),)
 
-# Track the stack of indent levels
 indent_stack = [0]
 
-# Rule for tracking newlines and whitespace
+
+t_ignore = " \t"
 
 
-def t_ANY_newline(t):
+def t_newline(t):
     r"\n+"
     t.lexer.lineno += len(t.value)
-    t.lexer.begin("indent")
 
 
 def t_indent_whitespace(t):
     r"[ ]+"
-    t.lexer.lexpos -= len(t.value)
     space_count = len(t.value)
     if space_count > indent_stack[-1]:
         indent_stack.append(space_count)
         t.type = "INDENT"
-        t.value = space_count
-        t.lexer.begin("INITIAL")
         return t
     elif space_count < indent_stack[-1]:
         while indent_stack and space_count < indent_stack[-1]:
             indent_stack.pop()
             t.type = "DEDENT"
-            t.value = space_count
-            t.lexer.begin("INITIAL")
             return t
     t.lexer.begin("INITIAL")
 
 
-# Error handling rule for indentation state
-def t_indent_error(t):
-    print(f"Illegal character in indentation '{t.value[0]}'")
+def t_error(t):
+    print(f"Illegal character '{t.value[0]}'")
     t.lexer.skip(1)
 
 
-# A rule for identifiers (variable names) and boolean values
+def t_indent_other(t):
+    r"[^\s]"
+    t.lexer.begin("INITIAL")
+    t.lexer.lexpos -= 1
+
+
+def t_indent_error(t):
+    print(f"Unexpected character {t.value[0]} in indentation")
+    t.lexer.skip(1)
+
+
 def t_IDENTIFIER(t):
     r"[a-zA-Z_][a-zA-Z_0-9]*"
     t.value = t.value
@@ -130,46 +131,24 @@ def t_IDENTIFIER(t):
     return t
 
 
-# Rule for Floats only
 def t_FLOAT(t):
     r"(\d+\.\d*|\.\d+)([eE][+-]?\d+)?|\d+[eE][+-]?\d+"
     t.value = float(t.value)
     return t
 
 
-# Rule for Integers only
 def t_INTEGER(t):
     r"\d+"
     t.value = int(t.value)
     return t
 
 
-# Function to Handle String Literals
-
-
 def t_STRING_LITERAL(t):
     r"\"([^\\\n]|(\\.))*?\" "
-    t.value = t.value[1:-1]  # Remove the surrounding double quotes
+    t.value = t.value[1:-1]
     return t
 
 
-# A string containing ignored characters (spaces and tabs)
-t_ignore = " \t"
-
-
-# Define a rule so we can track line numbers
-def t_newline(t):
-    r"\n+"
-    t.lexer.lineno += len(t.value)
-
-
-# Error handling rule
-def t_error(t):
-    print(f"Illegal character '{t.value[0]}'")
-    t.lexer.skip(1)
-
-
-# Assignment and assignment operators
 def t_EQUAL(t):
     r"=="
     return t
@@ -210,7 +189,6 @@ def t_ASSIGN(t):
     return t
 
 
-# Build the lexer
 lexer = lex.lex()
 
 if __name__ == "__main__":
