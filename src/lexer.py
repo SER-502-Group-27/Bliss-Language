@@ -52,9 +52,7 @@ reserved = {
     "def": "DEF",
 }
 
-
 tokens += tuple(reserved.values())
-
 
 t_PLUS = r"\+"
 t_MINUS = r"-"
@@ -63,9 +61,6 @@ t_DIVIDE = r"/"
 t_MODULO = r"%"
 t_LPAREN = r"\("
 t_RPAREN = r"\)"
-t_AND = r"&"
-t_OR = r"\|"
-t_NOT = r"!"
 t_GREATER_THAN = r">"
 t_LESS_THAN = r"<"
 t_GREATER_EQUAL = r">="
@@ -73,18 +68,19 @@ t_LESS_EQUAL = r"<="
 t_COLON = r":"
 t_COMMA = r","
 
-
 states = (("indent", "exclusive"),)
 
 indent_stack = [0]
 
-
+# Ignore spaces and tabs in all states
 t_ignore = " \t"
+t_indent_ignore = " \t"
 
 
 def t_newline(t):
     r"\n+"
     t.lexer.lineno += len(t.value)
+    t.lexer.begin("indent")  # Begin checking for indentation on new lines
 
 
 def t_indent_whitespace(t):
@@ -97,20 +93,20 @@ def t_indent_whitespace(t):
     elif space_count < indent_stack[-1]:
         while indent_stack and space_count < indent_stack[-1]:
             indent_stack.pop()
-            t.type = "DEDENT"
-            return t
+            t.lexer.emit("DEDENT")
     t.lexer.begin("INITIAL")
 
 
 def t_error(t):
-    print(f"Illegal character '{t.value[0]}'")
+    if t.value[0] not in " \t":
+        print(f"Illegal character '{t.value[0]}'")
     t.lexer.skip(1)
 
 
 def t_indent_other(t):
     r"[^\s]"
-    t.lexer.begin("INITIAL")
-    t.lexer.lexpos -= 1
+    t.lexer.begin("INITIAL")  # Return to the initial state when hitting non-whitespace
+    t.lexer.lexpos -= 1  # Re-evaluate this character in the initial state
 
 
 def t_indent_error(t):
@@ -193,25 +189,10 @@ lexer = lex.lex()
 
 if __name__ == "__main__":
     # Test the lexer
-    data = """
-    a = 2
-    b = .3
-    c = 0.6
-    f = 1.0e+10
-    g = 1.0e-10
-    g1 = 1.0e-3
-    h = 1e+10
-    e = 1e-10
-    e1 = 1e-3
-    d = 1e10
-    "string"
-    range(start, stop, step)
-    range(1, 10)
-    range(5)
-    def my_function(name):
-      print(name)
-    """
-    lexer.input(data)
+    with open("tests/sample.bs", "r", encoding="utf-8") as f:
+        bliss_code = f.read()
+
+    lexer.input(bliss_code)
     for tok in lexer:
         print(tok)
 
