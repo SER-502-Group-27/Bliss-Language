@@ -28,7 +28,7 @@ tokens = (
     "EQUAL",
     "NOT_EQUAL",
     "INDENT",
-    "DEDENT",
+    "OUTDENT",
     "STRING_LITERAL",
     "COMMA",
     "NEWLINE",
@@ -95,7 +95,7 @@ def t_newline(t):
         add_token_to_queue("INDENT", t.lexer.lineno)
     while new_indent_level < current_indent_level:
         indent_stack.pop()
-        add_token_to_queue("DEDENT", t.lexer.lineno)
+        add_token_to_queue("OUTDENT", t.lexer.lineno)
         current_indent_level = indent_stack[-1] if indent_stack else 0
 
     t.type = "NEWLINE"
