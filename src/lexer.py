@@ -88,28 +88,31 @@ def t_newline(t):
         len(remaining_data) - len(remaining_data.lstrip(" "))
     ) // indent_size
     current_indent_level = indent_stack[-1] if indent_stack else 0
-
+    return_flag = False
     # Process indentation changes
     if new_indent_level > current_indent_level:
         indent_stack.append(new_indent_level)
-        add_token_to_queue("INDENT", t.lexer.lineno)
+        return generate_indent_token("INDENT", new_indent_level, t.lexer.lineno)
     while new_indent_level < current_indent_level:
         indent_stack.pop()
-        add_token_to_queue("OUTDENT", t.lexer.lineno)
-        current_indent_level = indent_stack[-1] if indent_stack else 0
+        if not return_flag:
+            token = generate_indent_token("OUTDENT", current_indent_level, t.lexer.lineno)
+            return_flag = True
+        else:
+            token_to_append = generate_indent_token("OUTDENT", current_indent_level, t.lexer.lineno)
+            lexer_tokens_queue.append(token_to_append)
+        current_indent_level = indent_stack[-1] if indent_stack else -1
+    if return_flag:
+        return token
 
-    t.type = "NEWLINE"
-    return t
-
-def add_token_to_queue(token_type, line_no):
-    # print(f"Adding token {token_type} at line {line_no}")
+def generate_indent_token(token_type, indent_level, line_no):
     token = lex.LexToken()
     token.type = token_type
-    token.value = None
+    token.value = indent_level
     token.lineno = line_no
-    token.lexpos = -1  # position not tracked
-    lexer_tokens_queue.append(token)
-    # print(lexer_tokens_queue)
+    token.lexpos = indent_level * indent_size if indent_level > 0 else 0
+    return token
+    
 
 
 def t_error(t):
@@ -205,41 +208,33 @@ original_token_method = lex.Lexer.token
 
 def new_token_method(self):
     # First check if there are tokens in the queue to be processed
-    if lexer_tokens_queue:
-        # Get the next token from the queue
-        queued_token = lexer_tokens_queue.pop(0)
-        # print(f"Dequeuing: {queued_token.type} at line {queued_token.lineno}")
-        return queued_token
+    while lexer_tokens_queue:
+        if lexer_tokens_queue[0].type in {"INDENT", "OUTDENT"}:
+            return lexer_tokens_queue.pop(0)
 
     # If no tokens are in the queue, generate the next token using the original method
     token = original_token_method(self)
-
-    # If the generated token is significant for indentation handling (like NEWLINE), recheck the queue
-    if token and token.type == "NEWLINE":
-        # Check if there are indentation changes that need to be processed before continuing
-        if lexer_tokens_queue:
-            # Insert the current token back at the start of the queue to handle it after the indentation tokens
-            lexer_tokens_queue.insert(0, token)
-            # print(f"Re-queueing NEWLINE for later processing")
-            # Return the next token from the queue which should be an indentation token
-            return lexer_tokens_queue.pop(0)
-
-    # Return the generated token if no further queue processing is needed
     return token
-
 
 
 lex.Lexer.token = new_token_method
 
 lexer = lex.lex()
-lexer.indent_stack = [0]
+
+
+def preprocess_input(data):
+    """Ensure the input data ends with a newline for proper lexing."""
+    if not data.endswith("\n"):
+        data += "\n"
+    return data
+
 
 if __name__ == "__main__":
     # Test the lexer
     with open("tests/sample.bs", "r", encoding="utf-8") as f:
         bliss_code = f.read()
 
-    lexer.input(bliss_code)
+    lexer.input(preprocess_input(bliss_code))
     for tok in lexer:
         print(tok)
 
