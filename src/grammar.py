@@ -16,15 +16,72 @@ def p_program(p):
         p[0] = p[1] + p[2] if p[1] and p[2] else p[1] or p[2]
 
 
-def p_statement_expr(p):
-    "statement : expression"
+def p_block(p):
+    """
+    block : INDENT statements OUTDENT
+    """
+    p[0] = p[2]
+
+
+def p_statements(p):
+    """
+    statements : statement
+               | statements statement
+    """
+    if len(p) == 2:
+        p[0] = [p[1]]
+        print(f"Adding single statement at line: {p.lineno(1)}")
+    else:
+        p[0].append(p[2])
+        print(f"Appending statement at line: {p.lineno(2)}")
+
+
+def p_statement(p):
+    """
+    statement : simple_statement
+              | compound_statement
+    """
     p[0] = p[1]
 
 
-def p_statement_assign(p):
-    "statement : IDENTIFIER ASSIGN expression"
+def p_simple_statement(p):
+    """
+    simple_statement : expression_stmt
+                     | assignment_stmt
+                     | print_stmt
+    """
+    p[0] = p[1]
+
+
+def p_compound_statement(p):
+    """
+    compound_statement : if_stmt
+    """
+    p[0] = p[1]
+
+
+def p_if_stmt(p):
+    """
+    if_stmt : IF expression COLON block
+            | IF expression COLON block ELSE COLON block
+    """
+    if len(p) == 5:
+        p[0] = ("if", p[2], p[4])
+        print(f"Processed IF without ELSE at line {p.lineno(1)}")
+    elif len(p) == 8:
+        p[0] = ("if-else", p[2], p[4], p[7])
+        print(f"Processed IF with ELSE at line {p.lineno(1)}")
+
+
+def p_expression_stmt(p):
+    "expression_stmt : expression"
+    p[0] = p[1]
+
+
+def p_assignment_stmt(p):
+    "assignment_stmt : IDENTIFIER ASSIGN expression"
     symbol_table[p[1]] = p[3]
-    print(f"{p[1]} = {p[3]}")
+    p[0] = (p[1], p[3])
 
 
 def p_expression_binop(p):
@@ -79,27 +136,21 @@ def p_expression_identifier(p):
 
 def p_error(p):
     if p:
-        print(f"Syntax error at '{p.value}'")
+        print(f"Syntax error at '{p.value}', type: {p.type}, line: {p.lineno}")
     else:
         print("Syntax error at EOF")
 
 
-def p_statement_print(p):
-    "statement : PRINT LPAREN expression RPAREN"
+def p_print_stmt(p):
+    "print_stmt : PRINT LPAREN expression RPAREN"
     print(f"{p[3]}")
 
 
 parser = yacc.yacc()
 
 
-bliss_code = """
-x = 2.5
-y = 20
-z = x + y
-print(z)
-x = x * 5
-print(x)
-"""
+with open("tests/sample.bs", "r", encoding="utf-8") as f:
+    bliss_code = f.read()
 
 if __name__ == "__main__":
     print("Processing Bliss code:")
