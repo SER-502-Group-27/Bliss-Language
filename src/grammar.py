@@ -1,19 +1,35 @@
-from lexer import tokens
 import ply.yacc as yacc
+from lexer import (
+    tokens,
+    lexer,
+)
 
+precedence = (
+    ("left", "OR"),
+    ("left", "AND"),
+    (
+        "nonassoc",
+        "LESS_THAN",
+        "GREATER_THAN",
+        "LESS_EQUAL",
+        "GREATER_EQUAL",
+        "EQUAL",
+        "NOT_EQUAL",
+    ),
+    ("left", "PLUS", "MINUS"),
+    ("left", "TIMES", "DIVIDE", "MODULO"),
+    ("right", "UMINUS", "NOT"),
+)
 
-symbol_table = {}
+# Dictionary to hold variables' values
+variables = {}
 
 
 def p_program(p):
     """
-    program : program statement
-            | statement
+    program : statements
     """
-    if len(p) == 2:
-        p[0] = p[1]
-    else:
-        p[0] = p[1] + p[2] if p[1] and p[2] else p[1] or p[2]
+    p[0] = p[1]
 
 
 def p_block(p):
@@ -28,60 +44,48 @@ def p_statements(p):
     statements : statement
                | statements statement
     """
-    if len(p) == 2:
-        p[0] = [p[1]]
-        print(f"Adding single statement at line: {p.lineno(1)}")
+    if len(p) == 3:
+        p[0] = p[1] + [p[2]]
     else:
-        p[0].append(p[2])
-        print(f"Appending statement at line: {p.lineno(2)}")
+        p[0] = [p[1]]
 
 
 def p_statement(p):
     """
-    statement : simple_statement
-              | compound_statement
-    """
-    p[0] = p[1]
-
-
-def p_simple_statement(p):
-    """
-    simple_statement : expression_stmt
-                     | assignment_stmt
-                     | print_stmt
-    """
-    p[0] = p[1]
-
-
-def p_compound_statement(p):
-    """
-    compound_statement : if_stmt
-    """
-    p[0] = p[1]
-
-
-def p_if_stmt(p):
-    """
-    if_stmt : IF expression COLON block
-            | IF expression COLON block ELSE COLON block
+    statement : assignment
+              | expression
+              | control_flow
+              | function_definition
+              | PRINT LPAREN expression RPAREN
     """
     if len(p) == 5:
-        p[0] = ("if", p[2], p[4])
-        print(f"Processed IF without ELSE at line {p.lineno(1)}")
-    elif len(p) == 8:
-        p[0] = ("if-else", p[2], p[4], p[7])
-        print(f"Processed IF with ELSE at line {p.lineno(1)}")
+        print(p[3])  # Execute the print statement
+    else:
+        p[0] = p[1]
 
 
-def p_expression_stmt(p):
-    "expression_stmt : expression"
-    p[0] = p[1]
-
-
-def p_assignment_stmt(p):
-    "assignment_stmt : IDENTIFIER ASSIGN expression"
-    symbol_table[p[1]] = p[3]
-    p[0] = (p[1], p[3])
+def p_assignment(p):
+    """
+    assignment : IDENTIFIER ASSIGN expression
+               | IDENTIFIER ADD_ASSIGN expression
+               | IDENTIFIER SUB_ASSIGN expression
+               | IDENTIFIER MUL_ASSIGN expression
+               | IDENTIFIER DIV_ASSIGN expression
+               | IDENTIFIER MOD_ASSIGN expression
+    """
+    if p[2] == "=":
+        variables[p[1]] = p[3]
+    elif p[2] == "+=":
+        variables[p[1]] += p[3]
+    elif p[2] == "-=":
+        variables[p[1]] -= p[3]
+    elif p[2] == "*=":
+        variables[p[1]] *= p[3]
+    elif p[2] == "/=":
+        variables[p[1]] /= p[3]
+    elif p[2] == "%=":
+        variables[p[1]] %= p[3]
+    p[0] = variables[p[1]]
 
 
 def p_expression_binop(p):
@@ -98,60 +102,129 @@ def p_expression_binop(p):
                | expression EQUAL expression
                | expression NOT_EQUAL expression
     """
-    operators = {
-        "+": lambda x, y: x + y,
-        "-": lambda x, y: x - y,
-        "*": lambda x, y: x * y,
-        "/": lambda x, y: x / y,
-        "%": lambda x, y: x % y,
-        ">": lambda x, y: x > y,
-        "<": lambda x, y: x < y,
-        ">=": lambda x, y: x >= y,
-        "<=": lambda x, y: x <= y,
-        "==": lambda x, y: x == y,
-        "!=": lambda x, y: x != y,
-    }
-    p[0] = operators[p[2]](p[1], p[3])
+    if p[2] == "+":
+        p[0] = p[1] + p[3]
+    elif p[2] == "-":
+        p[0] = p[1] - p[3]
+    elif p[2] == "*":
+        p[0] = p[1] * p[3]
+    elif p[2] == "/":
+        p[0] = p[1] / p[3]
+    elif p[2] == "%":
+        p[0] = p[1] % p[3]
+    elif p[2] == ">":
+        p[0] = p[1] > p[3]
+    elif p[2] == "<":
+        p[0] = p[1] < p[3]
+    elif p[2] == ">=":
+        p[0] = p[1] >= p[3]
+    elif p[2] == "<=":
+        p[0] = p[1] <= p[3]
+    elif p[2] == "==":
+        p[0] = p[1] == p[3]
+    elif p[2] == "!=":
+        p[0] = p[1] != p[3]
 
 
 def p_expression_group(p):
-    "expression : LPAREN expression RPAREN"
+    """
+    expression : LPAREN expression RPAREN
+    """
     p[0] = p[2]
 
 
 def p_expression_number(p):
-    "expression : INTEGER"
-    p[0] = p[1]
-
-
-def p_expression_float(p):
-    "expression : FLOAT"
+    """
+    expression : INTEGER
+               | FLOAT
+    """
     p[0] = p[1]
 
 
 def p_expression_identifier(p):
-    "expression : IDENTIFIER"
-    p[0] = symbol_table.get(p[1], 0)
+    """
+    expression : IDENTIFIER
+    """
+    p[0] = variables.get(p[1], 0)
+
+
+def p_expression_negate(p):
+    """
+    expression : MINUS expression %prec UMINUS
+               | NOT expression
+    """
+    if p[1] == "-":
+        p[0] = -p[2]
+    elif p[1] == "not":
+        p[0] = not p[2]
+
+
+def p_expression_string(p):
+    """
+    expression : STRING_LITERAL
+    """
+    p[0] = p[1]
+
+
+def p_control_flow(p):
+    """
+    control_flow : if_statement
+                 | while_statement
+    """
+    p[0] = p[1]
+
+
+def p_if_statement(p):
+    """
+    if_statement : IF expression COLON block ELSE COLON block
+                 | IF expression COLON block
+    """
+    if p[2]:
+        p[0] = p[4]
+    elif len(p) > 5:
+        p[0] = p[7]
+
+
+def p_while_statement(p):
+    """
+    while_statement : WHILE expression COLON block
+    """
+    while p[2]:
+        p[0] = p[4]
+
+
+def p_function_definition(p):
+    """
+    function_definition : DEF IDENTIFIER LPAREN RPAREN COLON statements
+    """
+    p[0] = ("function", p[2], p[6])
 
 
 def p_error(p):
-    if p:
-        print(f"Syntax error at '{p.value}', type: {p.type}, line: {p.lineno}")
-    else:
-        print("Syntax error at EOF")
+    print(
+        f"Syntax error {p.type}, {p.value}, {p.lineno}, {p.lexpos}"
+        if p
+        else "Syntax error at EOF"
+    )
 
 
-def p_print_stmt(p):
-    "print_stmt : PRINT LPAREN expression RPAREN"
-    print(f"{p[3]}")
-
-
+# Build the parser
 parser = yacc.yacc()
 
 
-with open("tests/sample.bs", "r", encoding="utf-8") as f:
-    bliss_code = f.read()
+def preprocess_input(data):
+    """Ensure the input data ends with a newline for proper lexing."""
+    if not data.endswith("\n"):
+        data += "\n"
+    return data
+
+
+def parse(data):
+    result = parser.parse(data, lexer=lexer)
+    return result
+
 
 if __name__ == "__main__":
-    print("Processing Bliss code:")
-    parser.parse(bliss_code)
+    with open("tests/sample.bs", "r", encoding="utf-8") as f:
+        bliss_code = f.read()
+    print(parse(preprocess_input(bliss_code)))

@@ -96,14 +96,19 @@ def t_newline(t):
     while new_indent_level < current_indent_level:
         indent_stack.pop()
         if not return_flag:
-            token = generate_indent_token("OUTDENT", current_indent_level, t.lexer.lineno)
+            token = generate_indent_token(
+                "OUTDENT", current_indent_level, t.lexer.lineno
+            )
             return_flag = True
         else:
-            token_to_append = generate_indent_token("OUTDENT", current_indent_level, t.lexer.lineno)
+            token_to_append = generate_indent_token(
+                "OUTDENT", current_indent_level, t.lexer.lineno
+            )
             lexer_tokens_queue.append(token_to_append)
         current_indent_level = indent_stack[-1] if indent_stack else -1
     if return_flag:
         return token
+
 
 def generate_indent_token(token_type, indent_level, line_no):
     token = lex.LexToken()
@@ -112,7 +117,6 @@ def generate_indent_token(token_type, indent_level, line_no):
     token.lineno = line_no
     token.lexpos = indent_level * indent_size if indent_level > 0 else 0
     return token
-    
 
 
 def t_error(t):
