@@ -1444,17 +1444,6 @@ state 43
     (18) expression -> expression . EQUAL expression
     (19) expression -> expression . NOT_EQUAL expression
 
-    PLUS            reduce using rule 26 (expression -> NOT expression .)
-    MINUS           reduce using rule 26 (expression -> NOT expression .)
-    TIMES           reduce using rule 26 (expression -> NOT expression .)
-    DIVIDE          reduce using rule 26 (expression -> NOT expression .)
-    MODULO          reduce using rule 26 (expression -> NOT expression .)
-    GREATER_THAN    reduce using rule 26 (expression -> NOT expression .)
-    LESS_THAN       reduce using rule 26 (expression -> NOT expression .)
-    GREATER_EQUAL   reduce using rule 26 (expression -> NOT expression .)
-    LESS_EQUAL      reduce using rule 26 (expression -> NOT expression .)
-    EQUAL           reduce using rule 26 (expression -> NOT expression .)
-    NOT_EQUAL       reduce using rule 26 (expression -> NOT expression .)
     PRINT           reduce using rule 26 (expression -> NOT expression .)
     IDENTIFIER      reduce using rule 26 (expression -> NOT expression .)
     LPAREN          reduce using rule 26 (expression -> NOT expression .)
@@ -1469,18 +1458,29 @@ state 43
     RPAREN          reduce using rule 26 (expression -> NOT expression .)
     COLON           reduce using rule 26 (expression -> NOT expression .)
     OUTDENT         reduce using rule 26 (expression -> NOT expression .)
+    PLUS            shift and go to state 22
+    MINUS           shift and go to state 23
+    TIMES           shift and go to state 24
+    DIVIDE          shift and go to state 25
+    MODULO          shift and go to state 26
+    GREATER_THAN    shift and go to state 27
+    LESS_THAN       shift and go to state 28
+    GREATER_EQUAL   shift and go to state 29
+    LESS_EQUAL      shift and go to state 30
+    EQUAL           shift and go to state 31
+    NOT_EQUAL       shift and go to state 32
 
-  ! PLUS            [ shift and go to state 22 ]
-  ! MINUS           [ shift and go to state 23 ]
-  ! TIMES           [ shift and go to state 24 ]
-  ! DIVIDE          [ shift and go to state 25 ]
-  ! MODULO          [ shift and go to state 26 ]
-  ! GREATER_THAN    [ shift and go to state 27 ]
-  ! LESS_THAN       [ shift and go to state 28 ]
-  ! GREATER_EQUAL   [ shift and go to state 29 ]
-  ! LESS_EQUAL      [ shift and go to state 30 ]
-  ! EQUAL           [ shift and go to state 31 ]
-  ! NOT_EQUAL       [ shift and go to state 32 ]
+  ! PLUS            [ reduce using rule 26 (expression -> NOT expression .) ]
+  ! MINUS           [ reduce using rule 26 (expression -> NOT expression .) ]
+  ! TIMES           [ reduce using rule 26 (expression -> NOT expression .) ]
+  ! DIVIDE          [ reduce using rule 26 (expression -> NOT expression .) ]
+  ! MODULO          [ reduce using rule 26 (expression -> NOT expression .) ]
+  ! GREATER_THAN    [ reduce using rule 26 (expression -> NOT expression .) ]
+  ! LESS_THAN       [ reduce using rule 26 (expression -> NOT expression .) ]
+  ! GREATER_EQUAL   [ reduce using rule 26 (expression -> NOT expression .) ]
+  ! LESS_EQUAL      [ reduce using rule 26 (expression -> NOT expression .) ]
+  ! EQUAL           [ reduce using rule 26 (expression -> NOT expression .) ]
+  ! NOT_EQUAL       [ reduce using rule 26 (expression -> NOT expression .) ]
 
 
 state 44

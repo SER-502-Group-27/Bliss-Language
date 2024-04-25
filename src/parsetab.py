@@ -5,7 +5,7 @@ _tabversion = "3.10"
 
 _lr_method = "LALR"
 
-_lr_signature = "leftORleftANDnonassocLESS_THANGREATER_THANLESS_EQUALGREATER_EQUALEQUALNOT_EQUALleftPLUSMINUSleftTIMESDIVIDEMODULOrightUMINUSNOTADD_ASSIGN AND ASSIGN BOOLEAN BREAK COLON COMMA CONTINUE DEF DIVIDE DIV_ASSIGN ELIF ELSE EQUAL FLOAT FOR GREATER_EQUAL GREATER_THAN IDENTIFIER IF IN INDENT INTEGER LESS_EQUAL LESS_THAN LPAREN MINUS MODULO MOD_ASSIGN MUL_ASSIGN NEWLINE NOT NOT_EQUAL NUMBER OR OUTDENT PLUS PRINT RANGE RPAREN STRING STRING_LITERAL SUB_ASSIGN TIMES WHILE\n    program : statements\n    \n    statements : statements statement\n               | statement\n    \n    statement : assignment\n              | expression\n              | control_flow\n              | function_definition\n              | PRINT LPAREN expression RPAREN\n    \n    expression : expression PLUS expression\n               | expression MINUS expression\n               | expression TIMES expression\n               | expression DIVIDE expression\n               | expression MODULO expression\n               | expression GREATER_THAN expression\n               | expression LESS_THAN expression\n               | expression GREATER_EQUAL expression\n               | expression LESS_EQUAL expression\n               | expression EQUAL expression\n               | expression NOT_EQUAL expression\n    \n    expression : LPAREN expression RPAREN\n    \n    expression : INTEGER\n               | FLOAT\n    \n    expression : IDENTIFIER\n    \n    expression : STRING_LITERAL\n    \n    expression : MINUS expression %prec UMINUS\n               | NOT expression\n    \n    assignment : IDENTIFIER ASSIGN expression\n               | IDENTIFIER ADD_ASSIGN expression\n               | IDENTIFIER SUB_ASSIGN expression\n               | IDENTIFIER MUL_ASSIGN expression\n               | IDENTIFIER DIV_ASSIGN expression\n               | IDENTIFIER MOD_ASSIGN expression\n    \n    control_flow : if_statement\n                 | while_statement\n    \n    if_statement : IF expression COLON block ELSE COLON block\n                 | IF expression COLON block\n    \n    while_statement : WHILE expression COLON block\n    \n    block : INDENT statements OUTDENT\n    \n    function_definition : DEF IDENTIFIER LPAREN RPAREN COLON block\n    "
+_lr_signature = "rightNOTleftORleftANDnonassocLESS_THANGREATER_THANLESS_EQUALGREATER_EQUALEQUALNOT_EQUALleftPLUSMINUSleftTIMESDIVIDEMODULOrightUMINUSADD_ASSIGN AND ASSIGN BOOLEAN BREAK COLON COMMA CONTINUE DEF DIVIDE DIV_ASSIGN ELIF ELSE EQUAL FLOAT FOR GREATER_EQUAL GREATER_THAN IDENTIFIER IF IN INDENT INTEGER LESS_EQUAL LESS_THAN LPAREN MINUS MODULO MOD_ASSIGN MUL_ASSIGN NEWLINE NOT NOT_EQUAL NUMBER OR OUTDENT PLUS PRINT RANGE RPAREN STRING STRING_LITERAL SUB_ASSIGN TIMES WHILE\n    program : statements\n    \n    statements : statements statement\n               | statement\n    \n    statement : assignment\n              | expression\n              | control_flow\n              | function_definition\n              | PRINT LPAREN expression RPAREN\n    \n    expression : expression PLUS expression\n               | expression MINUS expression\n               | expression TIMES expression\n               | expression DIVIDE expression\n               | expression MODULO expression\n               | expression GREATER_THAN expression\n               | expression LESS_THAN expression\n               | expression GREATER_EQUAL expression\n               | expression LESS_EQUAL expression\n               | expression EQUAL expression\n               | expression NOT_EQUAL expression\n    \n    expression : LPAREN expression RPAREN\n    \n    expression : INTEGER\n               | FLOAT\n    \n    expression : IDENTIFIER\n    \n    expression : STRING_LITERAL\n    \n    expression : MINUS expression %prec UMINUS\n               | NOT expression %prec NOT\n    \n    assignment : IDENTIFIER ASSIGN expression\n               | IDENTIFIER ADD_ASSIGN expression\n               | IDENTIFIER SUB_ASSIGN expression\n               | IDENTIFIER MUL_ASSIGN expression\n               | IDENTIFIER DIV_ASSIGN expression\n               | IDENTIFIER MOD_ASSIGN expression\n    \n    control_flow : if_statement\n                 | while_statement\n    \n    if_statement : IF expression COLON block ELSE COLON block\n                 | IF expression COLON block\n    \n    while_statement : WHILE expression COLON block\n    \n    block : INDENT statements OUTDENT\n    \n    function_definition : DEF IDENTIFIER LPAREN RPAREN COLON block\n    "
 
 _lr_action_items = {
     "PRINT": (
@@ -910,7 +910,7 @@ _lr_action_items = {
             11,
             11,
             -25,
-            -26,
+            23,
             23,
             23,
             -9,
@@ -1572,7 +1572,7 @@ _lr_action_items = {
             22,
             -23,
             -25,
-            -26,
+            22,
             22,
             22,
             -9,
@@ -1638,7 +1638,7 @@ _lr_action_items = {
             24,
             -23,
             -25,
-            -26,
+            24,
             24,
             24,
             24,
@@ -1704,7 +1704,7 @@ _lr_action_items = {
             25,
             -23,
             -25,
-            -26,
+            25,
             25,
             25,
             25,
@@ -1770,7 +1770,7 @@ _lr_action_items = {
             26,
             -23,
             -25,
-            -26,
+            26,
             26,
             26,
             26,
@@ -1836,7 +1836,7 @@ _lr_action_items = {
             27,
             -23,
             -25,
-            -26,
+            27,
             27,
             27,
             -9,
@@ -1902,7 +1902,7 @@ _lr_action_items = {
             28,
             -23,
             -25,
-            -26,
+            28,
             28,
             28,
             -9,
@@ -1968,7 +1968,7 @@ _lr_action_items = {
             29,
             -23,
             -25,
-            -26,
+            29,
             29,
             29,
             -9,
@@ -2034,7 +2034,7 @@ _lr_action_items = {
             30,
             -23,
             -25,
-            -26,
+            30,
             30,
             30,
             -9,
@@ -2100,7 +2100,7 @@ _lr_action_items = {
             31,
             -23,
             -25,
-            -26,
+            31,
             31,
             31,
             -9,
@@ -2166,7 +2166,7 @@ _lr_action_items = {
             32,
             -23,
             -25,
-            -26,
+            32,
             32,
             32,
             -9,
@@ -2558,26 +2558,26 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
     ("S' -> program", "S'", 1, None, None, None),
-    ("program -> statements", "program", 1, "p_program", "grammar.py", 134),
+    ("program -> statements", "program", 1, "p_program", "grammar.py", 40),
     (
         "statements -> statements statement",
         "statements",
         2,
         "p_statements",
         "grammar.py",
-        140,
+        47,
     ),
-    ("statements -> statement", "statements", 1, "p_statements", "grammar.py", 141),
-    ("statement -> assignment", "statement", 1, "p_statement", "grammar.py", 151),
-    ("statement -> expression", "statement", 1, "p_statement", "grammar.py", 152),
-    ("statement -> control_flow", "statement", 1, "p_statement", "grammar.py", 153),
+    ("statements -> statement", "statements", 1, "p_statements", "grammar.py", 48),
+    ("statement -> assignment", "statement", 1, "p_statement", "grammar.py", 59),
+    ("statement -> expression", "statement", 1, "p_statement", "grammar.py", 60),
+    ("statement -> control_flow", "statement", 1, "p_statement", "grammar.py", 61),
     (
         "statement -> function_definition",
         "statement",
         1,
         "p_statement",
         "grammar.py",
-        154,
+        62,
     ),
     (
         "statement -> PRINT LPAREN expression RPAREN",
@@ -2585,7 +2585,7 @@ _lr_productions = [
         4,
         "p_statement",
         "grammar.py",
-        155,
+        63,
     ),
     (
         "expression -> expression PLUS expression",
@@ -2593,7 +2593,7 @@ _lr_productions = [
         3,
         "p_expression_binop",
         "grammar.py",
-        164,
+        73,
     ),
     (
         "expression -> expression MINUS expression",
@@ -2601,7 +2601,7 @@ _lr_productions = [
         3,
         "p_expression_binop",
         "grammar.py",
-        165,
+        74,
     ),
     (
         "expression -> expression TIMES expression",
@@ -2609,7 +2609,7 @@ _lr_productions = [
         3,
         "p_expression_binop",
         "grammar.py",
-        166,
+        75,
     ),
     (
         "expression -> expression DIVIDE expression",
@@ -2617,7 +2617,7 @@ _lr_productions = [
         3,
         "p_expression_binop",
         "grammar.py",
-        167,
+        76,
     ),
     (
         "expression -> expression MODULO expression",
@@ -2625,7 +2625,7 @@ _lr_productions = [
         3,
         "p_expression_binop",
         "grammar.py",
-        168,
+        77,
     ),
     (
         "expression -> expression GREATER_THAN expression",
@@ -2633,7 +2633,7 @@ _lr_productions = [
         3,
         "p_expression_binop",
         "grammar.py",
-        169,
+        78,
     ),
     (
         "expression -> expression LESS_THAN expression",
@@ -2641,7 +2641,7 @@ _lr_productions = [
         3,
         "p_expression_binop",
         "grammar.py",
-        170,
+        79,
     ),
     (
         "expression -> expression GREATER_EQUAL expression",
@@ -2649,7 +2649,7 @@ _lr_productions = [
         3,
         "p_expression_binop",
         "grammar.py",
-        171,
+        80,
     ),
     (
         "expression -> expression LESS_EQUAL expression",
@@ -2657,7 +2657,7 @@ _lr_productions = [
         3,
         "p_expression_binop",
         "grammar.py",
-        172,
+        81,
     ),
     (
         "expression -> expression EQUAL expression",
@@ -2665,7 +2665,7 @@ _lr_productions = [
         3,
         "p_expression_binop",
         "grammar.py",
-        173,
+        82,
     ),
     (
         "expression -> expression NOT_EQUAL expression",
@@ -2673,7 +2673,7 @@ _lr_productions = [
         3,
         "p_expression_binop",
         "grammar.py",
-        174,
+        83,
     ),
     (
         "expression -> LPAREN expression RPAREN",
@@ -2681,24 +2681,17 @@ _lr_productions = [
         3,
         "p_expression_group",
         "grammar.py",
-        180,
+        90,
     ),
-    (
-        "expression -> INTEGER",
-        "expression",
-        1,
-        "p_expression_number",
-        "grammar.py",
-        186,
-    ),
-    ("expression -> FLOAT", "expression", 1, "p_expression_number", "grammar.py", 187),
+    ("expression -> INTEGER", "expression", 1, "p_expression_number", "grammar.py", 97),
+    ("expression -> FLOAT", "expression", 1, "p_expression_number", "grammar.py", 98),
     (
         "expression -> IDENTIFIER",
         "expression",
         1,
         "p_expression_identifier",
         "grammar.py",
-        193,
+        105,
     ),
     (
         "expression -> STRING_LITERAL",
@@ -2706,7 +2699,7 @@ _lr_productions = [
         1,
         "p_expression_string",
         "grammar.py",
-        199,
+        112,
     ),
     (
         "expression -> MINUS expression",
@@ -2714,7 +2707,7 @@ _lr_productions = [
         2,
         "p_expression_negate",
         "grammar.py",
-        205,
+        119,
     ),
     (
         "expression -> NOT expression",
@@ -2722,7 +2715,7 @@ _lr_productions = [
         2,
         "p_expression_negate",
         "grammar.py",
-        206,
+        120,
     ),
     (
         "assignment -> IDENTIFIER ASSIGN expression",
@@ -2730,7 +2723,7 @@ _lr_productions = [
         3,
         "p_assignment",
         "grammar.py",
-        215,
+        130,
     ),
     (
         "assignment -> IDENTIFIER ADD_ASSIGN expression",
@@ -2738,7 +2731,7 @@ _lr_productions = [
         3,
         "p_assignment",
         "grammar.py",
-        216,
+        131,
     ),
     (
         "assignment -> IDENTIFIER SUB_ASSIGN expression",
@@ -2746,7 +2739,7 @@ _lr_productions = [
         3,
         "p_assignment",
         "grammar.py",
-        217,
+        132,
     ),
     (
         "assignment -> IDENTIFIER MUL_ASSIGN expression",
@@ -2754,7 +2747,7 @@ _lr_productions = [
         3,
         "p_assignment",
         "grammar.py",
-        218,
+        133,
     ),
     (
         "assignment -> IDENTIFIER DIV_ASSIGN expression",
@@ -2762,7 +2755,7 @@ _lr_productions = [
         3,
         "p_assignment",
         "grammar.py",
-        219,
+        134,
     ),
     (
         "assignment -> IDENTIFIER MOD_ASSIGN expression",
@@ -2770,7 +2763,7 @@ _lr_productions = [
         3,
         "p_assignment",
         "grammar.py",
-        220,
+        135,
     ),
     (
         "control_flow -> if_statement",
@@ -2778,7 +2771,7 @@ _lr_productions = [
         1,
         "p_control_flow",
         "grammar.py",
-        226,
+        142,
     ),
     (
         "control_flow -> while_statement",
@@ -2786,7 +2779,7 @@ _lr_productions = [
         1,
         "p_control_flow",
         "grammar.py",
-        227,
+        143,
     ),
     (
         "if_statement -> IF expression COLON block ELSE COLON block",
@@ -2794,7 +2787,7 @@ _lr_productions = [
         7,
         "p_if_statement",
         "grammar.py",
-        233,
+        150,
     ),
     (
         "if_statement -> IF expression COLON block",
@@ -2802,7 +2795,7 @@ _lr_productions = [
         4,
         "p_if_statement",
         "grammar.py",
-        234,
+        151,
     ),
     (
         "while_statement -> WHILE expression COLON block",
@@ -2810,15 +2803,15 @@ _lr_productions = [
         4,
         "p_while_statement",
         "grammar.py",
-        243,
+        161,
     ),
-    ("block -> INDENT statements OUTDENT", "block", 3, "p_block", "grammar.py", 249),
+    ("block -> INDENT statements OUTDENT", "block", 3, "p_block", "grammar.py", 168),
     (
         "function_definition -> DEF IDENTIFIER LPAREN RPAREN COLON block",
         "function_definition",
         6,
         "p_function_definition",
         "grammar.py",
-        255,
+        175,
     ),
 ]

@@ -12,7 +12,6 @@ tokens = (
     "MODULO",
     "LPAREN",
     "RPAREN",
-    "NOT",
     "IDENTIFIER",
     "ASSIGN",
     "ADD_ASSIGN",
@@ -51,6 +50,7 @@ reserved = {
     "break": "BREAK",
     "continue": "CONTINUE",
     "def": "DEF",
+    "not": "NOT",
 }
 
 tokens += tuple(reserved.values())

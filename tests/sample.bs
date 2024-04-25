@@ -1,17 +1,17 @@
-x = 11
-y = 2 + 4 * 3 - 5
-z = "abc"
-if x > 10:
+x = 4
+y = 2 + 4 * 3 - x
+z = "hello" + "world"
+if not x < 10:
     print(x)
     print(y)
 else:
-    if x > 5:
+    if not(x < 5):
         x = x + 100
     else:
         x = x + 1000
         print(x)
 
-if y > 0:
-    print(y)
+if -y < 0:
+    print(x+y)
 
 print(z)
