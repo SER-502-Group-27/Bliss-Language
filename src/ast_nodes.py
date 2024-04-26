@@ -38,28 +38,46 @@ class List(ASTNode):
         return [element.eval(context) for element in self.elements]
 
 
-class Index(ASTNode):
-    def __init__(self, list, index):
+class IndexOrSlicing(ASTNode):
+    def __init__(self, list, index_or_slice):
         self.list = list
-        self.index = index
+        self.index_or_slice = index_or_slice
 
     def eval(self, context):
         self.list = self.list.eval(context)
-        self.index = self.index.eval(context)
 
         if not hasattr(self.list, "__getitem__"):
-            raise ValueError(f"Cannot index into {self.list}")
+            raise TypeError(
+                f"Type {type(self.list).__name__} does not support indexing or slicing"
+            )
 
-        if not isinstance(self.index, int):
-            if self.index.is_integer():
-                self.index = int(self.index)
-            else:
-                raise ValueError(f"Index {self.index} is not an integer")
+        if isinstance(self.index_or_slice, tuple):
+            # Handling slicing
+            start, stop, step = self.index_or_slice
+            start_val = start.eval(context) if start else None
+            stop_val = stop.eval(context) if stop else None
+            step_val = step.eval(context) if step else None
 
-        if not 0 <= self.index < len(self.list):
-            raise ValueError(f"Index {self.index} out of range")
+            if step_val is not None and step_val == 0:
+                raise ValueError("Slice step cannot be zero")
 
-        return self.list[self.index]
+            # Adjust for negative indices
+            length = len(self.list)
+            if start_val and start_val < 0:
+                start_val += length
+            if stop_val and stop_val < 0:
+                stop_val += length
+
+            return self.list[start_val:stop_val:step_val]
+
+        else:
+            # Handling simple indexing
+            index_val = self.index_or_slice.eval(context)
+            if index_val < 0:
+                index_val += len(self.list)
+            if index_val >= len(self.list) or index_val < 0:
+                raise IndexError("List index out of range")
+            return self.list[index_val]
 
 
 class Identifier(ASTNode):

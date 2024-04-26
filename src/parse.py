@@ -7,7 +7,7 @@ from ast_nodes import (
     Number,
     Boolean,
     List,
-    Index,
+    IndexOrSlicing,
     Identifier,
     StringLiteral,
     UnaryOperation,
@@ -22,6 +22,7 @@ from ast_nodes import (
 # Precedence and associativity of operators
 precedence = (
     ("right", "NOT"),
+    # ("nonassoc", "SLICE"),
     ("left", "OR"),
     ("left", "AND"),
     (
@@ -35,7 +36,7 @@ precedence = (
     ),
     ("left", "PLUS", "MINUS"),
     ("left", "TIMES", "DIVIDE", "MODULO"),
-    ("right", "UMINUS"),  # Unary minus and logical not
+    ("right", "UMINUS"),
 )
 
 
@@ -167,11 +168,67 @@ def p_list_elements(p):
         p[0] = [p[1]]
 
 
-def p_expression_index(p):
+def p_expression_index_or_slicing(p):
     """
-    expression : expression LBRACKET expression RBRACKET
+    expression : expression LBRACKET slice RBRACKET
     """
-    p[0] = Index(p[1], p[3])
+    p[0] = IndexOrSlicing(p[1], p[3])
+
+
+def p_slice_full(p):
+    """
+    slice : expression COLON expression COLON expression
+    """
+    p[0] = (p[1], p[3], p[5])  # start:stop:step
+
+
+def p_slice_start_step(p):
+    """
+    slice : expression COLON COLON expression
+    """
+    p[0] = (p[1], None, p[4])  # start::step
+
+
+def p_slice_stop_step(p):
+    """
+    slice : expression COLON expression
+    """
+    p[0] = (p[1], p[3], None)  # start:stop, no step
+
+
+def p_slice_start(p):
+    """
+    slice : expression COLON
+    """
+    p[0] = (p[1], None, None)  # start:, no stop or step
+
+
+def p_slice_step(p):
+    """
+    slice : COLON COLON expression
+    """
+    p[0] = (None, None, p[3])  # ::step
+
+
+def p_slice_stop(p):
+    """
+    slice : COLON expression
+    """
+    p[0] = (None, p[2], None)  # :stop
+
+
+def p_slice_empty(p):
+    """
+    slice : COLON
+    """
+    p[0] = (None, None, None)  # just the colon, no start or stop
+
+
+def p_simple_index(p):
+    """
+    slice : expression
+    """
+    p[0] = p[1]  # simple index, not a slice
 
 
 def p_expression_range(p):
