@@ -5,6 +5,7 @@ from ast_nodes import (
     PrintStatement,
     BinaryOperation,
     Number,
+    Boolean,
     Identifier,
     StringLiteral,
     UnaryOperation,
@@ -112,6 +113,13 @@ def p_expression_string(p):
     expression : STRING_LITERAL
     """
     p[0] = StringLiteral(p[1])
+
+
+def p_expression_boolean(p):
+    """
+    expression : BOOLEAN
+    """
+    p[0] = Boolean(p[1])
 
 
 def p_expression_negate(p):

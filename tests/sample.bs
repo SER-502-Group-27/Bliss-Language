@@ -1,6 +1,6 @@
 x = 4
 y = 2 + 4 * 3 - x
-z = "hello" + "world"
+z = True
 if not x < 10:
     print(x)
     print(y)

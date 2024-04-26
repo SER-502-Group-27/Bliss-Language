@@ -1,6 +1,10 @@
+from calendar import c
+
+
 class ASTNode:
     def eval(self, context):
         pass
+
 
 class Number(ASTNode):
     def __init__(self, value):
@@ -11,6 +15,14 @@ class Number(ASTNode):
 
 
 class StringLiteral(ASTNode):
+    def __init__(self, value):
+        self.value = value
+
+    def eval(self, context):
+        return self.value
+
+
+class Boolean(ASTNode):
     def __init__(self, value):
         self.value = value
 
@@ -59,7 +71,7 @@ class BinaryOperation(ASTNode):
             return lval >= rval
         else:
             raise ValueError("Unknown operator")
-        
+
 
 class UnaryOperation(ASTNode):
     def __init__(self, operator, operand):
@@ -68,9 +80,9 @@ class UnaryOperation(ASTNode):
 
     def eval(self, context):
         value = self.operand.eval(context)
-        if self.operator == '-':
+        if self.operator == "-":
             return -value
-        elif self.operator == 'not':
+        elif self.operator == "not":
             return not value
         else:
             raise ValueError(f"Unsupported unary operator {self.operator}")
@@ -95,6 +107,7 @@ class Assignment(ASTNode):
             context[self.identifier.name] /= self.expr.eval(context)
         elif self.op == "%=":
             context[self.identifier.name] %= self.expr.eval(context)
+
 
 class PrintStatement(ASTNode):
     def __init__(self, expr):

@@ -136,16 +136,23 @@ def t_indent_error(t):
     t.lexer.skip(1)
 
 
+def t_TRUE(t):
+    r"True"
+    t.value = True
+    t.type = "BOOLEAN"
+    return t
+
+
+def t_FALSE(t):
+    r"False"
+    t.value = False
+    t.type = "BOOLEAN"
+    return t
+
+
 def t_IDENTIFIER(t):
     r"[a-zA-Z_][a-zA-Z_0-9]*"
-    t.value = t.value
-    if t.value.lower() in ("true", "false"):
-        t.type = "BOOLEAN"
-        t.value = True if t.value.lower() == "true" else False
-    else:
-        t.type = reserved.get(
-            t.value.lower(), "IDENTIFIER"
-        )  # Use lowercase for checking
+    t.type = reserved.get(t.value, "IDENTIFIER")
     return t
 
 
