@@ -138,7 +138,7 @@ class TestLexer(unittest.TestCase):
         token = self.lexer.token()
         self.assertIsNotNone(token)
         self.assertEqual(token.type, "MOD_ASSIGN")
-    
+
     def test_equal_operator(self):
         self.lexer.input("==")
         token = self.lexer.token()
@@ -151,7 +151,20 @@ class TestLexer(unittest.TestCase):
         self.assertIsNotNone(token)
         self.assertEqual(token.type, "NOT_EQUAL")
 
+    def test_indentation_single_indent(self):
+        code = "if condition:\n    action"
+        self.lexer.input(code)
+        tokens = [token for token in self.lexer]
 
+        self.assertTrue(any(t.type == "INDENT" for t in tokens))
+
+    def test_indentation_with_dedent(self):
+        code = "if condition:\n    action\nelse:\n    action2"
+        self.lexer.input(code)
+        tokens = [token for token in self.lexer]
+        indents = [t.type for t in tokens]
+        self.assertIn("INDENT", indents)
+        self.assertIn("OUTDENT", indents)
 
 
 if __name__ == "__main__":
