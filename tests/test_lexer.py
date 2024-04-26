@@ -79,6 +79,29 @@ class TestLexer(unittest.TestCase):
         self.assertIsNotNone(token)
         self.assertEqual(token.type, "MODULO")
 
+    def test_greater_than_operator(self):
+        self.lexer.input(">")
+        token = self.lexer.token()
+        self.assertIsNotNone(token)
+        self.assertEqual(token.type, "GREATER_THAN")
+
+    def test_less_than_operator(self):
+        self.lexer.input("<")
+        token = self.lexer.token()
+        self.assertIsNotNone(token)
+        self.assertEqual(token.type, "LESS_THAN")
+
+    def test_greater_equal_operator(self):
+        self.lexer.input(">=")
+        token = self.lexer.token()
+        self.assertIsNotNone(token)
+        self.assertEqual(token.type, "GREATER_EQUAL")
+
+    def test_less_equal_operator(self):
+        self.lexer.input("<=")
+        token = self.lexer.token()
+        self.assertIsNotNone(token)
+        self.assertEqual(token.type, "LESS_EQUAL")
 
 
 if __name__ == "__main__":
