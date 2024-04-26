@@ -169,7 +169,7 @@ def t_INTEGER(t):
 
 
 def t_STRING_LITERAL(t):
-    r"\"([^\\\n]|(\\.))*?\" "
+    r"('([^'\\\n]|(\\.))*?'|\"([^\"\\\n]|(\\.))*?\")"
     t.value = t.value[1:-1]
     return t
 

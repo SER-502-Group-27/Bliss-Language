@@ -21,8 +21,15 @@ class TestLexer(unittest.TestCase):
         self.assertEqual(token.type, "FLOAT")
         self.assertEqual(token.value, 12.34)
 
-    def test_string_literal(self):
+    def test_string_literal_double_quotes(self):
         self.lexer.input('"hello world"')
+        token = self.lexer.token()
+        self.assertIsNotNone(token)
+        self.assertEqual(token.type, "STRING_LITERAL")
+        self.assertEqual(token.value, "hello world")
+
+    def test_string_literal_single_quotes(self):
+        self.lexer.input("'hello world'")
         token = self.lexer.token()
         self.assertIsNotNone(token)
         self.assertEqual(token.type, "STRING_LITERAL")
