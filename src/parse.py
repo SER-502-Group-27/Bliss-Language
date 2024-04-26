@@ -15,6 +15,7 @@ from ast_nodes import (
     Range,
     IfStatement,
     WhileStatement,
+    ForStatement,
     FunctionDefinition,
 )
 
@@ -263,6 +264,7 @@ def p_control_flow(p):
     """
     control_flow : if_statement
                  | while_statement
+                 | for_statement
     """
     p[0] = p[1]
 
@@ -283,6 +285,13 @@ def p_while_statement(p):
     while_statement : WHILE expression COLON block
     """
     p[0] = WhileStatement(p[2], p[4])
+
+
+def p_for_statement(p):
+    """
+    for_statement : FOR IDENTIFIER IN expression COLON block
+    """
+    p[0] = ForStatement(p[2], p[4], p[6])
 
 
 def p_block(p):

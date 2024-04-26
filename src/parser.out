@@ -6,8 +6,6 @@ Unused terminals:
     BREAK
     CONTINUE
     ELIF
-    FOR
-    IN
     NEWLINE
     NUMBER
     OR
@@ -305,6 +303,7 @@ state 3
     DEF             reduce using rule 3 (statements -> statement .)
     IF              reduce using rule 3 (statements -> statement .)
     WHILE           reduce using rule 3 (statements -> statement .)
+    FOR             reduce using rule 3 (statements -> statement .)
     $end            reduce using rule 3 (statements -> statement .)
     OUTDENT         reduce using rule 3 (statements -> statement .)
 
@@ -327,6 +326,7 @@ state 4
     DEF             reduce using rule 4 (statement -> assignment .)
     IF              reduce using rule 4 (statement -> assignment .)
     WHILE           reduce using rule 4 (statement -> assignment .)
+    FOR             reduce using rule 4 (statement -> assignment .)
     $end            reduce using rule 4 (statement -> assignment .)
     OUTDENT         reduce using rule 4 (statement -> assignment .)
 
@@ -361,6 +361,7 @@ state 5
     DEF             reduce using rule 5 (statement -> expression .)
     IF              reduce using rule 5 (statement -> expression .)
     WHILE           reduce using rule 5 (statement -> expression .)
+    FOR             reduce using rule 5 (statement -> expression .)
     $end            reduce using rule 5 (statement -> expression .)
     OUTDENT         reduce using rule 5 (statement -> expression .)
     PLUS            shift and go to state 25
@@ -398,6 +399,7 @@ state 6
     DEF             reduce using rule 6 (statement -> control_flow .)
     IF              reduce using rule 6 (statement -> control_flow .)
     WHILE           reduce using rule 6 (statement -> control_flow .)
+    FOR             reduce using rule 6 (statement -> control_flow .)
     $end            reduce using rule 6 (statement -> control_flow .)
     OUTDENT         reduce using rule 6 (statement -> control_flow .)
 
@@ -420,6 +422,7 @@ state 7
     DEF             reduce using rule 7 (statement -> function_definition .)
     IF              reduce using rule 7 (statement -> function_definition .)
     WHILE           reduce using rule 7 (statement -> function_definition .)
+    FOR             reduce using rule 7 (statement -> function_definition .)
     $end            reduce using rule 7 (statement -> function_definition .)
     OUTDENT         reduce using rule 7 (statement -> function_definition .)
 
@@ -428,7 +431,7 @@ state 8
 
     (8) statement -> PRINT . LPAREN expression RPAREN
 
-    LPAREN          shift and go to state 37
+    LPAREN          shift and go to state 39
 
 
 state 9
@@ -460,7 +463,7 @@ state 9
     LPAREN          shift and go to state 9
     INTEGER         shift and go to state 12
     FLOAT           shift and go to state 13
-    IDENTIFIER      shift and go to state 39
+    IDENTIFIER      shift and go to state 41
     STRING_LITERAL  shift and go to state 14
     BOOLEAN         shift and go to state 15
     MINUS           shift and go to state 11
@@ -468,7 +471,7 @@ state 9
     LBRACKET        shift and go to state 17
     RANGE           shift and go to state 18
 
-    expression                     shift and go to state 38
+    expression                     shift and go to state 40
 
 state 10
 
@@ -480,12 +483,12 @@ state 10
     (33) assignment -> IDENTIFIER . MOD_ASSIGN expression
     (23) expression -> IDENTIFIER .
 
-    ASSIGN          shift and go to state 40
-    ADD_ASSIGN      shift and go to state 41
-    SUB_ASSIGN      shift and go to state 42
-    MUL_ASSIGN      shift and go to state 43
-    DIV_ASSIGN      shift and go to state 44
-    MOD_ASSIGN      shift and go to state 45
+    ASSIGN          shift and go to state 42
+    ADD_ASSIGN      shift and go to state 43
+    SUB_ASSIGN      shift and go to state 44
+    MUL_ASSIGN      shift and go to state 45
+    DIV_ASSIGN      shift and go to state 46
+    MOD_ASSIGN      shift and go to state 47
     PLUS            reduce using rule 23 (expression -> IDENTIFIER .)
     MINUS           reduce using rule 23 (expression -> IDENTIFIER .)
     TIMES           reduce using rule 23 (expression -> IDENTIFIER .)
@@ -510,6 +513,7 @@ state 10
     DEF             reduce using rule 23 (expression -> IDENTIFIER .)
     IF              reduce using rule 23 (expression -> IDENTIFIER .)
     WHILE           reduce using rule 23 (expression -> IDENTIFIER .)
+    FOR             reduce using rule 23 (expression -> IDENTIFIER .)
     $end            reduce using rule 23 (expression -> IDENTIFIER .)
     OUTDENT         reduce using rule 23 (expression -> IDENTIFIER .)
 
@@ -543,7 +547,7 @@ state 11
     LPAREN          shift and go to state 9
     INTEGER         shift and go to state 12
     FLOAT           shift and go to state 13
-    IDENTIFIER      shift and go to state 39
+    IDENTIFIER      shift and go to state 41
     STRING_LITERAL  shift and go to state 14
     BOOLEAN         shift and go to state 15
     MINUS           shift and go to state 11
@@ -551,7 +555,7 @@ state 11
     LBRACKET        shift and go to state 17
     RANGE           shift and go to state 18
 
-    expression                     shift and go to state 46
+    expression                     shift and go to state 48
 
 state 12
 
@@ -581,6 +585,7 @@ state 12
     DEF             reduce using rule 21 (expression -> INTEGER .)
     IF              reduce using rule 21 (expression -> INTEGER .)
     WHILE           reduce using rule 21 (expression -> INTEGER .)
+    FOR             reduce using rule 21 (expression -> INTEGER .)
     $end            reduce using rule 21 (expression -> INTEGER .)
     RPAREN          reduce using rule 21 (expression -> INTEGER .)
     RBRACKET        reduce using rule 21 (expression -> INTEGER .)
@@ -617,6 +622,7 @@ state 13
     DEF             reduce using rule 22 (expression -> FLOAT .)
     IF              reduce using rule 22 (expression -> FLOAT .)
     WHILE           reduce using rule 22 (expression -> FLOAT .)
+    FOR             reduce using rule 22 (expression -> FLOAT .)
     $end            reduce using rule 22 (expression -> FLOAT .)
     RPAREN          reduce using rule 22 (expression -> FLOAT .)
     RBRACKET        reduce using rule 22 (expression -> FLOAT .)
@@ -653,6 +659,7 @@ state 14
     DEF             reduce using rule 24 (expression -> STRING_LITERAL .)
     IF              reduce using rule 24 (expression -> STRING_LITERAL .)
     WHILE           reduce using rule 24 (expression -> STRING_LITERAL .)
+    FOR             reduce using rule 24 (expression -> STRING_LITERAL .)
     $end            reduce using rule 24 (expression -> STRING_LITERAL .)
     RPAREN          reduce using rule 24 (expression -> STRING_LITERAL .)
     RBRACKET        reduce using rule 24 (expression -> STRING_LITERAL .)
@@ -689,6 +696,7 @@ state 15
     DEF             reduce using rule 25 (expression -> BOOLEAN .)
     IF              reduce using rule 25 (expression -> BOOLEAN .)
     WHILE           reduce using rule 25 (expression -> BOOLEAN .)
+    FOR             reduce using rule 25 (expression -> BOOLEAN .)
     $end            reduce using rule 25 (expression -> BOOLEAN .)
     RPAREN          reduce using rule 25 (expression -> BOOLEAN .)
     RBRACKET        reduce using rule 25 (expression -> BOOLEAN .)
@@ -726,7 +734,7 @@ state 16
     LPAREN          shift and go to state 9
     INTEGER         shift and go to state 12
     FLOAT           shift and go to state 13
-    IDENTIFIER      shift and go to state 39
+    IDENTIFIER      shift and go to state 41
     STRING_LITERAL  shift and go to state 14
     BOOLEAN         shift and go to state 15
     MINUS           shift and go to state 11
@@ -734,7 +742,7 @@ state 16
     LBRACKET        shift and go to state 17
     RANGE           shift and go to state 18
 
-    expression                     shift and go to state 47
+    expression                     shift and go to state 49
 
 state 17
 
@@ -767,7 +775,7 @@ state 17
     LPAREN          shift and go to state 9
     INTEGER         shift and go to state 12
     FLOAT           shift and go to state 13
-    IDENTIFIER      shift and go to state 39
+    IDENTIFIER      shift and go to state 41
     STRING_LITERAL  shift and go to state 14
     BOOLEAN         shift and go to state 15
     MINUS           shift and go to state 11
@@ -775,8 +783,8 @@ state 17
     LBRACKET        shift and go to state 17
     RANGE           shift and go to state 18
 
-    list_elements                  shift and go to state 48
-    expression                     shift and go to state 49
+    list_elements                  shift and go to state 50
+    expression                     shift and go to state 51
 
 state 18
 
@@ -866,7 +874,7 @@ state 22
     LPAREN          shift and go to state 9
     INTEGER         shift and go to state 12
     FLOAT           shift and go to state 13
-    IDENTIFIER      shift and go to state 39
+    IDENTIFIER      shift and go to state 41
     STRING_LITERAL  shift and go to state 14
     BOOLEAN         shift and go to state 15
     MINUS           shift and go to state 11
@@ -905,7 +913,7 @@ state 23
     LPAREN          shift and go to state 9
     INTEGER         shift and go to state 12
     FLOAT           shift and go to state 13
-    IDENTIFIER      shift and go to state 39
+    IDENTIFIER      shift and go to state 41
     STRING_LITERAL  shift and go to state 14
     BOOLEAN         shift and go to state 15
     MINUS           shift and go to state 11
@@ -933,6 +941,7 @@ state 24
     DEF             reduce using rule 2 (statements -> statements statement .)
     IF              reduce using rule 2 (statements -> statements statement .)
     WHILE           reduce using rule 2 (statements -> statements statement .)
+    FOR             reduce using rule 2 (statements -> statements statement .)
     $end            reduce using rule 2 (statements -> statements statement .)
     OUTDENT         reduce using rule 2 (statements -> statements statement .)
 
@@ -966,7 +975,7 @@ state 25
     LPAREN          shift and go to state 9
     INTEGER         shift and go to state 12
     FLOAT           shift and go to state 13
-    IDENTIFIER      shift and go to state 39
+    IDENTIFIER      shift and go to state 41
     STRING_LITERAL  shift and go to state 14
     BOOLEAN         shift and go to state 15
     MINUS           shift and go to state 11
@@ -974,9 +983,9 @@ state 25
     LBRACKET        shift and go to state 17
     RANGE           shift and go to state 18
 
-    expression                     shift and go to state 54
+    expression                     shift and go to state 58
 
-state 26
+state 29
 
     (10) expression -> expression MINUS . expression
     (9) expression -> . expression PLUS expression
@@ -1005,7 +1014,7 @@ state 26
     LPAREN          shift and go to state 9
     INTEGER         shift and go to state 12
     FLOAT           shift and go to state 13
-    IDENTIFIER      shift and go to state 39
+    IDENTIFIER      shift and go to state 41
     STRING_LITERAL  shift and go to state 14
     BOOLEAN         shift and go to state 15
     MINUS           shift and go to state 11
@@ -1013,9 +1022,9 @@ state 26
     LBRACKET        shift and go to state 17
     RANGE           shift and go to state 18
 
-    expression                     shift and go to state 55
+    expression                     shift and go to state 59
 
-state 27
+state 30
 
     (11) expression -> expression TIMES . expression
     (9) expression -> . expression PLUS expression
@@ -1044,7 +1053,7 @@ state 27
     LPAREN          shift and go to state 9
     INTEGER         shift and go to state 12
     FLOAT           shift and go to state 13
-    IDENTIFIER      shift and go to state 39
+    IDENTIFIER      shift and go to state 41
     STRING_LITERAL  shift and go to state 14
     BOOLEAN         shift and go to state 15
     MINUS           shift and go to state 11
@@ -1052,9 +1061,9 @@ state 27
     LBRACKET        shift and go to state 17
     RANGE           shift and go to state 18
 
-    expression                     shift and go to state 56
+    expression                     shift and go to state 60
 
-state 28
+state 31
 
     (12) expression -> expression DIVIDE . expression
     (9) expression -> . expression PLUS expression
@@ -1083,7 +1092,7 @@ state 28
     LPAREN          shift and go to state 9
     INTEGER         shift and go to state 12
     FLOAT           shift and go to state 13
-    IDENTIFIER      shift and go to state 39
+    IDENTIFIER      shift and go to state 41
     STRING_LITERAL  shift and go to state 14
     BOOLEAN         shift and go to state 15
     MINUS           shift and go to state 11
@@ -1091,9 +1100,9 @@ state 28
     LBRACKET        shift and go to state 17
     RANGE           shift and go to state 18
 
-    expression                     shift and go to state 57
+    expression                     shift and go to state 61
 
-state 29
+state 32
 
     (13) expression -> expression MODULO . expression
     (9) expression -> . expression PLUS expression
@@ -1122,7 +1131,7 @@ state 29
     LPAREN          shift and go to state 9
     INTEGER         shift and go to state 12
     FLOAT           shift and go to state 13
-    IDENTIFIER      shift and go to state 39
+    IDENTIFIER      shift and go to state 41
     STRING_LITERAL  shift and go to state 14
     BOOLEAN         shift and go to state 15
     MINUS           shift and go to state 11
@@ -1130,9 +1139,9 @@ state 29
     LBRACKET        shift and go to state 17
     RANGE           shift and go to state 18
 
-    expression                     shift and go to state 58
+    expression                     shift and go to state 62
 
-state 30
+state 33
 
     (14) expression -> expression GREATER_THAN . expression
     (9) expression -> . expression PLUS expression
@@ -1161,7 +1170,7 @@ state 30
     LPAREN          shift and go to state 9
     INTEGER         shift and go to state 12
     FLOAT           shift and go to state 13
-    IDENTIFIER      shift and go to state 39
+    IDENTIFIER      shift and go to state 41
     STRING_LITERAL  shift and go to state 14
     BOOLEAN         shift and go to state 15
     MINUS           shift and go to state 11
@@ -1169,9 +1178,9 @@ state 30
     LBRACKET        shift and go to state 17
     RANGE           shift and go to state 18
 
-    expression                     shift and go to state 59
+    expression                     shift and go to state 63
 
-state 31
+state 34
 
     (15) expression -> expression LESS_THAN . expression
     (9) expression -> . expression PLUS expression
@@ -1200,7 +1209,7 @@ state 31
     LPAREN          shift and go to state 9
     INTEGER         shift and go to state 12
     FLOAT           shift and go to state 13
-    IDENTIFIER      shift and go to state 39
+    IDENTIFIER      shift and go to state 41
     STRING_LITERAL  shift and go to state 14
     BOOLEAN         shift and go to state 15
     MINUS           shift and go to state 11
@@ -1208,9 +1217,9 @@ state 31
     LBRACKET        shift and go to state 17
     RANGE           shift and go to state 18
 
-    expression                     shift and go to state 60
+    expression                     shift and go to state 64
 
-state 32
+state 35
 
     (16) expression -> expression GREATER_EQUAL . expression
     (9) expression -> . expression PLUS expression
@@ -1239,7 +1248,7 @@ state 32
     LPAREN          shift and go to state 9
     INTEGER         shift and go to state 12
     FLOAT           shift and go to state 13
-    IDENTIFIER      shift and go to state 39
+    IDENTIFIER      shift and go to state 41
     STRING_LITERAL  shift and go to state 14
     BOOLEAN         shift and go to state 15
     MINUS           shift and go to state 11
@@ -1247,9 +1256,9 @@ state 32
     LBRACKET        shift and go to state 17
     RANGE           shift and go to state 18
 
-    expression                     shift and go to state 61
+    expression                     shift and go to state 65
 
-state 33
+state 36
 
     (17) expression -> expression LESS_EQUAL . expression
     (9) expression -> . expression PLUS expression
@@ -1278,7 +1287,7 @@ state 33
     LPAREN          shift and go to state 9
     INTEGER         shift and go to state 12
     FLOAT           shift and go to state 13
-    IDENTIFIER      shift and go to state 39
+    IDENTIFIER      shift and go to state 41
     STRING_LITERAL  shift and go to state 14
     BOOLEAN         shift and go to state 15
     MINUS           shift and go to state 11
@@ -1286,9 +1295,9 @@ state 33
     LBRACKET        shift and go to state 17
     RANGE           shift and go to state 18
 
-    expression                     shift and go to state 62
+    expression                     shift and go to state 66
 
-state 34
+state 37
 
     (18) expression -> expression EQUAL . expression
     (9) expression -> . expression PLUS expression
@@ -1317,7 +1326,7 @@ state 34
     LPAREN          shift and go to state 9
     INTEGER         shift and go to state 12
     FLOAT           shift and go to state 13
-    IDENTIFIER      shift and go to state 39
+    IDENTIFIER      shift and go to state 41
     STRING_LITERAL  shift and go to state 14
     BOOLEAN         shift and go to state 15
     MINUS           shift and go to state 11
@@ -1356,7 +1365,7 @@ state 35
     LPAREN          shift and go to state 9
     INTEGER         shift and go to state 12
     FLOAT           shift and go to state 13
-    IDENTIFIER      shift and go to state 39
+    IDENTIFIER      shift and go to state 41
     STRING_LITERAL  shift and go to state 14
     BOOLEAN         shift and go to state 15
     MINUS           shift and go to state 11
@@ -1415,7 +1424,7 @@ state 36
     expression                     shift and go to state 65
     slice                          shift and go to state 66
 
-state 37
+state 39
 
     (8) statement -> PRINT LPAREN . expression RPAREN
     (9) expression -> . expression PLUS expression
@@ -1444,7 +1453,7 @@ state 37
     LPAREN          shift and go to state 9
     INTEGER         shift and go to state 12
     FLOAT           shift and go to state 13
-    IDENTIFIER      shift and go to state 39
+    IDENTIFIER      shift and go to state 41
     STRING_LITERAL  shift and go to state 14
     BOOLEAN         shift and go to state 15
     MINUS           shift and go to state 11
@@ -1452,9 +1461,9 @@ state 37
     LBRACKET        shift and go to state 17
     RANGE           shift and go to state 18
 
-    expression                     shift and go to state 68
+    expression                     shift and go to state 71
 
-state 38
+state 40
 
     (20) expression -> LPAREN expression . RPAREN
     (9) expression -> expression . PLUS expression
@@ -1485,7 +1494,7 @@ state 38
     LBRACKET        shift and go to state 36
 
 
-state 39
+state 41
 
     (23) expression -> IDENTIFIER .
 
@@ -1514,6 +1523,7 @@ state 39
     DEF             reduce using rule 23 (expression -> IDENTIFIER .)
     IF              reduce using rule 23 (expression -> IDENTIFIER .)
     WHILE           reduce using rule 23 (expression -> IDENTIFIER .)
+    FOR             reduce using rule 23 (expression -> IDENTIFIER .)
     $end            reduce using rule 23 (expression -> IDENTIFIER .)
     RBRACKET        reduce using rule 23 (expression -> IDENTIFIER .)
     COMMA           reduce using rule 23 (expression -> IDENTIFIER .)
@@ -1521,7 +1531,7 @@ state 39
     OUTDENT         reduce using rule 23 (expression -> IDENTIFIER .)
 
 
-state 40
+state 42
 
     (28) assignment -> IDENTIFIER ASSIGN . expression
     (9) expression -> . expression PLUS expression
@@ -1550,7 +1560,7 @@ state 40
     LPAREN          shift and go to state 9
     INTEGER         shift and go to state 12
     FLOAT           shift and go to state 13
-    IDENTIFIER      shift and go to state 39
+    IDENTIFIER      shift and go to state 41
     STRING_LITERAL  shift and go to state 14
     BOOLEAN         shift and go to state 15
     MINUS           shift and go to state 11
@@ -1558,9 +1568,9 @@ state 40
     LBRACKET        shift and go to state 17
     RANGE           shift and go to state 18
 
-    expression                     shift and go to state 70
+    expression                     shift and go to state 73
 
-state 41
+state 43
 
     (29) assignment -> IDENTIFIER ADD_ASSIGN . expression
     (9) expression -> . expression PLUS expression
@@ -1589,7 +1599,7 @@ state 41
     LPAREN          shift and go to state 9
     INTEGER         shift and go to state 12
     FLOAT           shift and go to state 13
-    IDENTIFIER      shift and go to state 39
+    IDENTIFIER      shift and go to state 41
     STRING_LITERAL  shift and go to state 14
     BOOLEAN         shift and go to state 15
     MINUS           shift and go to state 11
@@ -1597,9 +1607,9 @@ state 41
     LBRACKET        shift and go to state 17
     RANGE           shift and go to state 18
 
-    expression                     shift and go to state 71
+    expression                     shift and go to state 74
 
-state 42
+state 44
 
     (30) assignment -> IDENTIFIER SUB_ASSIGN . expression
     (9) expression -> . expression PLUS expression
@@ -1628,7 +1638,7 @@ state 42
     LPAREN          shift and go to state 9
     INTEGER         shift and go to state 12
     FLOAT           shift and go to state 13
-    IDENTIFIER      shift and go to state 39
+    IDENTIFIER      shift and go to state 41
     STRING_LITERAL  shift and go to state 14
     BOOLEAN         shift and go to state 15
     MINUS           shift and go to state 11
@@ -1636,9 +1646,9 @@ state 42
     LBRACKET        shift and go to state 17
     RANGE           shift and go to state 18
 
-    expression                     shift and go to state 72
+    expression                     shift and go to state 75
 
-state 43
+state 45
 
     (31) assignment -> IDENTIFIER MUL_ASSIGN . expression
     (9) expression -> . expression PLUS expression
@@ -1667,7 +1677,7 @@ state 43
     LPAREN          shift and go to state 9
     INTEGER         shift and go to state 12
     FLOAT           shift and go to state 13
-    IDENTIFIER      shift and go to state 39
+    IDENTIFIER      shift and go to state 41
     STRING_LITERAL  shift and go to state 14
     BOOLEAN         shift and go to state 15
     MINUS           shift and go to state 11
@@ -1675,9 +1685,9 @@ state 43
     LBRACKET        shift and go to state 17
     RANGE           shift and go to state 18
 
-    expression                     shift and go to state 73
+    expression                     shift and go to state 76
 
-state 44
+state 46
 
     (32) assignment -> IDENTIFIER DIV_ASSIGN . expression
     (9) expression -> . expression PLUS expression
@@ -1706,7 +1716,7 @@ state 44
     LPAREN          shift and go to state 9
     INTEGER         shift and go to state 12
     FLOAT           shift and go to state 13
-    IDENTIFIER      shift and go to state 39
+    IDENTIFIER      shift and go to state 41
     STRING_LITERAL  shift and go to state 14
     BOOLEAN         shift and go to state 15
     MINUS           shift and go to state 11
@@ -1714,9 +1724,9 @@ state 44
     LBRACKET        shift and go to state 17
     RANGE           shift and go to state 18
 
-    expression                     shift and go to state 74
+    expression                     shift and go to state 77
 
-state 45
+state 47
 
     (33) assignment -> IDENTIFIER MOD_ASSIGN . expression
     (9) expression -> . expression PLUS expression
@@ -1745,7 +1755,7 @@ state 45
     LPAREN          shift and go to state 9
     INTEGER         shift and go to state 12
     FLOAT           shift and go to state 13
-    IDENTIFIER      shift and go to state 39
+    IDENTIFIER      shift and go to state 41
     STRING_LITERAL  shift and go to state 14
     BOOLEAN         shift and go to state 15
     MINUS           shift and go to state 11
@@ -1753,9 +1763,9 @@ state 45
     LBRACKET        shift and go to state 17
     RANGE           shift and go to state 18
 
-    expression                     shift and go to state 75
+    expression                     shift and go to state 78
 
-state 46
+state 48
 
     (26) expression -> MINUS expression .
     (9) expression -> expression . PLUS expression
@@ -1795,6 +1805,7 @@ state 46
     DEF             reduce using rule 26 (expression -> MINUS expression .)
     IF              reduce using rule 26 (expression -> MINUS expression .)
     WHILE           reduce using rule 26 (expression -> MINUS expression .)
+    FOR             reduce using rule 26 (expression -> MINUS expression .)
     $end            reduce using rule 26 (expression -> MINUS expression .)
     RPAREN          reduce using rule 26 (expression -> MINUS expression .)
     RBRACKET        reduce using rule 26 (expression -> MINUS expression .)
@@ -1816,7 +1827,7 @@ state 46
   ! LBRACKET        [ shift and go to state 36 ]
 
 
-state 47
+state 49
 
     (27) expression -> NOT expression .
     (9) expression -> expression . PLUS expression
@@ -1845,6 +1856,7 @@ state 47
     DEF             reduce using rule 27 (expression -> NOT expression .)
     IF              reduce using rule 27 (expression -> NOT expression .)
     WHILE           reduce using rule 27 (expression -> NOT expression .)
+    FOR             reduce using rule 27 (expression -> NOT expression .)
     $end            reduce using rule 27 (expression -> NOT expression .)
     RPAREN          reduce using rule 27 (expression -> NOT expression .)
     RBRACKET        reduce using rule 27 (expression -> NOT expression .)
@@ -1877,16 +1889,16 @@ state 47
   ! LBRACKET        [ shift and go to state 36 ]
 
 
-state 48
+state 50
 
     (34) expression -> LBRACKET list_elements . RBRACKET
     (35) list_elements -> list_elements . COMMA expression
 
-    RBRACKET        shift and go to state 76
-    COMMA           shift and go to state 77
+    RBRACKET        shift and go to state 79
+    COMMA           shift and go to state 80
 
 
-state 49
+state 51
 
     (36) list_elements -> expression .
     (9) expression -> expression . PLUS expression
@@ -1961,7 +1973,7 @@ state 50
     range_args                     shift and go to state 78
     expression                     shift and go to state 79
 
-state 51
+state 54
 
     (56) function_definition -> DEF IDENTIFIER . LPAREN RPAREN COLON block
 
@@ -2068,6 +2080,7 @@ state 54
     DEF             reduce using rule 9 (expression -> expression PLUS expression .)
     IF              reduce using rule 9 (expression -> expression PLUS expression .)
     WHILE           reduce using rule 9 (expression -> expression PLUS expression .)
+    FOR             reduce using rule 9 (expression -> expression PLUS expression .)
     $end            reduce using rule 9 (expression -> expression PLUS expression .)
     RPAREN          reduce using rule 9 (expression -> expression PLUS expression .)
     RBRACKET        reduce using rule 9 (expression -> expression PLUS expression .)
@@ -2129,6 +2142,7 @@ state 55
     DEF             reduce using rule 10 (expression -> expression MINUS expression .)
     IF              reduce using rule 10 (expression -> expression MINUS expression .)
     WHILE           reduce using rule 10 (expression -> expression MINUS expression .)
+    FOR             reduce using rule 10 (expression -> expression MINUS expression .)
     $end            reduce using rule 10 (expression -> expression MINUS expression .)
     RPAREN          reduce using rule 10 (expression -> expression MINUS expression .)
     RBRACKET        reduce using rule 10 (expression -> expression MINUS expression .)
@@ -2193,6 +2207,7 @@ state 56
     DEF             reduce using rule 11 (expression -> expression TIMES expression .)
     IF              reduce using rule 11 (expression -> expression TIMES expression .)
     WHILE           reduce using rule 11 (expression -> expression TIMES expression .)
+    FOR             reduce using rule 11 (expression -> expression TIMES expression .)
     $end            reduce using rule 11 (expression -> expression TIMES expression .)
     RPAREN          reduce using rule 11 (expression -> expression TIMES expression .)
     RBRACKET        reduce using rule 11 (expression -> expression TIMES expression .)
@@ -2254,6 +2269,7 @@ state 57
     DEF             reduce using rule 12 (expression -> expression DIVIDE expression .)
     IF              reduce using rule 12 (expression -> expression DIVIDE expression .)
     WHILE           reduce using rule 12 (expression -> expression DIVIDE expression .)
+    FOR             reduce using rule 12 (expression -> expression DIVIDE expression .)
     $end            reduce using rule 12 (expression -> expression DIVIDE expression .)
     RPAREN          reduce using rule 12 (expression -> expression DIVIDE expression .)
     RBRACKET        reduce using rule 12 (expression -> expression DIVIDE expression .)
@@ -2315,6 +2331,7 @@ state 58
     DEF             reduce using rule 13 (expression -> expression MODULO expression .)
     IF              reduce using rule 13 (expression -> expression MODULO expression .)
     WHILE           reduce using rule 13 (expression -> expression MODULO expression .)
+    FOR             reduce using rule 13 (expression -> expression MODULO expression .)
     $end            reduce using rule 13 (expression -> expression MODULO expression .)
     RPAREN          reduce using rule 13 (expression -> expression MODULO expression .)
     RBRACKET        reduce using rule 13 (expression -> expression MODULO expression .)
@@ -2371,6 +2388,7 @@ state 59
     DEF             reduce using rule 14 (expression -> expression GREATER_THAN expression .)
     IF              reduce using rule 14 (expression -> expression GREATER_THAN expression .)
     WHILE           reduce using rule 14 (expression -> expression GREATER_THAN expression .)
+    FOR             reduce using rule 14 (expression -> expression GREATER_THAN expression .)
     $end            reduce using rule 14 (expression -> expression GREATER_THAN expression .)
     RPAREN          reduce using rule 14 (expression -> expression GREATER_THAN expression .)
     RBRACKET        reduce using rule 14 (expression -> expression GREATER_THAN expression .)
@@ -2432,6 +2450,7 @@ state 60
     DEF             reduce using rule 15 (expression -> expression LESS_THAN expression .)
     IF              reduce using rule 15 (expression -> expression LESS_THAN expression .)
     WHILE           reduce using rule 15 (expression -> expression LESS_THAN expression .)
+    FOR             reduce using rule 15 (expression -> expression LESS_THAN expression .)
     $end            reduce using rule 15 (expression -> expression LESS_THAN expression .)
     RPAREN          reduce using rule 15 (expression -> expression LESS_THAN expression .)
     RBRACKET        reduce using rule 15 (expression -> expression LESS_THAN expression .)
@@ -2493,6 +2512,7 @@ state 61
     DEF             reduce using rule 16 (expression -> expression GREATER_EQUAL expression .)
     IF              reduce using rule 16 (expression -> expression GREATER_EQUAL expression .)
     WHILE           reduce using rule 16 (expression -> expression GREATER_EQUAL expression .)
+    FOR             reduce using rule 16 (expression -> expression GREATER_EQUAL expression .)
     $end            reduce using rule 16 (expression -> expression GREATER_EQUAL expression .)
     RPAREN          reduce using rule 16 (expression -> expression GREATER_EQUAL expression .)
     RBRACKET        reduce using rule 16 (expression -> expression GREATER_EQUAL expression .)
@@ -2554,6 +2574,7 @@ state 62
     DEF             reduce using rule 17 (expression -> expression LESS_EQUAL expression .)
     IF              reduce using rule 17 (expression -> expression LESS_EQUAL expression .)
     WHILE           reduce using rule 17 (expression -> expression LESS_EQUAL expression .)
+    FOR             reduce using rule 17 (expression -> expression LESS_EQUAL expression .)
     $end            reduce using rule 17 (expression -> expression LESS_EQUAL expression .)
     RPAREN          reduce using rule 17 (expression -> expression LESS_EQUAL expression .)
     RBRACKET        reduce using rule 17 (expression -> expression LESS_EQUAL expression .)
@@ -2615,6 +2636,7 @@ state 63
     DEF             reduce using rule 18 (expression -> expression EQUAL expression .)
     IF              reduce using rule 18 (expression -> expression EQUAL expression .)
     WHILE           reduce using rule 18 (expression -> expression EQUAL expression .)
+    FOR             reduce using rule 18 (expression -> expression EQUAL expression .)
     $end            reduce using rule 18 (expression -> expression EQUAL expression .)
     RPAREN          reduce using rule 18 (expression -> expression EQUAL expression .)
     RBRACKET        reduce using rule 18 (expression -> expression EQUAL expression .)
@@ -2676,6 +2698,7 @@ state 64
     DEF             reduce using rule 19 (expression -> expression NOT_EQUAL expression .)
     IF              reduce using rule 19 (expression -> expression NOT_EQUAL expression .)
     WHILE           reduce using rule 19 (expression -> expression NOT_EQUAL expression .)
+    FOR             reduce using rule 19 (expression -> expression NOT_EQUAL expression .)
     $end            reduce using rule 19 (expression -> expression NOT_EQUAL expression .)
     RPAREN          reduce using rule 19 (expression -> expression NOT_EQUAL expression .)
     RBRACKET        reduce using rule 19 (expression -> expression NOT_EQUAL expression .)
@@ -2778,7 +2801,7 @@ state 67
     LPAREN          shift and go to state 9
     INTEGER         shift and go to state 12
     FLOAT           shift and go to state 13
-    IDENTIFIER      shift and go to state 39
+    IDENTIFIER      shift and go to state 41
     STRING_LITERAL  shift and go to state 14
     BOOLEAN         shift and go to state 15
     MINUS           shift and go to state 11
@@ -2819,7 +2842,7 @@ state 68
     LBRACKET        shift and go to state 36
 
 
-state 69
+state 72
 
     (20) expression -> LPAREN expression RPAREN .
 
@@ -2847,6 +2870,7 @@ state 69
     DEF             reduce using rule 20 (expression -> LPAREN expression RPAREN .)
     IF              reduce using rule 20 (expression -> LPAREN expression RPAREN .)
     WHILE           reduce using rule 20 (expression -> LPAREN expression RPAREN .)
+    FOR             reduce using rule 20 (expression -> LPAREN expression RPAREN .)
     $end            reduce using rule 20 (expression -> LPAREN expression RPAREN .)
     RPAREN          reduce using rule 20 (expression -> LPAREN expression RPAREN .)
     RBRACKET        reduce using rule 20 (expression -> LPAREN expression RPAREN .)
@@ -2855,7 +2879,7 @@ state 69
     OUTDENT         reduce using rule 20 (expression -> LPAREN expression RPAREN .)
 
 
-state 70
+state 73
 
     (28) assignment -> IDENTIFIER ASSIGN expression .
     (9) expression -> expression . PLUS expression
@@ -2885,6 +2909,7 @@ state 70
     DEF             reduce using rule 28 (assignment -> IDENTIFIER ASSIGN expression .)
     IF              reduce using rule 28 (assignment -> IDENTIFIER ASSIGN expression .)
     WHILE           reduce using rule 28 (assignment -> IDENTIFIER ASSIGN expression .)
+    FOR             reduce using rule 28 (assignment -> IDENTIFIER ASSIGN expression .)
     $end            reduce using rule 28 (assignment -> IDENTIFIER ASSIGN expression .)
     OUTDENT         reduce using rule 28 (assignment -> IDENTIFIER ASSIGN expression .)
     PLUS            shift and go to state 25
@@ -2904,7 +2929,7 @@ state 70
   ! LBRACKET        [ reduce using rule 28 (assignment -> IDENTIFIER ASSIGN expression .) ]
 
 
-state 71
+state 74
 
     (29) assignment -> IDENTIFIER ADD_ASSIGN expression .
     (9) expression -> expression . PLUS expression
@@ -2934,6 +2959,7 @@ state 71
     DEF             reduce using rule 29 (assignment -> IDENTIFIER ADD_ASSIGN expression .)
     IF              reduce using rule 29 (assignment -> IDENTIFIER ADD_ASSIGN expression .)
     WHILE           reduce using rule 29 (assignment -> IDENTIFIER ADD_ASSIGN expression .)
+    FOR             reduce using rule 29 (assignment -> IDENTIFIER ADD_ASSIGN expression .)
     $end            reduce using rule 29 (assignment -> IDENTIFIER ADD_ASSIGN expression .)
     OUTDENT         reduce using rule 29 (assignment -> IDENTIFIER ADD_ASSIGN expression .)
     PLUS            shift and go to state 25
@@ -2953,7 +2979,7 @@ state 71
   ! LBRACKET        [ reduce using rule 29 (assignment -> IDENTIFIER ADD_ASSIGN expression .) ]
 
 
-state 72
+state 75
 
     (30) assignment -> IDENTIFIER SUB_ASSIGN expression .
     (9) expression -> expression . PLUS expression
@@ -2983,6 +3009,7 @@ state 72
     DEF             reduce using rule 30 (assignment -> IDENTIFIER SUB_ASSIGN expression .)
     IF              reduce using rule 30 (assignment -> IDENTIFIER SUB_ASSIGN expression .)
     WHILE           reduce using rule 30 (assignment -> IDENTIFIER SUB_ASSIGN expression .)
+    FOR             reduce using rule 30 (assignment -> IDENTIFIER SUB_ASSIGN expression .)
     $end            reduce using rule 30 (assignment -> IDENTIFIER SUB_ASSIGN expression .)
     OUTDENT         reduce using rule 30 (assignment -> IDENTIFIER SUB_ASSIGN expression .)
     PLUS            shift and go to state 25
@@ -3002,7 +3029,7 @@ state 72
   ! LBRACKET        [ reduce using rule 30 (assignment -> IDENTIFIER SUB_ASSIGN expression .) ]
 
 
-state 73
+state 76
 
     (31) assignment -> IDENTIFIER MUL_ASSIGN expression .
     (9) expression -> expression . PLUS expression
@@ -3032,6 +3059,7 @@ state 73
     DEF             reduce using rule 31 (assignment -> IDENTIFIER MUL_ASSIGN expression .)
     IF              reduce using rule 31 (assignment -> IDENTIFIER MUL_ASSIGN expression .)
     WHILE           reduce using rule 31 (assignment -> IDENTIFIER MUL_ASSIGN expression .)
+    FOR             reduce using rule 31 (assignment -> IDENTIFIER MUL_ASSIGN expression .)
     $end            reduce using rule 31 (assignment -> IDENTIFIER MUL_ASSIGN expression .)
     OUTDENT         reduce using rule 31 (assignment -> IDENTIFIER MUL_ASSIGN expression .)
     PLUS            shift and go to state 25
@@ -3051,7 +3079,7 @@ state 73
   ! LBRACKET        [ reduce using rule 31 (assignment -> IDENTIFIER MUL_ASSIGN expression .) ]
 
 
-state 74
+state 77
 
     (32) assignment -> IDENTIFIER DIV_ASSIGN expression .
     (9) expression -> expression . PLUS expression
@@ -3081,6 +3109,7 @@ state 74
     DEF             reduce using rule 32 (assignment -> IDENTIFIER DIV_ASSIGN expression .)
     IF              reduce using rule 32 (assignment -> IDENTIFIER DIV_ASSIGN expression .)
     WHILE           reduce using rule 32 (assignment -> IDENTIFIER DIV_ASSIGN expression .)
+    FOR             reduce using rule 32 (assignment -> IDENTIFIER DIV_ASSIGN expression .)
     $end            reduce using rule 32 (assignment -> IDENTIFIER DIV_ASSIGN expression .)
     OUTDENT         reduce using rule 32 (assignment -> IDENTIFIER DIV_ASSIGN expression .)
     PLUS            shift and go to state 25
@@ -3100,7 +3129,7 @@ state 74
   ! LBRACKET        [ reduce using rule 32 (assignment -> IDENTIFIER DIV_ASSIGN expression .) ]
 
 
-state 75
+state 78
 
     (33) assignment -> IDENTIFIER MOD_ASSIGN expression .
     (9) expression -> expression . PLUS expression
@@ -3130,6 +3159,7 @@ state 75
     DEF             reduce using rule 33 (assignment -> IDENTIFIER MOD_ASSIGN expression .)
     IF              reduce using rule 33 (assignment -> IDENTIFIER MOD_ASSIGN expression .)
     WHILE           reduce using rule 33 (assignment -> IDENTIFIER MOD_ASSIGN expression .)
+    FOR             reduce using rule 33 (assignment -> IDENTIFIER MOD_ASSIGN expression .)
     $end            reduce using rule 33 (assignment -> IDENTIFIER MOD_ASSIGN expression .)
     OUTDENT         reduce using rule 33 (assignment -> IDENTIFIER MOD_ASSIGN expression .)
     PLUS            shift and go to state 25
@@ -3149,7 +3179,7 @@ state 75
   ! LBRACKET        [ reduce using rule 33 (assignment -> IDENTIFIER MOD_ASSIGN expression .) ]
 
 
-state 76
+state 79
 
     (34) expression -> LBRACKET list_elements RBRACKET .
 
@@ -3177,6 +3207,7 @@ state 76
     DEF             reduce using rule 34 (expression -> LBRACKET list_elements RBRACKET .)
     IF              reduce using rule 34 (expression -> LBRACKET list_elements RBRACKET .)
     WHILE           reduce using rule 34 (expression -> LBRACKET list_elements RBRACKET .)
+    FOR             reduce using rule 34 (expression -> LBRACKET list_elements RBRACKET .)
     $end            reduce using rule 34 (expression -> LBRACKET list_elements RBRACKET .)
     RPAREN          reduce using rule 34 (expression -> LBRACKET list_elements RBRACKET .)
     RBRACKET        reduce using rule 34 (expression -> LBRACKET list_elements RBRACKET .)
@@ -3185,7 +3216,7 @@ state 76
     OUTDENT         reduce using rule 34 (expression -> LBRACKET list_elements RBRACKET .)
 
 
-state 77
+state 80
 
     (35) list_elements -> list_elements COMMA . expression
     (9) expression -> . expression PLUS expression
@@ -3214,7 +3245,7 @@ state 77
     LPAREN          shift and go to state 9
     INTEGER         shift and go to state 12
     FLOAT           shift and go to state 13
-    IDENTIFIER      shift and go to state 39
+    IDENTIFIER      shift and go to state 41
     STRING_LITERAL  shift and go to state 14
     BOOLEAN         shift and go to state 15
     MINUS           shift and go to state 11
@@ -3231,7 +3262,7 @@ state 78
     RPAREN          shift and go to state 89
 
 
-state 79
+state 84
 
     (47) range_args -> expression . COMMA expression COMMA expression
     (48) range_args -> expression . COMMA expression
@@ -3265,7 +3296,7 @@ state 79
     LBRACKET        shift and go to state 36
 
 
-state 80
+state 85
 
     (56) function_definition -> DEF IDENTIFIER LPAREN . RPAREN COLON block
 
@@ -3325,7 +3356,7 @@ state 83
     LPAREN          shift and go to state 9
     INTEGER         shift and go to state 12
     FLOAT           shift and go to state 13
-    IDENTIFIER      shift and go to state 39
+    IDENTIFIER      shift and go to state 41
     STRING_LITERAL  shift and go to state 14
     BOOLEAN         shift and go to state 15
     MINUS           shift and go to state 11
@@ -3363,6 +3394,7 @@ state 84
     DEF             reduce using rule 37 (expression -> expression LBRACKET slice RBRACKET .)
     IF              reduce using rule 37 (expression -> expression LBRACKET slice RBRACKET .)
     WHILE           reduce using rule 37 (expression -> expression LBRACKET slice RBRACKET .)
+    FOR             reduce using rule 37 (expression -> expression LBRACKET slice RBRACKET .)
     $end            reduce using rule 37 (expression -> expression LBRACKET slice RBRACKET .)
     RPAREN          reduce using rule 37 (expression -> expression LBRACKET slice RBRACKET .)
     RBRACKET        reduce using rule 37 (expression -> expression LBRACKET slice RBRACKET .)
@@ -3400,7 +3432,7 @@ state 85
     LPAREN          shift and go to state 9
     INTEGER         shift and go to state 12
     FLOAT           shift and go to state 13
-    IDENTIFIER      shift and go to state 39
+    IDENTIFIER      shift and go to state 41
     STRING_LITERAL  shift and go to state 14
     BOOLEAN         shift and go to state 15
     MINUS           shift and go to state 11
@@ -3459,6 +3491,7 @@ state 87
     DEF             reduce using rule 8 (statement -> PRINT LPAREN expression RPAREN .)
     IF              reduce using rule 8 (statement -> PRINT LPAREN expression RPAREN .)
     WHILE           reduce using rule 8 (statement -> PRINT LPAREN expression RPAREN .)
+    FOR             reduce using rule 8 (statement -> PRINT LPAREN expression RPAREN .)
     $end            reduce using rule 8 (statement -> PRINT LPAREN expression RPAREN .)
     OUTDENT         reduce using rule 8 (statement -> PRINT LPAREN expression RPAREN .)
 
@@ -3755,7 +3788,7 @@ state 96
     LPAREN          shift and go to state 9
     INTEGER         shift and go to state 12
     FLOAT           shift and go to state 13
-    IDENTIFIER      shift and go to state 39
+    IDENTIFIER      shift and go to state 41
     STRING_LITERAL  shift and go to state 14
     BOOLEAN         shift and go to state 15
     MINUS           shift and go to state 11
@@ -3942,7 +3975,7 @@ state 102
     LPAREN          shift and go to state 9
     INTEGER         shift and go to state 12
     FLOAT           shift and go to state 13
-    IDENTIFIER      shift and go to state 39
+    IDENTIFIER      shift and go to state 41
     STRING_LITERAL  shift and go to state 14
     BOOLEAN         shift and go to state 15
     MINUS           shift and go to state 11
@@ -4176,3 +4209,9 @@ WARNING: shift/reduce conflict for MINUS in state 74 resolved as shift
 WARNING: shift/reduce conflict for LBRACKET in state 74 resolved as shift
 WARNING: shift/reduce conflict for MINUS in state 75 resolved as shift
 WARNING: shift/reduce conflict for LBRACKET in state 75 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 76 resolved as shift
+WARNING: shift/reduce conflict for LBRACKET in state 76 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 77 resolved as shift
+WARNING: shift/reduce conflict for LBRACKET in state 77 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 78 resolved as shift
+WARNING: shift/reduce conflict for LBRACKET in state 78 resolved as shift

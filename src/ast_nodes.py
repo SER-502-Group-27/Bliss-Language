@@ -219,6 +219,23 @@ class WhileStatement(ASTNode):
             self.body.eval(context)
 
 
+class ForStatement(ASTNode):
+    def __init__(self, identifier, iterable, body):
+        self.identifier = identifier
+        self.iterable = iterable
+        self.body = body
+
+    def eval(self, context):
+        iterable = self.iterable.eval(context)
+
+        if not hasattr(iterable, "__iter__"):
+            raise TypeError(f"{type(iterable).__name__} object is not iterable")
+
+        for item in iterable:
+            context[self.identifier] = item
+            self.body.eval(context)
+
+
 class FunctionDefinition(ASTNode):
     def __init__(self, name, body):
         self.name = name
