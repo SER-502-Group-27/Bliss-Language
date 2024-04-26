@@ -140,6 +140,11 @@ def t_indent_error(t):
     t.lexer.skip(1)
 
 
+def t_RANGE(t):
+    r"range"
+    return t
+
+
 def t_TRUE(t):
     r"True"
     t.value = True

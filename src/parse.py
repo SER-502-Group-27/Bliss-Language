@@ -233,9 +233,30 @@ def p_simple_index(p):
 
 def p_expression_range(p):
     """
-    expression : expression RANGE expression
+    expression : RANGE LPAREN range_args RPAREN
     """
-    p[0] = Range(p[3])
+    p[0] = Range(*p[3])
+
+
+def p_range_args_three(p):
+    """
+    range_args : expression COMMA expression COMMA expression
+    """
+    p[0] = (p[1], p[3], p[5])
+
+
+def p_range_args_two(p):
+    """
+    range_args : expression COMMA expression
+    """
+    p[0] = (p[1], p[3], None)  # Default step is None
+
+
+def p_range_args_one(p):
+    """
+    range_args : expression
+    """
+    p[0] = (0, p[1], None)  # Default start is 0, step is None
 
 
 def p_control_flow(p):

@@ -160,11 +160,21 @@ class Assignment(ASTNode):
 
 
 class Range(ASTNode):
-    def __init__(self, end):
-        self.end = end
+    def __init__(self, start, stop, step=None):
+        self.start = start
+        self.stop = stop
+        self.step = step
 
     def eval(self, context):
-        return list(range(self.end.eval(context)))
+        start_val = (
+            self.start if isinstance(self.start, int) else self.start.eval(context)
+        )
+        stop_val = self.stop.eval(context)
+        if self.step:
+            step_val = self.step.eval(context)
+            return list(range(start_val, stop_val, step_val))
+        else:
+            return list(range(start_val, stop_val))
 
 
 class PrintStatement(ASTNode):
