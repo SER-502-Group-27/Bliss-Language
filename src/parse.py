@@ -23,7 +23,6 @@ from ast_nodes import (
 # Precedence and associativity of operators
 precedence = (
     ("right", "NOT"),
-    # ("nonassoc", "SLICE"),
     ("left", "OR"),
     ("left", "AND"),
     (
