@@ -30,6 +30,38 @@ class Boolean(ASTNode):
         return self.value
 
 
+class List(ASTNode):
+    def __init__(self, elements):
+        self.elements = elements
+
+    def eval(self, context):
+        return [element.eval(context) for element in self.elements]
+
+
+class Index(ASTNode):
+    def __init__(self, list, index):
+        self.list = list
+        self.index = index
+
+    def eval(self, context):
+        self.list = self.list.eval(context)
+        self.index = self.index.eval(context)
+
+        if not hasattr(self.list, "__getitem__"):
+            raise ValueError(f"Cannot index into {self.list}")
+
+        if not isinstance(self.index, int):
+            if self.index.is_integer():
+                self.index = int(self.index)
+            else:
+                raise ValueError(f"Index {self.index} is not an integer")
+
+        if not 0 <= self.index < len(self.list):
+            raise ValueError(f"Index {self.index} out of range")
+
+        return self.list[self.index]
+
+
 class Identifier(ASTNode):
     def __init__(self, name):
         self.name = name
@@ -107,6 +139,14 @@ class Assignment(ASTNode):
             context[self.identifier.name] /= self.expr.eval(context)
         elif self.op == "%=":
             context[self.identifier.name] %= self.expr.eval(context)
+
+
+class Range(ASTNode):
+    def __init__(self, end):
+        self.end = end
+
+    def eval(self, context):
+        return list(range(self.end.eval(context)))
 
 
 class PrintStatement(ASTNode):

@@ -6,10 +6,13 @@ from ast_nodes import (
     BinaryOperation,
     Number,
     Boolean,
+    List,
+    Index,
     Identifier,
     StringLiteral,
     UnaryOperation,
     Assignment,
+    Range,
     IfStatement,
     WhileStatement,
     FunctionDefinition,
@@ -143,6 +146,39 @@ def p_assignment(p):
                | IDENTIFIER MOD_ASSIGN expression
     """
     p[0] = Assignment(Identifier(p[1]), p[2], p[3])
+
+
+def p_expression_list(p):
+    """
+    expression : LBRACKET list_elements RBRACKET
+    """
+    p[0] = List(p[2])
+
+
+def p_list_elements(p):
+    """
+    list_elements : list_elements COMMA expression
+                  | expression
+    """
+    if len(p) == 4:
+        p[1].append(p[3])
+        p[0] = p[1]
+    else:
+        p[0] = [p[1]]
+
+
+def p_expression_index(p):
+    """
+    expression : expression LBRACKET expression RBRACKET
+    """
+    p[0] = Index(p[1], p[3])
+
+
+def p_expression_range(p):
+    """
+    expression : expression RANGE expression
+    """
+    p[0] = Range(p[3])
 
 
 def p_control_flow(p):

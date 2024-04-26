@@ -1,6 +1,6 @@
 x = 4
 y = 2 + 4 * 3 - x
-z = True
+z = [True, 2, 3, "abc"]
 if not x < 10:
     print(x)
     print(y)
@@ -14,4 +14,5 @@ else:
 if -y < 0:
     print(x+y)
 
+print(z["1a"])
 print(z)
