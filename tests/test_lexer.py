@@ -166,6 +166,33 @@ class TestLexer(unittest.TestCase):
         self.assertIn("INDENT", indents)
         self.assertIn("OUTDENT", indents)
 
+    def test_keyword_if(self):
+        self.lexer.input("if")
+        token = self.lexer.token()
+        self.assertIsNotNone(token)
+        self.assertEqual(token.type, "IF")
+
+    def test_keyword_else(self):
+        self.lexer.input("else")
+        token = self.lexer.token()
+        self.assertIsNotNone(token)
+        self.assertEqual(token.type, "ELSE")
+
+    def test_nested_if(self):
+        code = "if x > 0:\n    if x < 10:\n        print('x is between 0 and 10')"
+        self.lexer.input(code)
+        tokens = [token for token in self.lexer]
+        self.assertTrue(
+            any(t.type == "IF" for t in tokens)
+            and len([t for t in tokens if t.type == "IF"]) == 2
+        )
+
+    def test_while_simple_loop(self):
+        code = "while True:\n    print('Looping')"
+        self.lexer.input(code)
+        tokens = [token for token in self.lexer]
+        self.assertTrue(any(t.type == "WHILE" for t in tokens))
+
 
 if __name__ == "__main__":
     unittest.main()
