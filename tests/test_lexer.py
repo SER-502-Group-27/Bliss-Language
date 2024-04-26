@@ -139,7 +139,6 @@ class TestLexer(unittest.TestCase):
         self.assertIsNotNone(token)
         self.assertEqual(token.type, "MOD_ASSIGN")
 
-
     def test_equal_operator(self):
         self.lexer.input("==")
         token = self.lexer.token()

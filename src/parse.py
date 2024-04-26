@@ -17,6 +17,7 @@ from ast_nodes import (
     WhileStatement,
     ForStatement,
     FunctionDefinition,
+    FunctionCall,
 )
 
 
@@ -302,9 +303,47 @@ def p_block(p):
 
 def p_function_definition(p):
     """
-    function_definition : DEF IDENTIFIER LPAREN RPAREN COLON block
+    function_definition : DEF IDENTIFIER LPAREN params RPAREN COLON block
     """
-    p[0] = FunctionDefinition(p[2], p[6])
+    p[0] = FunctionDefinition(p[2], p[4], p[7])
+
+
+def p_params(p):
+    """
+    params : params COMMA IDENTIFIER
+           | IDENTIFIER
+           | empty
+    """
+    if len(p) == 4:
+        p[0] = p[1] + [p[3]]
+    elif len(p) == 2:
+        p[0] = [p[1]] if p[1] else []
+
+
+def p_empty(p):
+    """
+    empty :
+    """
+    p[0] = None
+
+
+def p_expression_function_call(p):
+    """
+    expression : IDENTIFIER LPAREN arguments RPAREN
+    """
+    p[0] = FunctionCall(p[1], p[3])
+
+
+def p_arguments(p):
+    """
+    arguments : arguments COMMA expression
+              | expression
+              | empty
+    """
+    if len(p) == 4:
+        p[0] = p[1] + [p[3]]
+    elif len(p) == 2:
+        p[0] = [p[1]] if p[1] else []
 
 
 def p_error(p):

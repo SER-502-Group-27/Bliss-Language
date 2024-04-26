@@ -1,7 +1,9 @@
-a = ['B', 'L', 'I', 'S', 'S']
+def start():
+    a = ['B', 'L', 'I', 'S', 'S']
+    for i in a:
+        print(i)
 
-for i in a:
-    print(i)
+start()
 
 for i in range(0,10,2):
     print(i)
@@ -19,8 +21,11 @@ else:
         x = x + 1000
         print(x)
 
-if -y < 0:
-    print(x+y)
+def print_xy(x,y):
+    if -y < 0:
+        print(x+y)
+
+print_xy(x,y)
 
 print(z[0:3:2])
 print(z[0::2])

@@ -237,10 +237,32 @@ class ForStatement(ASTNode):
 
 
 class FunctionDefinition(ASTNode):
-    def __init__(self, name, body):
+    def __init__(self, name, params, body):
         self.name = name
+        self.params = params
         self.body = body
 
     def eval(self, context):
-        # Assuming functions do not have parameters and do not return values for simplicity
-        context[self.name] = self.body
+        # Store the function in the context, including parameters and body
+        context[self.name] = self
+
+    def invoke(self, args, context):
+        # Create a new context for function execution to avoid side effects
+        local_context = context.copy()
+
+        for param, arg in zip(self.params, args):
+            local_context[param] = arg.eval(context)
+
+        return self.body.eval(local_context)
+
+
+class FunctionCall(ASTNode):
+    def __init__(self, function_name, arguments):
+        self.function_name = function_name
+        self.arguments = arguments
+
+    def eval(self, context):
+        function = context.get(self.function_name)
+        if not function or not isinstance(function, FunctionDefinition):
+            raise ValueError("Function {} is not defined".format(self.function_name))
+        return function.invoke(self.arguments, context)
