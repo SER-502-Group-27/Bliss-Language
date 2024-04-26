@@ -103,6 +103,43 @@ class TestLexer(unittest.TestCase):
         self.assertIsNotNone(token)
         self.assertEqual(token.type, "LESS_EQUAL")
 
+    def test_assign_operator(self):
+        self.lexer.input("=")
+        token = self.lexer.token()
+        self.assertIsNotNone(token)
+        self.assertEqual(token.type, "ASSIGN")
+
+    def test_add_assign_operator(self):
+        self.lexer.input("+=")
+        token = self.lexer.token()
+        self.assertIsNotNone(token)
+        self.assertEqual(token.type, "ADD_ASSIGN")
+
+    def test_sub_assign_operator(self):
+        self.lexer.input("-=")
+        token = self.lexer.token()
+        self.assertIsNotNone(token)
+        self.assertEqual(token.type, "SUB_ASSIGN")
+
+    def test_mul_assign_operator(self):
+        self.lexer.input("*=")
+        token = self.lexer.token()
+        self.assertIsNotNone(token)
+        self.assertEqual(token.type, "MUL_ASSIGN")
+
+    def test_div_assign_operator(self):
+        self.lexer.input("/=")
+        token = self.lexer.token()
+        self.assertIsNotNone(token)
+        self.assertEqual(token.type, "DIV_ASSIGN")
+
+    def test_mod_assign_operator(self):
+        self.lexer.input("%=")
+        token = self.lexer.token()
+        self.assertIsNotNone(token)
+        self.assertEqual(token.type, "MOD_ASSIGN")
+
+
 
 if __name__ == "__main__":
     unittest.main()
