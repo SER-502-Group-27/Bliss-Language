@@ -127,6 +127,46 @@ class BinaryOperation(ASTNode):
             raise ValueError("Unknown operator")
 
 
+class PreIncrement(ASTNode):
+    def __init__(self, identifier):
+        self.identifier = identifier
+
+    def eval(self, context):
+        # Increment the value before returning it
+        context[self.identifier] = context.get(self.identifier, 0) + 1
+        return context[self.identifier]
+
+
+class PreDecrement(ASTNode):
+    def __init__(self, identifier):
+        self.identifier = identifier
+
+    def eval(self, context):
+        # Decrement the value before returning it
+        context[self.identifier] = context.get(self.identifier, 0) - 1
+        return context[self.identifier]
+
+
+class PostIncrement(ASTNode):
+    def __init__(self, identifier):
+        self.identifier = identifier
+
+    def eval(self, context):
+        original_value = context[self.identifier]
+        context[self.identifier] = original_value + 1
+        return original_value
+
+
+class PostDecrement(ASTNode):
+    def __init__(self, identifier):
+        self.identifier = identifier
+
+    def eval(self, context):
+        original_value = context[self.identifier]
+        context[self.identifier] = original_value - 1
+        return original_value
+
+
 class UnaryOperation(ASTNode):
     def __init__(self, operator, operand):
         self.operator = operator
@@ -238,6 +278,20 @@ class ForStatement(ASTNode):
         for item in iterable:
             context[self.identifier] = item
             self.body.eval(context)
+
+
+class TraditionalForLoop(ASTNode):
+    def __init__(self, initialization, condition, increment, body):
+        self.initialization = initialization
+        self.condition = condition
+        self.increment = increment
+        self.body = body
+
+    def eval(self, context):
+        self.initialization.eval(context)
+        while self.condition.eval(context):
+            self.body.eval(context)
+            self.increment.eval(context)
 
 
 class FunctionDefinition(ASTNode):

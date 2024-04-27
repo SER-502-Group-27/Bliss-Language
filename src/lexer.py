@@ -2,7 +2,6 @@ import ply.lex as lex
 
 # List of token names. This is always required
 tokens = (
-    "NUMBER",
     "FLOAT",
     "BOOLEAN",
     "PLUS",
@@ -28,9 +27,11 @@ tokens = (
     "NOT_EQUAL",
     "INDENT",
     "OUTDENT",
-    "STRING_LITERAL",
+    "STRING",
     "COMMA",
-    "NEWLINE",
+    "SEMI",
+    "INC",
+    "DEC",
     "LBRACKET",
     "RBRACKET",
     "QUESTION",
@@ -74,7 +75,10 @@ t_GREATER_EQUAL = r">="
 t_LESS_EQUAL = r"<="
 t_COLON = r":"
 t_COMMA = r","
+t_SEMI = r";"
 t_QUESTION = r"\?"
+t_INC = r"\+\+"
+t_DEC = r"--"
 
 states = (("indent", "exclusive"),)
 indent_size = 4
@@ -181,7 +185,7 @@ def t_INTEGER(t):
     return t
 
 
-def t_STRING_LITERAL(t):
+def t_STRING(t):
     r"('([^'\\\n]|(\\.))*?'|\"([^\"\\\n]|(\\.))*?\")"
     t.value = t.value[1:-1]
     return t

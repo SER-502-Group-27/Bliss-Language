@@ -18,10 +18,15 @@ from src.ast_nodes import (
     StringLiteral,
     UnaryOperation,
     Assignment,
+    PreIncrement,
+    PreDecrement,
+    PostIncrement,
+    PostDecrement,
     Range,
     IfStatement,
     WhileStatement,
     ForStatement,
+    TraditionalForLoop,
     FunctionDefinition,
     FunctionCall,
 )
@@ -100,6 +105,34 @@ def p_expression_binop(p):
     p[0] = BinaryOperation(p[1], p[2], p[3])
 
 
+def p_expression_pre_increment(p):
+    """
+    expression : INC IDENTIFIER
+    """
+    p[0] = PreIncrement(p[2])
+
+
+def p_expression_pre_decrement(p):
+    """
+    expression : DEC IDENTIFIER
+    """
+    p[0] = PreDecrement(p[2])
+
+
+def p_expression_post_increment(p):
+    """
+    expression : IDENTIFIER INC
+    """
+    p[0] = PostIncrement(p[1])
+
+
+def p_expression_post_decrement(p):
+    """
+    expression : IDENTIFIER DEC
+    """
+    p[0] = PostDecrement(p[1])
+
+
 def p_expression_group(p):
     """
     expression : LPAREN expression RPAREN
@@ -124,7 +157,7 @@ def p_expression_identifier(p):
 
 def p_expression_string(p):
     """
-    expression : STRING_LITERAL
+    expression : STRING
     """
     p[0] = StringLiteral(p[1])
 
@@ -308,6 +341,13 @@ def p_for_statement(p):
     for_statement : FOR IDENTIFIER IN expression COLON block
     """
     p[0] = ForStatement(p[2], p[4], p[6])
+
+
+def p_for_statement_traditional(p):
+    """
+    for_statement : FOR LPAREN assignment SEMI expression SEMI expression RPAREN COLON block
+    """
+    p[0] = TraditionalForLoop(p[3], p[5], p[7], p[10])
 
 
 def p_block(p):

@@ -8,6 +8,9 @@ start()
 for i in range(0,10,2):
     print(i)
 
+for(i=5;i>0;i--):
+    print(i)
+
 x = 4
 y = 2 + 4 * 3 - x
 z = [True, 2, 3, "abc", 5, 7]
