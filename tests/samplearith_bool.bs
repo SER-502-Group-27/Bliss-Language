@@ -1,0 +1,22 @@
+# Demonstrating Boolean and arithmetic operations
+x = 10
+y = 20
+
+
+sum = x + y
+print(sum)
+difference = y - x
+print(difference)
+product = x * y
+print(product)
+division = y / x
+print(division)
+
+is_greater = x > y
+print(is_greater)
+and_operation = (x < y) and (y > 10)
+print(and_operation)
+or_operation = (x > y) or (y == 20)
+print(or_operation)
+not_operation = not (x == y)
+print(not_operation)

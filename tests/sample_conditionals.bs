@@ -1,0 +1,14 @@
+# Using ternary operator and traditional if-then-else and just if
+x = 5
+result = x > 3 ? "Greater" : "Less or Equal"
+print(result)
+
+age = 20
+if age < 18:
+    print("Underage")
+else:
+    print("Adult")
+
+age = 25
+if age > 21:
+    print("Can Drink")

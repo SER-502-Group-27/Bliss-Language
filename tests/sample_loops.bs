@@ -1,0 +1,13 @@
+# Traditional for loop
+for (i=0;i<5;i++):
+    print(i)
+
+# Traditional while loop
+j = 5
+while (j > 0):
+    print(j)
+    j = j - 1
+
+# For loop with range similar to Python's range
+for i in range(2, 5):
+    print(i)

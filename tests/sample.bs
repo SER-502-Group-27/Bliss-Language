@@ -50,3 +50,8 @@ print(y)
 
 if 3>0 and 0>3:
     print("True")
+
+i = 1
+while i < 3:
+        print("Value of i is less than 3!")
+        i = i + 1

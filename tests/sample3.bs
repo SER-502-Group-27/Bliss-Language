@@ -18,3 +18,5 @@ def Fibonacci(n):
     print(result)
 
 Fibonacci(7)
+Fibonacci(0)
+Fibonacci(5)

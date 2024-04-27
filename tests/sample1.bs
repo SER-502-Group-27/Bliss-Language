@@ -2,7 +2,6 @@ def start():
     y = 2.5
     i = None
     x = 10
-    stringTest = "Hello" + " World"
     print(i)
     isgreater = x > 3
     test = (x + 3) > (y + 1)
