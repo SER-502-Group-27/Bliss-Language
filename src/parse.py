@@ -424,10 +424,10 @@ def parse(data):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: python parse.py <filename>")
-        sys.exit(1)
-
-    filename = sys.argv[1]
+        print("Using default sample.bs")
+        filename = "tests/sample.bs"
+    else:
+        filename = sys.argv[1]
     try:
         with open(filename, "r", encoding="utf-8") as f:
             source_code = f.read()
