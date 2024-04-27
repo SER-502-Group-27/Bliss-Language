@@ -1,7 +1,7 @@
 import sys
 import os
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 import ply.yacc as yacc
 from src.lexer import tokens, lexer
@@ -45,7 +45,6 @@ precedence = (
     ("left", "PLUS", "MINUS"),
     ("left", "TIMES", "DIVIDE", "MODULO"),
     ("right", "UMINUS"),
-    
 )
 
 
@@ -95,6 +94,8 @@ def p_expression_binop(p):
                | expression LESS_EQUAL expression
                | expression EQUAL expression
                | expression NOT_EQUAL expression
+               | expression AND expression
+               | expression OR expression
     """
     p[0] = BinaryOperation(p[1], p[2], p[3])
 
@@ -144,6 +145,7 @@ def p_expression_negate(p):
         p[0] = UnaryOperation("-", p[2])
     else:
         p[0] = UnaryOperation("not", p[2])
+
 
 def p_expression_ternary(p):
     """

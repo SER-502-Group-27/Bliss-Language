@@ -85,17 +85,17 @@ Rule 67    arguments -> empty
 Terminals, with rules where they appear
 
 ADD_ASSIGN           : 30
-AND                  : 
+AND                  :
 ASSIGN               : 29
 BOOLEAN              : 25
-BREAK                : 
+BREAK                :
 COLON                : 28 39 39 40 40 41 42 43 43 44 45 54 54 55 56 57 59
 COMMA                : 36 48 48 49 60 65
-CONTINUE             : 
+CONTINUE             :
 DEF                  : 59
 DIVIDE               : 12
 DIV_ASSIGN           : 33
-ELIF                 : 
+ELIF                 :
 ELSE                 : 54
 EQUAL                : 18
 FLOAT                : 22
@@ -115,11 +115,11 @@ MINUS                : 10 26
 MODULO               : 13
 MOD_ASSIGN           : 34
 MUL_ASSIGN           : 32
-NEWLINE              : 
+NEWLINE              :
 NOT                  : 27
 NOT_EQUAL            : 19
-NUMBER               : 
-OR                   : 
+NUMBER               :
+OR                   :
 OUTDENT              : 58
 PLUS                 : 9
 PRINT                : 8
@@ -127,12 +127,12 @@ QUESTION             : 28
 RANGE                : 47
 RBRACKET             : 35 38
 RPAREN               : 8 20 47 59 64
-STRING               : 
+STRING               :
 STRING_LITERAL       : 24
 SUB_ASSIGN           : 31
 TIMES                : 11
 WHILE                : 56
-error                : 
+error                :
 
 Nonterminals, with rules where they appear
 
@@ -4993,9 +4993,9 @@ state 133
     $end            reduce using rule 54 (if_statement -> IF expression COLON block ELSE COLON block .)
     OUTDENT         reduce using rule 54 (if_statement -> IF expression COLON block ELSE COLON block .)
 
-WARNING: 
+WARNING:
 WARNING: Conflicts:
-WARNING: 
+WARNING:
 WARNING: shift/reduce conflict for MINUS in state 5 resolved as shift
 WARNING: shift/reduce conflict for LBRACKET in state 5 resolved as shift
 WARNING: shift/reduce conflict for LPAREN in state 10 resolved as shift

@@ -119,6 +119,10 @@ class BinaryOperation(ASTNode):
             return lval <= rval
         elif self.operator == ">=":
             return lval >= rval
+        elif self.operator == "and":
+            return lval and rval
+        elif self.operator == "or":
+            return lval or rval
         else:
             raise ValueError("Unknown operator")
 

@@ -33,7 +33,7 @@ tokens = (
     "NEWLINE",
     "LBRACKET",
     "RBRACKET",
-    "QUESTION"
+    "QUESTION",
 )
 
 # Reserved keywords mapping
@@ -73,7 +73,7 @@ t_GREATER_EQUAL = r">="
 t_LESS_EQUAL = r"<="
 t_COLON = r":"
 t_COMMA = r","
-t_QUESTION = r'\?'
+t_QUESTION = r"\?"
 
 states = (("indent", "exclusive"),)
 indent_size = 4

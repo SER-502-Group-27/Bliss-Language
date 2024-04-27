@@ -32,4 +32,3 @@ print(z[0::2])
 print(z)
 print(range(5))
 print(range(1,5,2))
-
