@@ -415,7 +415,6 @@ def preprocess_input(data):
     return data
 
 
-# Build the parser
 parser = yacc.yacc()
 
 
@@ -424,7 +423,17 @@ def parse(data):
 
 
 if __name__ == "__main__":
-    with open("tests/sample.bs", "r", encoding="utf-8") as f:
-        bliss_code = f.read()
-    ast = parse(preprocess_input(bliss_code))
-    ast.eval({})  # Execute with an empty context
+    if len(sys.argv) < 2:
+        print("Usage: python parse.py <filename>")
+        sys.exit(1)
+
+    filename = sys.argv[1]
+    try:
+        with open(filename, "r", encoding="utf-8") as f:
+            source_code = f.read()
+        ast = parse(preprocess_input(source_code))
+        result = ast.eval({})
+    except FileNotFoundError:
+        print(f"File not found: {filename}")
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")

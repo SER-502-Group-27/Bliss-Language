@@ -27,7 +27,6 @@ tokens = (
     "NOT_EQUAL",
     "INDENT",
     "OUTDENT",
-    "STRING",
     "COMMA",
     "SEMI",
     "INC",
