@@ -1,6 +1,12 @@
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 import ply.yacc as yacc
-from lexer import tokens, lexer
-from ast_nodes import (
+from src.lexer import tokens, lexer
+
+from src.ast_nodes import (
     Block,
     PrintStatement,
     BinaryOperation,
