@@ -29,6 +29,7 @@ print_xy(x,y)
 
 print(z[0:3:2])
 print(z[0::2])
+# print(x)
 print(z)
 print(range(5))
 print(range(1,5,2))

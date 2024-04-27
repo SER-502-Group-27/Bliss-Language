@@ -34,6 +34,7 @@ tokens = (
     "LBRACKET",
     "RBRACKET",
     "QUESTION",
+    "COMMENT",
 )
 
 # Reserved keywords mapping
@@ -133,7 +134,8 @@ def t_error(t):
 
 def t_indent_other(t):
     r"[^\s]"
-    t.lexer.begin("INITIAL")  # Return to the initial state when hitting non-whitespace
+    # Return to the initial state when hitting non-whitespace
+    t.lexer.begin("INITIAL")
     t.lexer.lexpos -= 1  # Re-evaluate this character in the initial state
 
 
@@ -225,6 +227,11 @@ def t_ASSIGN(t):
     return t
 
 
+def t_COMMENT(t):
+    r"\#.*"
+    pass
+
+
 original_token_method = lex.Lexer.token
 
 
@@ -253,7 +260,7 @@ def preprocess_input(data):
 
 if __name__ == "__main__":
     # Test the lexer
-    with open("tests/sample1.bs", "r", encoding="utf-8") as f:
+    with open("tests/sample.bs", "r", encoding="utf-8") as f:
         bliss_code = f.read()
 
     lexer.input(preprocess_input(bliss_code))
