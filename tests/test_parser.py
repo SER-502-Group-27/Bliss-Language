@@ -20,15 +20,15 @@ from src.ast_nodes import (
     FunctionCall,
 )
 
-class TestParser(unittest.TestCase):
 
+class TestParser(unittest.TestCase):
     def test_basic_arithmetic(self):
         data = "3 + 4"
         result = parse(preprocess_input(data))
         self.assertIsInstance(result, Block)
         self.assertEqual(len(result.statements), 1)
         self.assertIsInstance(result.statements[0], BinaryOperation)
-        self.assertEqual(result.statements[0].operator, '+')
+        self.assertEqual(result.statements[0].operator, "+")
         self.assertEqual(result.statements[0].left.value, 3)
         self.assertEqual(result.statements[0].right.value, 4)
 
@@ -67,9 +67,9 @@ class TestParser(unittest.TestCase):
         result = parse(preprocess_input(data))
         self.assertIsInstance(result, Block)
         self.assertIsInstance(result.statements[0], BinaryOperation)
-        self.assertEqual(result.statements[0].operator, '*')
+        self.assertEqual(result.statements[0].operator, "*")
         self.assertIsInstance(result.statements[0].left, BinaryOperation)
-        self.assertEqual(result.statements[0].left.operator, '+')
+        self.assertEqual(result.statements[0].left.operator, "+")
 
     def test_if_statement(self):
         data = "if x > 10:\n    print('yes')"
@@ -106,8 +106,7 @@ class TestParser(unittest.TestCase):
         self.assertIsInstance(result, Block)
         self.assertIsInstance(result.statements[0], Assignment)
         self.assertIsInstance(result.statements[0].expr, IndexOrSlicing)
-        
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

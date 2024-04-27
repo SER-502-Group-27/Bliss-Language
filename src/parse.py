@@ -32,6 +32,7 @@ precedence = (
     ("right", "NOT"),
     ("left", "OR"),
     ("left", "AND"),
+    ("left", "QUESTION", "COLON"),
     (
         "nonassoc",
         "LESS_THAN",
@@ -44,6 +45,7 @@ precedence = (
     ("left", "PLUS", "MINUS"),
     ("left", "TIMES", "DIVIDE", "MODULO"),
     ("right", "UMINUS"),
+    
 )
 
 
@@ -142,6 +144,12 @@ def p_expression_negate(p):
         p[0] = UnaryOperation("-", p[2])
     else:
         p[0] = UnaryOperation("not", p[2])
+
+def p_expression_ternary(p):
+    """
+    expression : expression QUESTION expression COLON expression
+    """
+    p[0] = IfStatement(p[1], Block([p[3]]), Block([p[5]]))
 
 
 def p_assignment(p):

@@ -33,6 +33,7 @@ tokens = (
     "NEWLINE",
     "LBRACKET",
     "RBRACKET",
+    "QUESTION"
 )
 
 # Reserved keywords mapping
@@ -72,6 +73,7 @@ t_GREATER_EQUAL = r">="
 t_LESS_EQUAL = r"<="
 t_COLON = r":"
 t_COMMA = r","
+t_QUESTION = r'\?'
 
 states = (("indent", "exclusive"),)
 indent_size = 4
@@ -251,7 +253,7 @@ def preprocess_input(data):
 
 if __name__ == "__main__":
     # Test the lexer
-    with open("tests/sample.bs", "r", encoding="utf-8") as f:
+    with open("tests/sample1.bs", "r", encoding="utf-8") as f:
         bliss_code = f.read()
 
     lexer.input(preprocess_input(bliss_code))

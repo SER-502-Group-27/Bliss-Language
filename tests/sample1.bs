@@ -1,0 +1,27 @@
+def start():
+    y = 2.5
+    i = None
+    x = 10
+    stringTest = "Hello" + " World"
+    print(i)
+    isgreater = x > 3
+    test = (x + 3) > (y + 1)
+    num = 8 / 2
+    result = 12 - 1
+    print(isgreater)
+    print(x * y)
+    for i in range(1, 5):
+        if i > 3:
+            print("Value of i is greater than 3!")
+        else:
+            print("Value of i is not greater than 3!")
+    while i < 3:
+        print("Value of i is less than 3!")
+        i = i + 1
+    print("End Program")
+
+    x = 5
+    result = x > 3 ? "Greater" : "Less or Equal"
+    print(result)
+
+start()
