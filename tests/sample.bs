@@ -33,3 +33,11 @@ print(z[0::2])
 print(z)
 print(range(5))
 print(range(1,5,2))
+t = 3>0 and 4<0
+print(t)
+
+y = 3>0 or 0>3
+print(y)
+
+if 3>0 and 0>3:
+    print("True")
