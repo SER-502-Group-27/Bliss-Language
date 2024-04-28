@@ -4,29 +4,35 @@ Bliss is a simple, expressive programming language designed to make programming 
 
 ## Features
 
-- **Implicit Type Declaration**: Variables in Bliss are implicitly typed, making the syntax cleaner and more intuitive.
-- **Rich Set of Operators**: Includes a comprehensive set of operators for arithmetic, logical operations, and more.
-- **Control Structures**: Supports conditional statements and loops for complex flow control.
-- **Built-in Print Functionality**: Simplified output with a built-in print function that supports various data types.
-- **Error Handling**: Offers straightforward error reporting to ease debugging.
+- **Implicit Type Declaration**: Variables are implicitly typed, streamlining syntax.
+- **Rich Set of Operators**: Supports arithmetic, logical operations, and more.
+- **Control Structures**: Enables complex flow control with conditional statements and loops.
+- **Built-in Print Functionality**: Simplifies output for various data types.
+- **Error Handling**: Enhances debugging with straightforward error reporting.
+
+## System Requirements
+
+Bliss can be used on GNUstep, Linux, Unix, Windows, and Mac OS.
+
+## Tools Used
+
+- Python 3.6 or later
+- PLY (Python Lex-Yacc) for building lexers and parsers.
 
 ## Getting Started
-
-These instructions will guide you through setting up the Bliss programming environment on your local machine for development and testing purposes.
 
 ### Prerequisites
 
 - Python 3.6 or later
-- PLY (Python Lex-Yacc). You can learn more about PLY and its capabilities [here](https://www.dabeaz.com/ply/ply.html).
+- [PLY (Python Lex-Yacc)](https://www.dabeaz.com/ply/ply.html)
 
-### Installing
+### Installation
 
-Follow these steps to get your development environment running:
-
-1. **Clone the repository**:
-   ```sh
+1. Clone the repository:
+   ```bash
    git clone https://github.com/SER-502-Group-27/SER502-Bliss-Team27.git
    cd SER502-Bliss-Team27
+
 
 2. **Set up the environment**:
 conda create -n bliss-env python=3.6
@@ -35,3 +41,6 @@ pip install ply
 
 3. **Run a sample program**
 python src/parser.py tests/sample.bs
+Here, if tests/sample.bs does not work, try adding the complete path of the bliss file you want to run.
+
+Youtube video link - https://youtu.be/Tg9lAqzFxOc
