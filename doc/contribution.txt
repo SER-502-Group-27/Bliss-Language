@@ -19,8 +19,8 @@ Rishabh Doshi:
 - Contributed to setting language rules
 - Researched LARC & PLY
 - Worked majorly on the Lexer.
-- Lexical Analysis
-- Will work on parse tree
+- Testing of lexer
+- Worked on documentation
 
 ------------------------------------------------------
 Satya Partha Varun Ramaraju:
