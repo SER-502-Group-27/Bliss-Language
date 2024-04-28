@@ -12,28 +12,26 @@ Bliss is a simple, expressive programming language designed to make programming 
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+These instructions will guide you through setting up the Bliss programming environment on your local machine for development and testing purposes.
 
 ### Prerequisites
 
 - Python 3.6 or later
-- [PLY (Python Lex-Yacc)](https://www.dabeaz.com/ply/ply.html)
+- PLY (Python Lex-Yacc). You can learn more about PLY and its capabilities [here](https://www.dabeaz.com/ply/ply.html).
 
 ### Installing
 
-A step-by-step series of examples that tell you how to get a development environment running.
+Follow these steps to get your development environment running:
 
-1. Clone the repository:
+1. **Clone the repository**:
+   ```sh
+   git clone https://github.com/SER-502-Group-27/SER502-Bliss-Team27.git
+   cd SER502-Bliss-Team27
 
-```sh
-https://github.com/SER-502-Group-27/SER502-Bliss-Team27.git
-cd bliss
-```
-
-2. Set up environment
-
-```
-conda env create -f environment.yml
+2. **Set up the environment**:
+conda create -n bliss-env python=3.6
 conda activate bliss-env
-poetry install --no-root
-```
+pip install ply
+
+3. **Run a sample program**
+python src/parser.py tests/sample.bs

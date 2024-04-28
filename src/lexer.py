@@ -1,3 +1,10 @@
+"""
+Lexer for the Bliss programming language.
+
+This module uses the PLY library to define a lexical analyzer that tokenizes the input source code into meaningful symbols. It includes definitions for various token types such as identifiers, operators, and literals. Additionally, it handles reserved keywords and indentation, crucial for the syntactic structure of Bliss. The lexer supports error handling for unrecognized tokens and maintains line numbers for better error reporting.
+"""
+
+
 import ply.lex as lex
 
 # List of token names. This is always required

@@ -1,3 +1,10 @@
+"""
+AST Nodes for the Bliss programming language.
+
+This module defines various classes representing nodes in the Abstract Syntax Tree (AST). Each node type corresponds to specific language constructs such as arithmetic operations, control structures, and data types. The nodes are designed to be evaluated within a given context, supporting the execution or interpretation of Bliss programs. This includes functionality for basic types like numbers and strings, as well as complex structures like functions and loops.
+"""
+
+
 class ASTNode:
     def eval(self, context):
         pass
