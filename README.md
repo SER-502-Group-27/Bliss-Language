@@ -30,8 +30,8 @@ Bliss can be used on GNUstep, Linux, Unix, Windows, and Mac OS.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/SER-502-Group-27/SER502-Bliss-Team27.git
-   cd SER502-Bliss-Team27
+   git clone https://github.com/SER-502-Group-27/Bliss-Language.git
+   cd Bliss-Language
 
 
 2. **Set up the environment**:
